@@ -44,6 +44,11 @@ void Menu::displayMenu()
             quit = true;
             std::cout << "Goodbye" << std::endl;
         }
+        else if(std::cin.eof())
+        {
+            quit = true;
+            std::cout << "Goodbye" << std::endl;
+        }
         else
         {
             std::cout << "Invalid option, please try again.";
