@@ -1,0 +1,34 @@
+#ifndef BROKENROW_H
+#define BROKENROW_H
+
+#include "LinkedList.h"
+
+#define MAX_TILES 7
+
+class BrokenRow
+{
+public:
+    BrokenRow();
+    ~BrokenRow();
+
+    //Add a tile to the row of broken tiles
+    void addTile(char&& colour);
+
+    //Clear the row (Note: use AFTER moving tiles to box lid)
+    void clearRow();
+
+    //Check to see if the broken row is full
+    bool isFull();
+
+    //get amount of tiles in broken row
+    int getLength();
+
+    char getTileAt(int index);
+
+private:
+    LinkedList* tiles;
+
+
+};
+
+#endif BROKENROW_H
