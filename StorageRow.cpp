@@ -3,12 +3,12 @@
 StorageRow::StorageRow(int maxTiles)
 {
     this->maxTiles = maxTiles;
-    tiles = new LinkedList();
+    tiles = make_shared<LinkedList>();
 }
 
 StorageRow::~StorageRow()
 {
-    delete tiles;
+
 }
 
 void StorageRow::addTile(char&& tile)

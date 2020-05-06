@@ -101,7 +101,6 @@ void Menu::loadGame()
 
     //TODO check that file exists
     //TODO check that file contains a valid game (format of valid game TBC)
-    //TODO load game and continue
 }
 
 

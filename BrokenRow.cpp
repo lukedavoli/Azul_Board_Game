@@ -3,12 +3,12 @@
 
 BrokenRow::BrokenRow()
 {
-    tiles = new LinkedList();
+    tiles = make_shared<LinkedList>();
 }
 
 BrokenRow::~BrokenRow()
 {
-    delete tiles;
+
 }
 
 void BrokenRow::addTile(char&& colour)

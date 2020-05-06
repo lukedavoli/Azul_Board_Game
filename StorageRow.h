@@ -1,7 +1,10 @@
 #ifndef STORAGEROW_H
 #define STORAGEROW_H
 
+#include <memory>
 #include "LinkedList.h"
+using std::make_shared;
+using std::shared_ptr;
 
 class StorageRow
 {
@@ -32,7 +35,7 @@ public:
     char getTileAt(int index);
 
 private:
-    LinkedList* tiles;
+    shared_ptr<LinkedList> tiles;
     int maxTiles;
 };
 

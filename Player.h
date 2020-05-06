@@ -2,8 +2,12 @@
 #define PLAYER_H
 
 #include <string>
+#include <memory>
+using std::shared_ptr;
+using std::make_shared;
 #include "StorageRow.h"
 #include "BrokenRow.h"
+#include "Mosaic.h"
 
 #define STORAGE_ROWS 5
 
@@ -22,21 +26,20 @@ public:
     //set player points
     void setPoints(int points);
 
-    //get the player's mosaic
-    char** getMosaic();
-
     //get a specific storage row
-    StorageRow* getStorageRow(int row);
+    shared_ptr<StorageRow> getStorageRow(int row);
 
     //get the player's broken row
-    BrokenRow* getBroken();
+    shared_ptr<BrokenRow> getBroken();
+
+    shared_ptr<Mosaic> getMosaic();
 
 private:
     std::string name;
     int points;
-    char** mosaic;
-    StorageRow* storageRows[STORAGE_ROWS];
-    BrokenRow* brokenRow;
+    shared_ptr<Mosaic> mosaic;
+    shared_ptr<StorageRow> storageRows[STORAGE_ROWS];
+    shared_ptr<BrokenRow> brokenRow;
 };
 
 #endif PLAYER_H

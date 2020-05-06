@@ -1,7 +1,10 @@
 #ifndef BROKENROW_H
 #define BROKENROW_H
 
+#include <memory>
 #include "LinkedList.h"
+using std::make_shared;
+using std::shared_ptr;
 
 #define MAX_TILES 7
 
@@ -26,7 +29,7 @@ public:
     char getTileAt(int index);
 
 private:
-    LinkedList* tiles;
+    shared_ptr<LinkedList> tiles;
 
 
 };

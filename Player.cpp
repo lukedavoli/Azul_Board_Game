@@ -8,20 +8,16 @@ Player::Player(std::string name, int points)
 
     for(int i = 0; i < STORAGE_ROWS; i++)
     {
-        storageRows[i] = new StorageRow(i + 1);
+        storageRows[i] = make_shared<StorageRow>(i + 1);
     }
 
-    brokenRow = new BrokenRow();
-
-    //TODO initiate mosaic
+    brokenRow = make_shared<BrokenRow>();
+    mosaic = make_shared<Mosaic>();
 }
 
 Player::~Player()
 {
-    for(int i = 0; i < STORAGE_ROWS; i++)
-    {
-        delete storageRows[i];
-    }
+
 }
 
 std::string Player::getName()
@@ -39,17 +35,17 @@ void Player::setPoints(int points)
     this->points = points;
 }
 
-char **Player::getMosaic()
+Mosaic Player::getMosaic()
 {
     return mosaic;
 }
 
-StorageRow *Player::getStorageRow(int row)
+shared_ptr<StorageRow> Player::getStorageRow(int row)
 {
     return storageRows[row - 1];
 }
 
-BrokenRow *Player::getBroken()
+shared_ptr<BrokenRow> Player::getBroken()
 {
     return brokenRow;
 }
