@@ -8,17 +8,14 @@ using std::endl;
 #define MAX 5
 
 // For each row insert tile "t"
-void insertTest(Mosaic* m, char* t);
+void insertTest(Mosaic* m, char t);
 
 int main(int argc, char const *argv[])
 {
     Mosaic* m = new Mosaic();
     cout << "For each row insert R and U" << endl;
-    char red = 'R';
-    char black = 'U';
-
-    insertTest(m, &red);
-    insertTest(m, &black);
+    insertTest(m, 'R');
+    insertTest(m, 'U');
 
     m->printMosaic();
     cout << endl;
@@ -26,20 +23,17 @@ int main(int argc, char const *argv[])
     cout << endl;
 
     cout << "For each row insert Y, B and L" << endl;
-    char yellow = 'Y';
-    char blue = 'B';
-    char lightb = 'L';
 
-    insertTest(m, &yellow);
-    insertTest(m, &blue);
-    insertTest(m, &lightb);
+    insertTest(m, 'Y');
+    insertTest(m, 'B');
+    insertTest(m, 'L');
 
     m->printMosaic();
     cout << endl;
     m->print2DMosaic();
     cout << endl;
 
-    cout << "Reset to empty mosaic" << endl;
+    cout << "<<Reset Mosaic>>" << endl;
     m->resetMosaic();
     m->printMosaic();
     cout << endl;
@@ -69,6 +63,8 @@ int main(int argc, char const *argv[])
     m->loadRow(10, line4);
     m->printMosaic();
     cout << endl;
+    m->print2DMosaic();
+    cout << endl;
 
     cout << "Get Row 1: " << m->getRow(1) << endl;
 
@@ -84,12 +80,20 @@ int main(int argc, char const *argv[])
     
     cout << "Get Row 1000: " << m->getRow(1000) << endl;
 
+    cout << endl;
+    cout << "<<Reset Mosaic>>"<< endl;
+    m->resetMosaic();
+    cout << "Insert H into Row 1" << endl;
+    m->insertRow(1, 'H');
+    m->printMosaic();
+    cout << endl;
+
     return 0;
 }
 
-void insertTest(Mosaic* m, char* t) {
+void insertTest(Mosaic* m, char t) {
 
     for(int i = 0; i != MAX; ++i){
-        m->insertRow(i+1, *t);
+        m->insertRow(i+1, t);
     }
 }

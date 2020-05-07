@@ -19,6 +19,7 @@ Mosaic::~Mosaic() {
     }
     delete mosaic;
 }
+
 void Mosaic::resetMosaic() {
     string row1 = "b y r u l";
     string row2 = "l b y r u";
@@ -33,14 +34,14 @@ void Mosaic::resetMosaic() {
 }
 
 string Mosaic::getRow(int rowNum) {
-    if(rowNum > 0 && rowNum <= DIM) {
+    if(validRowNum(rowNum)) {
          return rows[rowNum-1];
     }
     return "Error - invalid row number";
 }
 
 void Mosaic::loadRow(int rowNum, string row) {
-    if(rowNum > 0 && rowNum <= DIM) {
+    if(validRowNum(rowNum)) {
         if(row.size() == MAX_NUM_OF_CHARS){
             rows[rowNum-1] = row;
         }
@@ -56,10 +57,13 @@ void Mosaic::insertRow(int rowNum, char tile){
     //         i = MAX_NUM_OF_CHARS;
     //     }
     // }
-    
-    for(int i = 0; i < MAX_NUM_OF_CHARS; ++i){
-        if(setTile(&rows[rowNum-1].at(i), &tile)){
-            i = MAX_NUM_OF_CHARS;
+    if(validRowNum(rowNum)) {
+        if(validTile(tile)){
+            for(int i = 0; i < MAX_NUM_OF_CHARS; ++i){
+                if(setTile(&rows[rowNum-1].at(i), &tile)){
+                    i = MAX_NUM_OF_CHARS;
+                }
+            }
         }
     }
 }
@@ -117,4 +121,20 @@ void Mosaic::removeWhiteSpaceFromRow(string string, char* newString){
             }
         }
     }
+}
+
+bool Mosaic::validTile(char tile) {
+    bool valid = false;
+    if(tile == BLUE || tile == YELLOW || tile == RED || tile == BLACK || tile == LIGHT_BLUE){
+        valid = true;
+    }
+    return valid;
+}
+
+bool Mosaic::validRowNum(int rowNum){
+    bool valid = false;
+    if(rowNum > 0 && rowNum <= DIM) {
+        valid = true;
+    }
+    return valid;
 }
