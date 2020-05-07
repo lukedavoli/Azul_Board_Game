@@ -15,7 +15,6 @@ int main(int argc, char const *argv[])
     // cout << newString << endl;
 
     m->updateMosaic();
-    
     m->printMosaic();
     return 0;
 }

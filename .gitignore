@@ -2,3 +2,5 @@
 CMakeLists.txt
 /.idea
 main
+.DS_Store
+.vscode/

@@ -36,14 +36,21 @@ class Mosaic {
         string getRow4();
         string getRow5();
 
-        char** getMosaic();
+        
 
         void insertRow(int row, char tile);
         void getTile(char* tile);
         void setTile(char* tileSpace, char* tile);
+
+        // Test
         void printMosaic();
+
+        // To get a 2D array without white spaces
         void removeWhiteSpaceFromRow(string string, char* newString);
         void updateMosaic();
+
+        // Get 2D array
+        char** getMosaic();
 
     private:
         string row1;
@@ -51,7 +58,6 @@ class Mosaic {
         string row3;
         string row4;
         string row5;
-        //shared_ptr<string> mosaic;
         char** mosaic;
 
 };

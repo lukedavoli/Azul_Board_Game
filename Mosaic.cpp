@@ -16,8 +16,6 @@ Mosaic::Mosaic() {
     for(int i = 0; i < DIM; ++i){
         mosaic[i] = new char[DIM];
     }
-
-    //mosaic  = make_shared<string>(row1 + '\n' + row2 + '\n' + row4 +  '\n' + row5+ '\n');
 }
 
 Mosaic::~Mosaic() {
@@ -42,6 +40,7 @@ string Mosaic::getRow4() {
 string Mosaic::getRow5() {
     return row5;
 }
+
 
 void Mosaic::insertRow(int row, char tile){
     
@@ -68,6 +67,7 @@ void Mosaic::insertRow(int row, char tile){
     }
 }
 
+// Set tile to lowercase
 void Mosaic::setTile(char* tileSpace, char* tile){
     if (tileSpace == tile) {
         getTile(tile);
