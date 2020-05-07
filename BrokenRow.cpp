@@ -33,7 +33,7 @@ bool BrokenRow::isFull()
 
 int BrokenRow::getLength()
 {
-    tiles->size();
+    return tiles->size();
 }
 
 char BrokenRow::getTileAt(int index)
