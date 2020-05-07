@@ -1,7 +1,10 @@
 #ifndef MENU_H
 #define MENU_H
+#ifndef GAMEENGINE_H
+#define GAMEENGINE_H
 
 #include <string>
+#include "GameEngine.h"
 
 #define SHORT_LB "----"
 #define MEDIUM_LB "-------------------"
@@ -37,9 +40,8 @@ private:
     std::string names[STUDENTS] = {S1_NAME, S2_NAME, S3_NAME};
     std::string ids[STUDENTS] = {S1_SID, S2_SID, S3_SID};
     std::string emails[STUDENTS] = {S1_EMAIL, S2_EMAIL, S3_EMAIL};
-
-    //Collects player names before starting a new game
-    void newGame();
+    
+    shared_ptr<GameEngine> gameEngine;
 
     //Takes a filename to load a saved game
     void loadGame();
@@ -47,3 +49,4 @@ private:
 
 
 #endif //APT_A2_MENU_H
+#endif
