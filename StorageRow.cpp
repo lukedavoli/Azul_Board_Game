@@ -34,7 +34,7 @@ bool StorageRow::isFull()
 
 char StorageRow::getFirstTile()
 {
-    tiles->get(0);
+   return tiles->get(0);
 }
 
 void StorageRow::clearCompleteRow()
@@ -44,7 +44,7 @@ void StorageRow::clearCompleteRow()
 
 int StorageRow::getLength()
 {
-    tiles->size();
+    return tiles->size();
 }
 
 int StorageRow::getMaxTiles()
