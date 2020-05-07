@@ -1,21 +1,16 @@
 #include "Mosaic.h"
 
-
-#include <iostream>
-using std::cout;
-using std::endl;
-
 Mosaic::Mosaic() {
-    row1 = "b y r u l";
-    row2 = "l b y r u";
-    row3 = "u l b y r";
-    row4 = "r u l b y";
-    row5 = "y r u l b";
-    
+   
+    resetMosaic();
+
+    /*  Creates the 2D array on the heap;
+        Then uses 'update2DMosaic()' to actually have tiles in the 2D array. */
     mosaic = new char*[DIM];
     for(int i = 0; i < DIM; ++i){
         mosaic[i] = new char[DIM];
     }
+    update2DMosaic();
 }
 
 Mosaic::~Mosaic() {
@@ -24,94 +19,87 @@ Mosaic::~Mosaic() {
     }
     delete mosaic;
 }
-
-string Mosaic::getRow1() {
-    return row1;
-}
-string Mosaic::getRow2() {
-    return row2;
-}
-string Mosaic::getRow3() {
-    return row3;
-}
-string Mosaic::getRow4() {
-    return row4;
-}
-string Mosaic::getRow5() {
-    return row5;
-}
-
-
-void Mosaic::insertRow(int row, char tile){
+void Mosaic::resetMosaic() {
+    string row1 = "b y r u l";
+    string row2 = "l b y r u";
+    string row3 = "u l b y r";
+    string row4 = "r u l b y";
+    string row5 = "y r u l b";
     
-    if(row == 1){
-        for(char tileSpace : row1){
-            setTile(&tileSpace, &tile);
-        }
-    } else if (row == 2){
-       for(char tileSpace : row2){
-            setTile(&tileSpace, &tile);
-        }
-    } else if (row == 3){
-        for(char tileSpace : row3){
-            setTile(&tileSpace, &tile);
-        }
-    } else if (row == 4){
-        for(char tileSpace : row4){
-            setTile(&tileSpace, &tile);
-        }
-    } else if (row == 5){
-        for(char tileSpace : row5){
-            setTile(&tileSpace, &tile);
+    string temp[DIM] = {row1, row2, row3, row4, row5};
+    for(int i = 0; i != DIM; ++i){
+        rows[i] = temp[i];
+    }
+}
+
+string Mosaic::getRow(int rowNum) {
+    if(rowNum > 0 && rowNum <= DIM) {
+         return rows[rowNum-1];
+    }
+    return "Error - invalid row number";
+}
+
+void Mosaic::loadRow(int rowNum, string row) {
+    if(rowNum > 0 && rowNum <= DIM) {
+        if(row.size() == MAX_NUM_OF_CHARS){
+            rows[rowNum-1] = row;
         }
     }
 }
 
-// Set tile to lowercase
-void Mosaic::setTile(char* tileSpace, char* tile){
-    if (tileSpace == tile) {
-        getTile(tile);
-        tileSpace = tile;
+void Mosaic::insertRow(int rowNum, char tile){
+    // This commented section doesn't work - not sure why.
+    // string* row = &rows[rowNum-1];
+
+    // for(int i = 0; i < MAX_NUM_OF_CHARS; ++i){
+    //     if(setTile(row.at(i), &tile)){
+    //         i = MAX_NUM_OF_CHARS;
+    //     }
+    // }
+    
+    for(int i = 0; i < MAX_NUM_OF_CHARS; ++i){
+        if(setTile(&rows[rowNum-1].at(i), &tile)){
+            i = MAX_NUM_OF_CHARS;
+        }
     }
 }
 
-void Mosaic::getTile(char* tile){
-    if(*tile == EMPTY_BLUE){
-        *tile = BLUE;
+bool Mosaic::setTile(char* tileSpace, char* tile){
+    bool success = false;
+    *tile = tolower(*tile);
+    if(*tileSpace == *tile) {
+        *tileSpace = toupper(*tile);
+        success = true;
+    }
+    return success;
+}
 
-    } else if(*tile == EMPTY_YELLOW){
-        *tile = YELLOW;
-    }
-    else if(*tile == RED){
-        *tile = RED;
-    }
-    else if(*tile == BLACK){
-        *tile = BLACK;
-    }
-    else if(*tile == LIGHTB){
-        *tile = LIGHTB;
+
+void Mosaic::printMosaic() {
+    for(int i = 0; i < DIM; ++i){
+        cout << rows[i] << endl;
     }
 }
 
-char** Mosaic::getMosaic() {
+char** Mosaic::get2DMosaic() {
     return mosaic;
 }
 
-void Mosaic::updateMosaic() {
-    string array[DIM] = {row1, row2, row3, row4, row5};
+// Inserts the data from 'rows' into the 2D mosaic.
+void Mosaic::update2DMosaic() {
     for(int i = 0; i < DIM; ++i){
-        removeWhiteSpaceFromRow(array[i],  mosaic[i]);
+        removeWhiteSpaceFromRow(rows[i],  mosaic[i]);
     }
 }
 
-void Mosaic::printMosaic() {
-    
+void Mosaic::print2DMosaic() {
     if(mosaic != nullptr){
+        update2DMosaic();
         for(int row = 0; row < DIM; ++row){
             for(int col = 0; col < DIM; ++col){
                 cout << mosaic[row][col];
             }
-             cout << endl;
+            cout << endl;
         }
     } else {
         cout << "Mosaic is null." << endl;
@@ -119,7 +107,6 @@ void Mosaic::printMosaic() {
 }
 
 void Mosaic::removeWhiteSpaceFromRow(string string, char* newString){
-
     if(string.length() == MAX_NUM_OF_CHARS && newString != nullptr){
         int counter = 0;
         for(int i = 0; i < string.length(); ++i)
