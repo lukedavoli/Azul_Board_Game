@@ -4,8 +4,8 @@ Mosaic::Mosaic() {
    
     resetMosaic();
 
-    /*  Creates the 2D array on the heap;
-        Then uses 'update2DMosaic()' to actually have tiles in the 2D array. */
+    // Creates the 2D array on the heap.
+    // Then uses 'update2DMosaic()' to actually have tiles in the 2D array.
     mosaic = new char*[DIM];
     for(int i = 0; i < DIM; ++i){
         mosaic[i] = new char[DIM];
@@ -86,6 +86,7 @@ void Mosaic::printMosaic() {
 }
 
 char** Mosaic::get2DMosaic() {
+    update2DMosaic();
     return mosaic;
 }
 
@@ -96,6 +97,7 @@ void Mosaic::update2DMosaic() {
     }
 }
 
+// For Testing
 void Mosaic::print2DMosaic() {
     if(mosaic != nullptr){
         update2DMosaic();
