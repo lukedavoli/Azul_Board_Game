@@ -35,9 +35,6 @@ class Mosaic {
         void removeWhiteSpaceFromRow(string string, char* newString);
         char** get2DMosaic();
 
-        // For Testing
-        void print2DMosaic();
-
         bool validRowNum(int rowNum);
         bool validTile(char tile);
 

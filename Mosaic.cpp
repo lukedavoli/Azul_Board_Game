@@ -49,14 +49,6 @@ void Mosaic::loadRow(int rowNum, string row) {
 }
 
 void Mosaic::insertRow(int rowNum, char tile){
-    // This commented section doesn't work - not sure why.
-    // string* row = &rows[rowNum-1];
-
-    // for(int i = 0; i < MAX_NUM_OF_CHARS; ++i){
-    //     if(setTile(row.at(i), &tile)){
-    //         i = MAX_NUM_OF_CHARS;
-    //     }
-    // }
     if(validRowNum(rowNum)) {
         if(validTile(tile)){
             for(int i = 0; i < MAX_NUM_OF_CHARS; ++i){
@@ -78,7 +70,6 @@ bool Mosaic::setTile(char* tileSpace, char* tile){
     return success;
 }
 
-
 void Mosaic::printMosaic() {
     for(int i = 0; i < DIM; ++i){
         cout << rows[i] << endl;
@@ -94,21 +85,6 @@ char** Mosaic::get2DMosaic() {
 void Mosaic::update2DMosaic() {
     for(int i = 0; i < DIM; ++i){
         removeWhiteSpaceFromRow(rows[i],  mosaic[i]);
-    }
-}
-
-// For Testing
-void Mosaic::print2DMosaic() {
-    if(mosaic != nullptr){
-        update2DMosaic();
-        for(int row = 0; row < DIM; ++row){
-            for(int col = 0; col < DIM; ++col){
-                cout << mosaic[row][col];
-            }
-            cout << endl;
-        }
-    } else {
-        cout << "Mosaic is null." << endl;
     }
 }
 
