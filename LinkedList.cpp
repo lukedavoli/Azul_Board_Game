@@ -1,7 +1,7 @@
 #include "LinkedList.h"
 #include <iostream>
 
-Node::Node(int value, Node *next) :
+Node::Node(char value, Node *next) :
  value(value),
  next(next)
 {
@@ -33,11 +33,11 @@ int LinkedList::size()
     return length;
 }
 
-int LinkedList::get(int index)
+char LinkedList::get(int index)
 {
     int count = 0;
     Node *current = head;
-    int returnValue = 10;
+    char returnValue = 10;
     if (index == 0)
     {
         returnValue = head->value;
@@ -55,7 +55,7 @@ int LinkedList::get(int index)
     return returnValue;
 }
 
-void LinkedList::addFront(int value)
+void LinkedList::addFront(char&& value)
 {
     Node *toAdd = new Node(value, nullptr);
 
@@ -72,7 +72,7 @@ void LinkedList::addFront(int value)
     this->length++;
 }
 
-void LinkedList::addBack(int value)
+void LinkedList::addBack(char&& value)
 {
     Node *toAdd = new Node(value, nullptr);
 
@@ -145,6 +145,6 @@ void LinkedList::print()
 
     for (int i = 0; i < size(); i++)
     {
-        std::cout << get(i) << std::endl;
+        std::cout << get(i) << " ";
     }
 }

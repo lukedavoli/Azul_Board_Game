@@ -27,8 +27,10 @@ void removeTile(char&& colour);
 
 void print();
 
+void clear();
+
 private:
-    // V: startingPlayerMarker
+    // startingPlayerMarker
     char startingPlayer;
     std::vector<char> tiles;
 };

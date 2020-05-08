@@ -13,7 +13,7 @@ StorageRow::~StorageRow()
 
 void StorageRow::addTile(char&& tile)
 {
-    tiles->addFront(tile);
+    tiles->addBack(move(tile));
 }
 
 char StorageRow::getOccupyingColour()
@@ -55,5 +55,16 @@ int StorageRow::getMaxTiles()
 char StorageRow::getTileAt(int index)
 {
     return tiles->get(index);
+}
+
+void StorageRow::resetRow() {
+    tiles->clear();
+    for(int i = 0; i < maxTiles; ++i){
+        tiles->addFront(move('.'));
+    }
+}
+
+void StorageRow::print() {
+    tiles->print();
 }
 

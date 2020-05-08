@@ -30,13 +30,19 @@ void removeTile(char&& colour, FactoryZero* factory);
 //  Move excess tiles to Factory Zero
 void moveToFactoryZ(FactoryZero* factory);
 
+// Resets all chars in factory to '.'
+void clear();
+
 // This method is only for testing 
 // We can remove it later 
 void print();
+
+
 private:
 
 char tiles[NUM_OF_TILES];
 int factoryNumber;
+
 };
 
 #endif // FACTORY_H

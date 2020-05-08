@@ -35,7 +35,7 @@ class Mosaic {
         void insertRow(int rowNum, char tile);
 
         void printMosaic();
-        void resetMosaic();
+        void clear();
 
         // To get a 2D array without white spaces.
         void removeWhiteSpaceFromRow(string string, char* newString);

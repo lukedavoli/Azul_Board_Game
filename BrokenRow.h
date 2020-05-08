@@ -3,8 +3,10 @@
 
 #include <memory>
 #include "LinkedList.h"
+
 using std::make_shared;
 using std::shared_ptr;
+
 
 #define MAX_TILES 7
 
@@ -28,10 +30,13 @@ public:
 
     char getTileAt(int index);
 
+    void print();
+
+    int getMaxSize();
+
 private:
     shared_ptr<LinkedList> tiles;
-
-
+    int maxSize;
 };
 
 #endif //BROKENROW_H

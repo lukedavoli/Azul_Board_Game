@@ -43,7 +43,7 @@ void GameEngine::newGame(){
 
     factoryZero = make_shared<FactoryZero>();
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
-        factories[i] = make_shared<Factory>( i + 1 );
+        factories[i] = make_shared<Factory>(i + 1);
     }
 
     std::cout << "\nLet's Play!\n" <<player1->getName()<<","<<player2->getName()<< std::endl;
@@ -53,64 +53,65 @@ void GameEngine::loadGame(string filename){
     init();
     ifstream inStream(filename);
     string line = " ";
-    int points = 0;
+    string p1Name;
+    string p2Name;
+    int p1Points = 0;
+    int p2Points = 0;
 
-    while(!inStream.eof()){
+        inStream >> p1Name;
+        player1->setName(p1Name);
+        inStream >> p2Name;
+        player2->setName(p2Name);
+
+        inStream >> p1Points;
+        player1->setPoints(p1Points);
+        inStream >> p2Points;
+        player2->setPoints(p2Points);
+
+        inStream >> nextTurn;
+
+        // char c = ' ';
+        // while(inStream.get(c) && (c != ' ' || c != '\n')) {
+        //     factoryZero->clear(); 
+        //     factoryZero->addToFac(move(c));
+        // }
 
         getline(inStream, line);
-        player1->setName(line);
-
-        getline(inStream, line);
-        player2->setName(line);
-
-        getline(inStream, line);
-        points = std::stoi(line);
-        player1->setPoints(points);
-
-        getline(inStream, line);
-        points = std::stoi(line);
-        player2->setPoints(points);
-        
-        getline(inStream, line);
-        nextTurn = line;
 
         getline(inStream, line);
         loadFactoryZero(line);
 
-        getline(inStream, line);
-        loadFactory(1, line);
-        getline(inStream, line);
-        loadFactory(2, line);
-        getline(inStream, line);
-        loadFactory(3, line);
-        getline(inStream, line);
-        loadFactory(4, line);
-        getline(inStream, line);
-        loadFactory(5, line);
+        for(int i = 0; i < MAX_FACTORY_NUM; ++i){
+            getline(inStream, line);
+            loadFactory(i+1, line);
+        }
+        
+        for(int i = 0; i < MAX_MOSAIC_ROW_NUM; ++i){
+            getline(inStream, line);
+            player1->getMosaic()->loadRow(i+1, line);
+        }
+
+        for(int i = 0; i < MAX_MOSAIC_ROW_NUM; ++i){
+            getline(inStream, line);
+            player2->getMosaic()->loadRow(i+1, line);
+        }
+
+        for(int i = 0; i < MAX_STORAGE_NUM; ++i){
+            getline(inStream, line);
+            loadStorageRow(i+1, player1, line);
+        }
+
+        for(int i = 0; i < MAX_STORAGE_NUM; ++i){
+            getline(inStream, line);
+            loadStorageRow(i+1, player2, line);
+        }
 
         getline(inStream, line);
-        player1->getMosaic()->loadRow(1, line);
-        getline(inStream, line);
-        player1->getMosaic()->loadRow(2, line);
-        getline(inStream, line);
-        player1->getMosaic()->loadRow(3, line);
-        getline(inStream, line);
-        player1->getMosaic()->loadRow(4, line);
-        getline(inStream, line);
-        player1->getMosaic()->loadRow(5, line);
+        loadBrokenStorage(player1, line);
 
         getline(inStream, line);
-        player2->getMosaic()->loadRow(1, line);
-        getline(inStream, line);
-        player2->getMosaic()->loadRow(2, line);
-        getline(inStream, line);
-        player2->getMosaic()->loadRow(3, line);
-        getline(inStream, line);
-        player2->getMosaic()->loadRow(4, line);
-        getline(inStream, line);
-        player2->getMosaic()->loadRow(5, line);
-
-    }
+        loadBrokenStorage(player2, line);
+    
     inStream.close();
 
     cout << "Player 1 Name: " << player1->getName() << endl;
@@ -123,56 +124,105 @@ void GameEngine::loadGame(string filename){
     factoryZero->print();
     cout << endl;
 
-    cout << "Factory 1: ";
-    factories[0]->print();
+    int maxRowNum = 5;
+    for(int i = 0; i < maxRowNum; ++i){
+        cout << "Factory "<< i+1 << ": ";
+        factories[i]->print();
+        cout << endl;
+    }
+
+ 
+    for(int i = 0; i < maxRowNum; ++i){
+        cout << "Player 1 Mosaic Row "<< i+1 << ": " << player1->getMosaic()->getRow(i+1) << endl;
+    }
+
+    for(int i = 0; i < maxRowNum; ++i){
+        cout << "Player 2 Mosaic Row "<< i+1 << ": " << player2->getMosaic()->getRow(i+1) << endl;
+    }
+
+    
+    for(int i = 0; i < maxRowNum; ++i) {
+        cout << "Player 1 Storage Row "  << i+1 << ": ";
+        player1->getStorageRow(i+1)->print();
+        cout << endl;
+    }
+
+    for(int i = 0; i < maxRowNum; ++i) {
+        cout << "Player 2 Storage Row " << i+1 << ": ";
+        player2->getStorageRow(i+1)->print();
+        cout << endl;
+    }
+
+    cout << "Player 1 Broken Tiles: ";
+    player1->getBroken()->print();
     cout << endl;
 
-    cout << "Factory 2: ";
-    factories[1]->print();
+    cout << "Player 2 Broken Tiles: ";
+    player2->getBroken()->print();
     cout << endl;
 
-    cout << "Factory 3: ";
-    factories[2]->print();
-    cout << endl;
 
-    cout << "Factory 4: ";
-    factories[3]->print();
-    cout << endl;
-
-    cout << "Factory 5: ";
-    factories[4]->print();
-    cout << endl;
-
-    cout << "Player 1 Mosaic Row 1: " << player1->getMosaic()->getRow(1) << endl;
-    cout << "Player 1 Mosaic Row 2: " << player1->getMosaic()->getRow(2) << endl;
-    cout << "Player 1 Mosaic Row 3: " << player1->getMosaic()->getRow(3) << endl;
-    cout << "Player 1 Mosaic Row 4: " << player1->getMosaic()->getRow(4) << endl;
-    cout << "Player 1 Mosaic Row 5: " << player1->getMosaic()->getRow(5) << endl;
-    cout << "Player 2 Mosaic Row 1: " << player2->getMosaic()->getRow(1) << endl;
-    cout << "Player 2 Mosaic Row 2: " << player2->getMosaic()->getRow(2) << endl;
-    cout << "Player 2 Mosaic Row 3: " << player2->getMosaic()->getRow(3) << endl;
-    cout << "Player 2 Mosaic Row 4: " << player2->getMosaic()->getRow(4) << endl;
-    cout << "Player 2 Mosaic Row 5: " << player2->getMosaic()->getRow(5) << endl;
+   
 }
 
+
+/* 
+    Loads in Factory Zero
+    Clears factory
+    FOR each character within string
+        IF character is not white space
+            ADD to factory.
+*/
 void GameEngine::loadFactoryZero(string strFactory) {
-   for(int i = 0; i < strFactory.length(); ++i){
+    factoryZero->clear();
+    for(int i = 0; i < strFactory.length(); ++i){
         if(strFactory[i] !=  ' '){
             factoryZero->addToFac(move(strFactory[i]));
         }
     }
 }
 
+
+/*
+    Loads in a Standard Factory
+    Create a char array containing only tile chars (no white space)
+    FOR 0 to MAX_FACTORY_TILES
+        ADD tile to factory.
+*/
+
 void GameEngine::loadFactory(int fNum, string strFactory){
     char tempfactory[MAX_FACTORY_TILES] = {'\0'};
     getCharArray(strFactory, tempfactory);
    
     if(fNum > 0 && fNum < 6) {
+        factories[fNum-1]->clear();
         for(int i = 0; i != MAX_FACTORY_TILES; ++i){
             factories[fNum - 1]->addToFactory(move(tempfactory[i]));
         }
     }
 }
+
+void GameEngine::loadStorageRow(int rNum, shared_ptr<Player> player, string strStorage) {
+    if(rNum > 0  && rNum < 6) {
+        player->getStorageRow(rNum)->clearCompleteRow();
+        char tempStorage[rNum];
+        getCharArray(strStorage, tempStorage);
+        for(int i = 0; i < rNum; ++i){
+            player->getStorageRow(rNum)->addTile(move(tempStorage[i]));
+        }
+    }
+}
+
+void GameEngine::loadBrokenStorage(shared_ptr<Player> player, string strBroken){
+    player->getBroken()->clearRow();
+    //cout << strBroken << endl;
+    char tempStorage[player->getBroken()->getMaxSize()];
+    getCharArray(strBroken, tempStorage);
+    for(int i = 0; i < player->getBroken()->getMaxSize(); ++i){
+        player->getBroken()->addTile(move(tempStorage[i]));
+    }
+}
+
 
 void GameEngine::getCharArray(string string, char* charArray){
     int counter = 0;
@@ -184,6 +234,11 @@ void GameEngine::getCharArray(string string, char* charArray){
     }
 }
 
-
+void GameEngine::printStorageRowAsStr(int rNum, shared_ptr<Player> player){
+    for(int i = 0; i < rNum; ++i){
+        cout << player->getStorageRow(rNum)->getTileAt(i) << " ";
+    }
+   
+}
  
 

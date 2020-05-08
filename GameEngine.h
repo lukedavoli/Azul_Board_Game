@@ -20,6 +20,8 @@ using std::move;
 #define INIT_POINTS 0
 #define MAX_FACTORY_TILES 4
 #define MAX_FACTORY_NUM 5
+#define MAX_STORAGE_NUM 5
+#define MAX_MOSAIC_ROW_NUM 5
 class GameEngine
 {
 
@@ -33,7 +35,7 @@ public:
 private:
 
 // LinkedList* bag;
-// char boxlid[MAX_TILES];
+// LinkedList* box;
 string nextTurn;
 
 shared_ptr<Player> player1;
@@ -44,9 +46,14 @@ shared_ptr<Factory> factories[MAX_FACTORY_NUM];
 void init();
 void loadFactoryZero(string strFactory);
 void loadFactory(int fNum, string strFactory);
+void loadStorageRow(int rNum, shared_ptr<Player> player, string strStorage);
+void loadBrokenStorage(shared_ptr<Player> player, string strStorage);
 
-// A method that puts the chars from string into a char array.
+// Helper method to remove whitespece from string and places it in a char array.
 void getCharArray(string string, char* charArray);
+void getCharArrayNum(string string, char* charArray, int* numOfChars);
+
+void printStorageRowAsStr(int rNum, shared_ptr<Player> player);
 
 };
 #endif // GAMEENGINE_H

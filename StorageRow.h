@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "LinkedList.h"
+
 using std::make_shared;
 using std::shared_ptr;
 
@@ -33,6 +34,11 @@ public:
     int getMaxTiles();
 
     char getTileAt(int index);
+
+    // Sets all the tile spaces to '.';
+    void resetRow();
+
+    void print();
 
 private:
     shared_ptr<LinkedList> tiles;

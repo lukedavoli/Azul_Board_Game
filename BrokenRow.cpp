@@ -3,6 +3,7 @@
 
 BrokenRow::BrokenRow()
 {
+    maxSize = 7;
     tiles = make_shared<LinkedList>();
 }
 
@@ -11,9 +12,13 @@ BrokenRow::~BrokenRow()
 
 }
 
+int BrokenRow::getMaxSize() {
+    return maxSize;
+}
+
 void BrokenRow::addTile(char&& colour)
 {
-    tiles->addFront(colour);
+    tiles->addBack(move(colour));
 }
 
 void BrokenRow::clearRow()
@@ -39,4 +44,8 @@ int BrokenRow::getLength()
 char BrokenRow::getTileAt(int index)
 {
     return tiles->get(index);
+}
+
+void BrokenRow::print() {
+    tiles->print();
 }

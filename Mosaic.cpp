@@ -2,7 +2,7 @@
 
 Mosaic::Mosaic() {
 
-    resetMosaic();
+    clear();
     
     // Creates the 2D array on the heap.
     // Then uses 'update2DMosaic()' to actually have tiles in the 2D array.
@@ -20,7 +20,7 @@ Mosaic::~Mosaic() {
     delete mosaic;
 }
 
-void Mosaic::resetMosaic() {
+void Mosaic::clear() {
     string row1 = "b y r u l";
     string row2 = "l b y r u";
     string row3 = "u l b y r";

@@ -17,10 +17,10 @@ FactoryZero()
 FactoryZero::FactoryZero(FactoryZero&& other)
 {
     int size=other.tiles.size();
- for (int i = 0; i < size; ++i)
- {
-     tiles.push_back(std::move(other.tiles[i]));
- }
+    for (int i = 0; i < size; ++i)
+    {
+        tiles.push_back(std::move(other.tiles[i]));
+    }
  
    
 }
@@ -62,7 +62,7 @@ void FactoryZero::removeTile(char&& colour){
         {   
             tiles.erase(tiles.begin()+i);   
             
-         }
+        }
         
     }
 
@@ -73,4 +73,8 @@ void FactoryZero::print(){
     for( int i = 0 ; i < size ; i++){
         std::cout << tiles[i] << " ";
     }
+}
+
+void FactoryZero::clear() {
+    tiles.clear();
 }

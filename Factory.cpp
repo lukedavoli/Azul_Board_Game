@@ -5,10 +5,7 @@
 
 Factory::Factory(int factoryNumber){
     this->factoryNumber=factoryNumber;
-     for (int i = 0; i < NUM_OF_TILES; ++i)
-     {
-       tiles[i]='.';   
-     }
+    clear();
      
 }
 
@@ -92,4 +89,11 @@ void Factory::print(){
        std::cout << tiles[i] << " ";
     }
     
+}
+
+void Factory::clear() {
+    for (int i = 0; i < NUM_OF_TILES; ++i)
+    {
+       tiles[i] = '.';   
+    }
 }

@@ -1,11 +1,12 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H 
+#include <utility>
+using std::move;
 
 class Node {
 public:
-   Node(int value, Node* next);
-
-   int value;
+   Node(char value, Node* next);
+   char value;
    Node* next;
 };
 
@@ -25,17 +26,17 @@ public:
     * input: Index must be >=0 and < size()
     * 
     */
-   int get(  int index)  ;
+   char get( int index)  ;
 
    /**
     * Add the value to the back of the Linked List
     */
-   void addBack(int value);
+   void addBack(char&& value);
 
    /**
     * Add the value to the front of the Linked List
     */
-   void addFront(int value);
+   void addFront(char&& value);
 
    /**
     * Remove the value at the back of the Linked List
