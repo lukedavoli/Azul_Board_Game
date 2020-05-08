@@ -3,8 +3,15 @@
 #ifndef GAMEENGINE_H
 #define GAMEENGINE_H
 
+#include <iostream>
+#include <fstream>
 #include <string>
 #include "GameEngine.h"
+
+
+using std::ifstream;
+using std::cout;
+using std::cin;
 
 #define SHORT_LB "----"
 #define MEDIUM_LB "-------------------"
@@ -43,8 +50,11 @@ private:
     
     shared_ptr<GameEngine> gameEngine;
 
-    //Takes a filename to load a saved game
+    //Takes a filename to load a saved game.
     void loadGame();
+    // Booleans to check the file.
+    bool fileExists(string filename);
+    bool validFile(string filename);
 };
 
 

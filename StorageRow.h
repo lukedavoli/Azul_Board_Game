@@ -40,4 +40,4 @@ private:
 };
 
 
-#endif STORAGEROW_H
+#endif //STORAGEROW_H

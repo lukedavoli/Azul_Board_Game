@@ -3,22 +3,28 @@
 
 #include <string>
 #include <memory>
-using std::shared_ptr;
-using std::make_shared;
+
 #include "StorageRow.h"
 #include "BrokenRow.h"
 #include "Mosaic.h"
+
+using std::shared_ptr;
+using std::make_shared;
+using std::string;
+
+
 
 #define STORAGE_ROWS 5
 
 class Player
 {
 public:
-    Player(std::string name, int points);
+    Player(string name, int points);
     ~Player();
 
     //get player name
-    std::string getName();
+    string getName();
+    void setName(string name);
 
     //get player points
     int getPoints();
@@ -35,11 +41,11 @@ public:
     shared_ptr<Mosaic> getMosaic();
 
 private:
-    std::string name;
+    string name;
     int points;
     shared_ptr<Mosaic> mosaic;
     shared_ptr<StorageRow> storageRows[STORAGE_ROWS];
     shared_ptr<BrokenRow> brokenRow;
 };
 
-#endif PLAYER_H
+#endif //PLAYER_H

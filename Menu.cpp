@@ -1,4 +1,4 @@
-#include <iostream>
+
 #include "Menu.h"
 
 
@@ -13,7 +13,7 @@ void Menu::displayMenu()
 {
     gameEngine=  make_shared<GameEngine>();
     bool quit = false;
-    while(std::cin.eof() || !quit )
+    while(!quit)
     {
         std::cout << "Menu\n" <<
                   SHORT_LB << "\n" <<
@@ -42,7 +42,7 @@ void Menu::displayMenu()
             showCredits();
         }
          
-        else if(menuSelection == 4)
+        else if(menuSelection == 4 || !cin.good())
         {
             quit = true;
             std::cout << "Goodbye" << std::endl;
@@ -74,15 +74,51 @@ void Menu::showCredits()
 
 void Menu::loadGame()
 {
-    std::string filename;
+    string filename = "";
+    cout << "Enter the filename from which to load the game" << std::endl;
+    cout << PROMPT;
+    cin >> filename;
+         
+    if(fileExists(filename)){
+        if(validFile(filename)){
+            cout << "Loading game..." << endl;
+            gameEngine->loadGame(filename);
 
-    std::cout << "Enter the filename from which to load the game" << std::endl;
-    std::cout << PROMPT;
-    std::cin >> filename;
+        } else{
+            cout << MEDIUM_LB << endl;
+            cout << "Invalid file." << endl;
+            cout << MEDIUM_LB << endl;
+        }
+    } else {
+        cout << MEDIUM_LB << endl;
+        cout << "File doesn't exist." << endl;
+        cout << MEDIUM_LB << endl;
+    }
 
-    //TODO check that file exists
     //TODO check that file contains a valid game (format of valid game TBC)
     //TODO load game and continue
+}
+
+bool Menu::fileExists(string filename){
+    bool exists = false;
+    ifstream inStream(filename);
+    if(inStream.good()){
+        exists = true;
+    }
+    inStream.close();
+    return exists;
+}
+
+bool Menu::validFile(string filename){
+    bool valid = true;
+    ifstream inStream(filename);
+    string line = " ";
+    // while(!inStream.eof()){
+    //     // Check if each line is valid.
+    //     getline(inStream, line);
+    // }
+    inStream.close();
+    return valid;
 }
 
 

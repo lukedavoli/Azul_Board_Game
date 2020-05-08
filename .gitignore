@@ -4,3 +4,4 @@ CMakeLists.txt
 main
 .DS_Store
 .vscode/
+*.o

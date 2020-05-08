@@ -1,7 +1,7 @@
 
 #include "Player.h"
 
-Player::Player(std::string name, int points)
+Player::Player(string name, int points)
 {
     this->name = name;
     this->points = points;
@@ -20,9 +20,13 @@ Player::~Player()
 
 }
 
-std::string Player::getName()
+string Player::getName()
 {
     return name;
+}
+
+void Player::setName(string name) {
+    this->name = name;
 }
 
 int Player::getPoints()
@@ -35,7 +39,7 @@ void Player::setPoints(int points)
     this->points = points;
 }
 
-Mosaic Player::getMosaic()
+shared_ptr<Mosaic> Player::getMosaic()
 {
     return mosaic;
 }
