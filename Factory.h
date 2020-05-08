@@ -1,4 +1,7 @@
 
+#ifndef FACTORY_ZERO
+#define FACTORY_ZERO
+
 #define NUM_OF_TILES 4
 #include "FactoryZero.h"
 class Factory
@@ -35,6 +38,8 @@ private:
 char tiles[NUM_OF_TILES];
 int factoryNumber;
 };
+
+#endif // FACTORY_H
 
  
 

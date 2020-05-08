@@ -1,7 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
-#ifndef GAMEENGINE_H
-#define GAMEENGINE_H
+
 
 #include <iostream>
 #include <fstream>
@@ -55,8 +54,8 @@ private:
     // Booleans to check the file.
     bool fileExists(string filename);
     bool validFile(string filename);
+    bool validStrFactory(const string* strFactory);
 };
 
 
-#endif //APT_A2_MENU_H
-#endif
+#endif // MENU_H

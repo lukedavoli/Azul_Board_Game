@@ -1,6 +1,12 @@
 #ifndef MOSAIC
 #define MOSAIC
 
+// #include <memory>
+// #include <array>
+// using std::shared_ptr;
+// using std::make_shared;
+// using std::array;
+
 #include <string>
 #include <iostream>
 

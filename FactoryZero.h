@@ -1,3 +1,6 @@
+#ifndef FACTORYZERO_H
+#define FACTORYZERO_H
+
 #include<vector>
 #define FACTORY_NUM 0
 class FactoryZero
@@ -26,10 +29,10 @@ void print();
 
 private:
     // V: startingPlayerMarker
-    char srartingPlayer;
+    char startingPlayer;
     std::vector<char> tiles;
 };
-
+#endif // FACTORYZERO_H
  
 
  

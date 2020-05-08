@@ -1,9 +1,9 @@
 #include "Mosaic.h"
 
 Mosaic::Mosaic() {
-   
-    resetMosaic();
 
+    resetMosaic();
+    
     // Creates the 2D array on the heap.
     // Then uses 'update2DMosaic()' to actually have tiles in the 2D array.
     mosaic = new char*[DIM];

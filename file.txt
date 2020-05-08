@@ -3,6 +3,12 @@ P-Body
 25
 39
 P-Body
+R B B B L
+R R Y L
+R R R L
+R B B B
+Y Y Y L
+L L U L
 b y l u r
 l b y r u
 u l b y r

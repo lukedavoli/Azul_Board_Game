@@ -17,7 +17,7 @@ Factory::Factory(Factory& other):
     {
          for (int i = 0; i < NUM_OF_TILES; i++) {
             tiles[i] = other.tiles[i];
-    }
+        }
     }
 Factory::Factory(Factory&& other):
     factoryNumber(other.factoryNumber)
@@ -89,7 +89,7 @@ void Factory::moveToFactoryZ(FactoryZero* factory){
 void Factory::print(){
     for (int i = 0; i < NUM_OF_TILES; ++i)
     {
-       std::cout<< tiles[i];
+       std::cout << tiles[i] << " ";
     }
     
 }

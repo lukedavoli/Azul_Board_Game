@@ -4,8 +4,8 @@
 #include<utility>
 
 FactoryZero::FactoryZero(){
-    this->srartingPlayer='F';
-    tiles.push_back(srartingPlayer);
+    this->startingPlayer = 'F';
+    tiles.push_back(startingPlayer);
 }
 
 FactoryZero::FactoryZero(FactoryZero& other):
@@ -69,8 +69,8 @@ void FactoryZero::removeTile(char&& colour){
 }
 
 void FactoryZero::print(){
-        int size=tiles.size();
-        for(int i=0;i<size;i++){
+    int size=tiles.size();
+    for( int i = 0 ; i < size ; i++){
         std::cout << tiles[i] << " ";
     }
 }
