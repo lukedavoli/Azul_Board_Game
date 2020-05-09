@@ -52,7 +52,9 @@ void loadBrokenStorage(shared_ptr<Player> player, string strStorage);
 
 // Helper method to remove whitespece from string and places it in a char array.
 void getCharArray(string string, char* charArray);
-void getCharArrayNum(string string, char* charArray, int* numOfChars);
+
+
+void printValues();
 
 bool validChar(char c);
 
