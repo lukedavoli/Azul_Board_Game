@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Factory.h"
 #include "FactoryZero.h"
+#include "Tiles.h"
 #include <iostream>
 #include <fstream>
 #include <utility>
@@ -53,7 +54,7 @@ void loadBrokenStorage(shared_ptr<Player> player, string strStorage);
 void getCharArray(string string, char* charArray);
 void getCharArrayNum(string string, char* charArray, int* numOfChars);
 
-void printStorageRowAsStr(int rNum, shared_ptr<Player> player);
+bool validChar(char c);
 
 };
 #endif // GAMEENGINE_H

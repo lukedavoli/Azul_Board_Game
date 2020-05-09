@@ -32,11 +32,9 @@ public:
 
     void print();
 
-    int getMaxSize();
 
 private:
     shared_ptr<LinkedList> tiles;
-    int maxSize;
 };
 
 #endif //BROKENROW_H

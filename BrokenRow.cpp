@@ -3,7 +3,6 @@
 
 BrokenRow::BrokenRow()
 {
-    maxSize = 7;
     tiles = make_shared<LinkedList>();
 }
 
@@ -12,9 +11,6 @@ BrokenRow::~BrokenRow()
 
 }
 
-int BrokenRow::getMaxSize() {
-    return maxSize;
-}
 
 void BrokenRow::addTile(char&& colour)
 {

@@ -1,4 +1,9 @@
 #include "GameEngine.h"
+#define MAX_STR_STORAGE_1 1
+#define MAX_STR_STORAGE_2 3
+#define MAX_STR_STORAGE_3 5
+#define MAX_STR_STORAGE_4 7
+#define MAX_STR_STORAGE_5 9
 
 GameEngine::GameEngine(){
 
@@ -52,6 +57,7 @@ void GameEngine::newGame(){
 void GameEngine::loadGame(string filename){
     init();
     ifstream inStream(filename);
+
     string line = " ";
     string p1Name;
     string p2Name;
@@ -75,8 +81,8 @@ void GameEngine::loadGame(string filename){
         //     factoryZero->clear(); 
         //     factoryZero->addToFac(move(c));
         // }
-
-        getline(inStream, line);
+        
+        inStream >> line;
 
         getline(inStream, line);
         loadFactoryZero(line);
@@ -175,10 +181,12 @@ void GameEngine::loadGame(string filename){
 */
 void GameEngine::loadFactoryZero(string strFactory) {
     factoryZero->clear();
-    for(int i = 0; i < strFactory.length(); ++i){
-        if(strFactory[i] !=  ' '){
-            factoryZero->addToFac(move(strFactory[i]));
+    int counter = 0;
+    while(strFactory[counter] != '\n'){
+        if(validChar(strFactory[counter])){
+            factoryZero->addToFac(move(strFactory[counter]));
         }
+        ++counter;
     }
 }
 
@@ -191,54 +199,50 @@ void GameEngine::loadFactoryZero(string strFactory) {
 */
 
 void GameEngine::loadFactory(int fNum, string strFactory){
-    char tempfactory[MAX_FACTORY_TILES] = {'\0'};
-    getCharArray(strFactory, tempfactory);
-   
+    int counter = 0;
     if(fNum > 0 && fNum < 6) {
         factories[fNum-1]->clear();
-        for(int i = 0; i != MAX_FACTORY_TILES; ++i){
-            factories[fNum - 1]->addToFactory(move(tempfactory[i]));
+        while(strFactory[counter] != '\n'){
+            if(validChar(strFactory[counter])){
+                factories[fNum-1]->addToFactory(move(strFactory[counter]));
+            }
+            ++counter;
         }
     }
 }
 
 void GameEngine::loadStorageRow(int rNum, shared_ptr<Player> player, string strStorage) {
+    int counter = 0;
     if(rNum > 0  && rNum < 6) {
         player->getStorageRow(rNum)->clearCompleteRow();
-        char tempStorage[rNum];
-        getCharArray(strStorage, tempStorage);
-        for(int i = 0; i < rNum; ++i){
-            player->getStorageRow(rNum)->addTile(move(tempStorage[i]));
+        while(strStorage[counter] != '\n'){
+            if(validChar(strStorage[counter])){
+                 player->getStorageRow(rNum)->addTile(move(strStorage[counter]));
+            }
+            ++counter;
         }
     }
 }
 
 void GameEngine::loadBrokenStorage(shared_ptr<Player> player, string strBroken){
     player->getBroken()->clearRow();
-    //cout << strBroken << endl;
-    char tempStorage[player->getBroken()->getMaxSize()];
-    getCharArray(strBroken, tempStorage);
-    for(int i = 0; i < player->getBroken()->getMaxSize(); ++i){
-        player->getBroken()->addTile(move(tempStorage[i]));
-    }
-}
-
-
-void GameEngine::getCharArray(string string, char* charArray){
     int counter = 0;
-    for(int i = 0; i < string.length(); ++i){
-        if(string[i] !=  ' '){
-            charArray[counter] = string[i];
-            ++counter;
+    while(strBroken[counter] != '\n'){
+        if(validChar(strBroken[counter])) {
+            player->getBroken()->addTile(move(strBroken[counter]));
         }
+        ++counter;
     }
 }
 
-void GameEngine::printStorageRowAsStr(int rNum, shared_ptr<Player> player){
-    for(int i = 0; i < rNum; ++i){
-        cout << player->getStorageRow(rNum)->getTileAt(i) << " ";
+bool GameEngine::validChar(char c) {
+    bool valid = false;
+    if(c == BLUE || c == YELLOW || c == RED || c == BLACK || c == LIGHT_BLUE || c == FIRST_PLAYER_MARKER || c == EMPTY){
+        valid = true;
     }
-   
+    return valid;
 }
+
+   
  
 

@@ -20,6 +20,15 @@ Mosaic::~Mosaic() {
     delete mosaic;
 }
 
+void Mosaic::print2DMosaic() {
+    for(int row = 0; row < DIM; ++row){
+        for(int col = 0; col < DIM; ++col){
+            cout << mosaic[row][col];
+        }
+        cout << endl;
+    }
+}
+
 void Mosaic::clear() {
     string row1 = "b y r u l";
     string row2 = "l b y r u";
@@ -91,7 +100,7 @@ void Mosaic::update2DMosaic() {
 void Mosaic::removeWhiteSpaceFromRow(string string, char* newString){
     if(string.length() == MAX_NUM_OF_CHARS && newString != nullptr){
         int counter = 0;
-        for(int i = 0; i < string.length(); ++i)
+        for(int i = 0; i < string.size(); ++i)
         {
             if(string[i] !=  ' '){
                 newString[counter] = string[i];

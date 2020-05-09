@@ -1,6 +1,8 @@
 #ifndef MOSAIC
 #define MOSAIC
 
+#include "Tiles.h"
+
 // #include <memory>
 // #include <array>
 // using std::shared_ptr;
@@ -16,12 +18,6 @@ using std::string;
 
 #define DIM 5
 #define MAX_NUM_OF_CHARS 9
-
-#define BLUE 'B'
-#define YELLOW 'Y'
-#define RED 'R'
-#define BLACK 'U'
-#define LIGHT_BLUE 'L'
 
 
 class Mosaic {
@@ -40,6 +36,7 @@ class Mosaic {
         // To get a 2D array without white spaces.
         void removeWhiteSpaceFromRow(string string, char* newString);
         char** get2DMosaic();
+        void print2DMosaic();
 
         bool validRowNum(int rowNum);
         bool validTile(char tile);
