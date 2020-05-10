@@ -12,8 +12,8 @@ using std::shared_ptr;
 using std::make_shared;
 using std::string;
 
-
-
+#define SPACES 10
+#define WHITESPACES 2
 #define STORAGE_ROWS 5
 
 class Player
@@ -39,6 +39,8 @@ public:
     shared_ptr<BrokenRow> getBroken();
 
     shared_ptr<Mosaic> getMosaic();
+
+    string boardToString();
 
 private:
     string name;

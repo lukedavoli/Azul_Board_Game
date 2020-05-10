@@ -52,8 +52,6 @@ int Factory::getNumberOfColour(char&& colour){
         
      }
      return inFactory;
-     
-
 }
 
 void Factory::removeTile(char&& colour, FactoryZero* factory){
@@ -78,9 +76,7 @@ void Factory::moveToFactoryZ(FactoryZero* factory){
             (*factory).addToFac(std::move(tiles[i]));
             tiles[i]='.';
         }
-        
     }
-    
 }
 
 void Factory::print(){
@@ -96,4 +92,15 @@ void Factory::clear() {
     {
        tiles[i] = '.';   
     }
+}
+
+string Factory::toString() {
+    string strTiles = "";
+    for(int i = 0; i < NUM_OF_TILES; i++){
+        strTiles += tiles[i];
+        if(i != NUM_OF_TILES - 1){
+            strTiles += " ";
+        }
+    }
+    return strTiles;
 }

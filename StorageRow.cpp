@@ -68,3 +68,24 @@ void StorageRow::print() {
     tiles->print();
 }
 
+string StorageRow::toString() {
+    string row = "";
+    int size = getLength();
+    for(int i = 0; i < maxTiles - size; i++){
+        row += ".";
+        if(i != maxTiles){
+            row += " ";
+        }
+    }
+
+    for(int i = 0; i < size; i++){
+        row += getTileAt(i);
+        if(i != size - 1){
+            row += " ";
+        }
+    }
+
+    return row;
+}
+
+

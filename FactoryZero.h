@@ -1,7 +1,10 @@
 #ifndef FACTORYZERO_H
 #define FACTORYZERO_H
 
-#include<vector>
+#include <vector>
+#include <string>
+using std::string;
+
 #define FACTORY_NUM 0
 class FactoryZero
 {
@@ -26,6 +29,8 @@ int getNumOfCoulour(char&& colour);
 void removeTile(char&& colour);
 
 void print();
+
+std::string toString();
 
 void clear();
 

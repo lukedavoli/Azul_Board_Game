@@ -78,3 +78,15 @@ void FactoryZero::print(){
 void FactoryZero::clear() {
     tiles.clear();
 }
+
+string FactoryZero::toString() {
+    string tiles = "";
+    int size=tiles.size();
+    for( int i = 0 ; i < size ; i++){
+        tiles += tiles[i];
+        if(i != size - 1){
+            tiles += " ";
+        }
+    }
+    return tiles;
+}

@@ -17,31 +17,34 @@ public:
     // move constructor
     Factory(Factory&& other);
 
-//  Get factory number
-int getNumber();
-// Add tiles to array
-void addToFactory(char&& colour);
-//  Get number of tiles with the same color as the color selected
-int getNumberOfColour(char&& colour);
+    //  Get factory number
+    int getNumber();
+    // Add tiles to array
+    void addToFactory(char&& colour);
+    //  Get number of tiles with the same color as the color selected
+    int getNumberOfColour(char&& colour);
 
-// Remove tiles given the color selected (set them to null)
-void removeTile(char&& colour, FactoryZero* factory);
+    // Remove tiles given the color selected (set them to null)
+    void removeTile(char&& colour, FactoryZero* factory);
 
-//  Move excess tiles to Factory Zero
-void moveToFactoryZ(FactoryZero* factory);
+    //  Move excess tiles to Factory Zero
+    void moveToFactoryZ(FactoryZero* factory);
 
-// Resets all chars in factory to '.'
-void clear();
+    // Resets all chars in factory to '.'
+    void clear();
 
-// This method is only for testing 
-// We can remove it later 
-void print();
+    // This method is only for testing
+    // We can remove it later
+    void print();
+
+    string toString();
 
 
 private:
 
-char tiles[NUM_OF_TILES];
-int factoryNumber;
+    char tiles[NUM_OF_TILES];
+    int factoryNumber;
+
 
 };
 

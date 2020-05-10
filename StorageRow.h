@@ -6,6 +6,7 @@
 
 using std::make_shared;
 using std::shared_ptr;
+using std::string;
 
 class StorageRow
 {
@@ -37,6 +38,8 @@ public:
 
     // Sets all the tile spaces to '.';
     void resetRow();
+
+    string toString();
 
     void print();
 
