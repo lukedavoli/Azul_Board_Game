@@ -100,11 +100,10 @@ void Mosaic::update2DMosaic() {
 void Mosaic::removeWhiteSpaceFromRow(string string, char* newString){
     if(string.length() == MAX_NUM_OF_CHARS && newString != nullptr){
         int counter = 0;
-        int size = string.size();
-        for(int i = 0; i < size; ++i)
+        for(string::iterator c = string.begin(); c != string.end(); ++c)
         {
-            if(string[i] !=  ' '){
-                newString[counter] = string[i];
+            if( *c !=  ' '){
+                newString[counter] = *c;
                 ++counter;
             }
         }
