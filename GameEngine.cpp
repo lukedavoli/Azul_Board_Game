@@ -196,30 +196,29 @@ void GameEngine::printValues() {
     factoryZero->print();
     cout << endl;
 
-    int maxRowNum = 5;
-    for(int i = 0; i < maxRowNum; ++i){
+    for(int i = 0; i < MAX_FACTORY_NUM; ++i){
         cout << "Factory "<< i+1 << ": ";
         factories[i]->print();
         cout << endl;
     }
 
  
-    for(int i = 0; i < maxRowNum; ++i){
+    for(int i = 0; i < MAX_MOSAIC_ROW_NUM; ++i){
         cout << "Player 1 Mosaic Row "<< i+1 << ": " << player1->getMosaic()->getRow(i+1) << endl;
     }
 
-    for(int i = 0; i < maxRowNum; ++i){
+    for(int i = 0; i < MAX_MOSAIC_ROW_NUM; ++i){
         cout << "Player 2 Mosaic Row "<< i+1 << ": " << player2->getMosaic()->getRow(i+1) << endl;
     }
 
     
-    for(int i = 0; i < maxRowNum; ++i) {
+    for(int i = 0; i < MAX_STORAGE_NUM; ++i) {
         cout << "Player 1 Storage Row "  << i+1 << ": ";
         player1->getStorageRow(i+1)->print();
         cout << endl;
     }
 
-    for(int i = 0; i < maxRowNum; ++i) {
+    for(int i = 0; i < MAX_STORAGE_NUM; ++i) {
         cout << "Player 2 Storage Row " << i+1 << ": ";
         player2->getStorageRow(i+1)->print();
         cout << endl;

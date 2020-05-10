@@ -29,6 +29,8 @@ using std::cin;
 #define S2_EMAIL "s3783287@student.rmit.edu.au"
 #define S3_EMAIL "s3782747@student.rmit.edu.au"
 
+#define NUM_OF_PLAYERS 2
+
 
 
 class Menu{

@@ -55,13 +55,6 @@ private:
 
     bool initialised;
     Factory* factories[MAX_FACTORY_NUM];
-    //shared_ptr<Factory> factories[MAX_FACTORY_NUM];
-
-    // shared_ptr<Factory> factory1;
-    // shared_ptr<Factory> factory2;
-    // shared_ptr<Factory> factory3;
-    // shared_ptr<Factory> factory4;
-    // shared_ptr<Factory> factory5;
 
     void init();
     void loadPlayerNames(istream& inStream, string line);
@@ -72,9 +65,6 @@ private:
     void loadStorageRows(istream& inStream, string line, shared_ptr<Player> player);
     void loadBrokenStorage(istream& inStream, string strStorage, shared_ptr<Player> player);
     void deleteFactories();
-
-    // Helper method to remove whitespece from string and places it in a char array.
-    void getCharArray(string string, char* charArray);
 
     void printValues();
     bool validChar(char c);
