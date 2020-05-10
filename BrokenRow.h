@@ -3,6 +3,7 @@
 
 #include <memory>
 #include "LinkedList.h"
+#include <string>
 
 using std::make_shared;
 using std::shared_ptr;

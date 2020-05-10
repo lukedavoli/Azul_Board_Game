@@ -1,9 +1,4 @@
 #include "GameEngine.h"
-#define MAX_STR_STORAGE_1 1
-#define MAX_STR_STORAGE_2 3
-#define MAX_STR_STORAGE_3 5
-#define MAX_STR_STORAGE_4 7
-#define MAX_STR_STORAGE_5 9
 
 GameEngine::GameEngine(){
 
@@ -98,22 +93,6 @@ void GameEngine::loadGame(string filename){
         getline(inStream, line);
         loadFactoryZero(line);
 
-        inStream >> p1Name;
-        player1->setName(p1Name);
-        inStream >> p2Name;
-        player2->setName(p2Name);
-
-        inStream >> p1Points;
-        player1->setPoints(p1Points);
-        inStream >> p2Points;
-        player2->setPoints(p2Points);
-
-        inStream >> nextTurn;
-        
-        inStream >> line;
-
-        getline(inStream, line);
-        loadFactoryZero(line);
 
         for(int i = 0; i < MAX_FACTORY_NUM; ++i){
             getline(inStream, line);
@@ -158,18 +137,13 @@ void GameEngine::loadGame(string filename){
 }
 
 
-/* 
-    Loads in Factory Zero
-    Clears factory
-    While character != '\n';
-        IF character is valid.
-            ADD to factory.
-*/
 void GameEngine::loadFactoryZero(string strFactory) {
     factoryZero->clear();
+    cout << strFactory << endl;
     for(string::iterator c = strFactory.begin(); c != strFactory.end(); ++c){
         if(validChar(*c)){
-            factoryZero->addToFac(move(*c));
+            char tile = *c;
+            factoryZero->addToFac(move(tile));
         }
     }
 }
@@ -177,10 +151,12 @@ void GameEngine::loadFactoryZero(string strFactory) {
 
 void GameEngine::loadFactory(int fNum, string strFactory){
     if(fNum > 0 && fNum < 6) {
+        cout << strFactory << endl;
         factories[fNum-1]->clear();
         for(string::iterator c = strFactory.begin(); c != strFactory.end(); ++c){
             if(validChar(*c)){
-                factories[fNum-1]->addToFactory(move(*c));
+                char tile = *c;
+                factories[fNum-1]->addToFactory(move(tile));
             }
         }
     }
@@ -188,10 +164,12 @@ void GameEngine::loadFactory(int fNum, string strFactory){
 
 void GameEngine::loadStorageRow(int rNum, shared_ptr<Player> player, string strStorage) {
     if(rNum > 0  && rNum < 6) {
+        cout << strStorage << endl;
         player->getStorageRow(rNum)->clearCompleteRow();
          for(string::iterator c = strStorage.begin(); c != strStorage.end(); ++c){
             if(validChar(*c)){
-                 player->getStorageRow(rNum)->addTile(move(*c));
+                char tile = *c;
+                 player->getStorageRow(rNum)->addTile(move(tile));
             }
         }
     }
@@ -200,9 +178,11 @@ void GameEngine::loadStorageRow(int rNum, shared_ptr<Player> player, string strS
 
 void GameEngine::loadBrokenStorage(shared_ptr<Player> player, string strBroken){
     player->getBroken()->clearRow();
+    cout << strBroken << endl;
     for(string::iterator c = strBroken.begin(); c != strBroken.end(); ++c){
         if(validChar(*c)) {
-            player->getBroken()->addTile(move(*c));
+            char tile = *c;
+            player->getBroken()->addTile(move(tile));
         }
     }
 }
