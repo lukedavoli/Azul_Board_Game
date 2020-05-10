@@ -51,13 +51,23 @@ private:
     shared_ptr<Player> player2;
     shared_ptr<Player> activePlayer;
     shared_ptr<FactoryZero> factoryZero;
-    shared_ptr<Factory> factories[MAX_FACTORY_NUM];
+
+    bool initialised;
+    Factory* factories[MAX_FACTORY_NUM];
+    //shared_ptr<Factory> factories[MAX_FACTORY_NUM];
+
+    // shared_ptr<Factory> factory1;
+    // shared_ptr<Factory> factory2;
+    // shared_ptr<Factory> factory3;
+    // shared_ptr<Factory> factory4;
+    // shared_ptr<Factory> factory5;
 
     void init();
     void loadFactoryZero(string strFactory);
     void loadFactory(int fNum, string strFactory);
     void loadStorageRow(int rNum, shared_ptr<Player> player, string strStorage);
     void loadBrokenStorage(shared_ptr<Player> player, string strStorage);
+    void deleteFactories();
 
     // Helper method to remove whitespece from string and places it in a char array.
     void getCharArray(string string, char* charArray);

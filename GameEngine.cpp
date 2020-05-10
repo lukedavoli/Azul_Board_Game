@@ -1,26 +1,59 @@
 #include "GameEngine.h"
 
 GameEngine::GameEngine(){
+    initialised = false;
 
 }
 GameEngine::~GameEngine(){
+    deleteFactories();
+}
 
+void GameEngine::deleteFactories() {
+    for(int i = 0; i < MAX_FACTORY_NUM; ++i){
+        delete factories[i];
+        cout << "Deleted Factory " << i+1;
+    }
 }
 
 void GameEngine::init() {
+    // Delete variables on the heap if they have already been created.
+    if(initialised == true){
+        deleteFactories();
+    }
+    // Set initialised to true, because factories will be created on the heap here.
+    initialised = true;
+    
+    cout << "In init()" << endl;
     string p1Name = " ";
     string p2Name = " ";
 
     player1 = make_shared<Player>(p1Name, INIT_POINTS);
     player2 = make_shared<Player>(p2Name, INIT_POINTS);
+    cout << "Created players" << endl;
 
     nextTurn = player1->getName();
+    cout << "Set next player" << endl;
 
     factoryZero = make_shared<FactoryZero>();
+    cout << "Created factory Zero" << endl;
+
+
+    // factory1 = make_shared<Factory>(1);
+    // factory2 = make_shared<Factory>(2);
+    // factory3 = make_shared<Factory>(3);
+    // factory4 = make_shared<Factory>(4);
+    // factory5 = make_shared<Factory>(5);
+    
+
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
-        factories[i] = make_shared<Factory>( i + 1 );
+        factories[i] = new Factory(i+1);
+        cout << "Created factory: " << i+1;
     }
 
+    // for(int i = 0; i < MAX_FACTORY_NUM; ++i){
+    //     factories[i] = make_shared<Factory>(i+1);
+    //     cout << "Created factory: " << i+1;
+    // }
 }
 
 void GameEngine::newGame(){
@@ -58,7 +91,8 @@ void GameEngine::newGame(){
 
     factoryZero = make_shared<FactoryZero>();
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
-        factories[i] = make_shared<Factory>(i + 1);
+        factories[i] = new Factory(i+1);
+        cout << "Created factory: " << i+1;
     }
 
     std::cout << "\n" << player1->getName() << " and " << player2->getName() << ", Let's Play!\n" << std::endl;
@@ -67,6 +101,7 @@ void GameEngine::newGame(){
 }
 
 void GameEngine::loadGame(string filename){
+    //deleteFactories();
     init();
     ifstream inStream(filename);
 
@@ -76,19 +111,19 @@ void GameEngine::loadGame(string filename){
     int p1Points = 0;
     int p2Points = 0;
 
-        inStream >> p1Name;
-        player1->setName(p1Name);
-        inStream >> p2Name;
-        player2->setName(p2Name);
+    inStream >> p1Name;
+    player1->setName(p1Name);
+    inStream >> p2Name;
+    player2->setName(p2Name);
 
-        inStream >> p1Points;
-        player1->setPoints(p1Points);
-        inStream >> p2Points;
-        player2->setPoints(p2Points);
+    inStream >> p1Points;
+    player1->setPoints(p1Points);
+    inStream >> p2Points;
+    player2->setPoints(p2Points);
 
-        inStream >> nextTurn;
-        
-        inStream >> line;
+    inStream >> nextTurn;
+    
+    inStream >> line;
 
         getline(inStream, line);
         loadFactoryZero(line);
@@ -247,91 +282,91 @@ void GameEngine::printValues() {
 }
 
 void GameEngine::enterGame(){
-    bool completeRow = false;
-    bool userExit = false;
-    string turn = "";
+    // bool completeRow = false;
+    // bool userExit = false;
+    // string turn = "";
 
-    while(!userExit && !completeRow){
+    // while(!userExit && !completeRow){
 
-        // Set pointer to player whose turn it is
-        if(nextTurn == player1->getName()){
-            activePlayer = player1;
-        }else{
-            activePlayer = player2;
-        }
+    //     // Set pointer to player whose turn it is
+    //     if(nextTurn == player1->getName()){
+    //         activePlayer = player1;
+    //     }else{
+    //         activePlayer = player2;
+    //     }
 
-        // Display the current status of the game
-        cout << "TURN FOR PLAYER: " << activePlayer->getName() << endl;
-        cout << "Factories: \n" << factoriesToString() << "\n" << endl;
-        cout << activePlayer->getName() << "'s board:\n" <<
-            activePlayer->boardToString() << endl;
+    //     // Display the current status of the game
+    //     cout << "TURN FOR PLAYER: " << activePlayer->getName() << endl;
+    //     cout << "Factories: \n" << factoriesToString() << "\n" << endl;
+    //     cout << activePlayer->getName() << "'s board:\n" <<
+    //         activePlayer->boardToString() << endl;
 
-        // Get a command from the player whose turn it is
-        bool validCommand = false;
-        while(!validCommand){
-            turn = "";
-            bool cmdShort = true;
-            // Do not proceed until command is long enough
-            while(cmdShort){
-                cout << PROMPT;
-                cin.ignore();
-                getline(cin, turn);
-                cmdShort = turn.length() < COMMAND_LENGTH;
-                if(cmdShort){
-                    cout << "Invalid action, please try again with one of the"
-                            " following: \n" <<
-                         "turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
-                         "[Row: 1-5, B]\n"
-                         "save [filename] (ensure file exists)\n" <<
-                         "exit" << endl;
-                }
-            }
+    //     // Get a command from the player whose turn it is
+    //     bool validCommand = false;
+    //     while(!validCommand){
+    //         turn = "";
+    //         bool cmdShort = true;
+    //         // Do not proceed until command is long enough
+    //         while(cmdShort){
+    //             cout << PROMPT;
+    //             cin.ignore();
+    //             getline(cin, turn);
+    //             cmdShort = turn.length() < COMMAND_LENGTH;
+    //             if(cmdShort){
+    //                 cout << "Invalid action, please try again with one of the"
+    //                         " following: \n" <<
+    //                      "turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
+    //                      "[Row: 1-5, B]\n"
+    //                      "save [filename] (ensure file exists)\n" <<
+    //                      "exit" << endl;
+    //             }
+    //         }
 
-            // Seperate input into command and argument
-            string command = turn.substr(0, COMMAND_LENGTH);
+    //         // Seperate input into command and argument
+    //         string command = turn.substr(0, COMMAND_LENGTH);
 
-            // Take action based on command and argument
-            if(command == "turn")
-            {
-                validCommand = true;
-                //seperate arguments into factory, tile and row
-                int factory = command[COMIN_START_INDEX] - '0'; // Subtract '0' for ASCII conversion
-                char tile = command[TILE_INDEX];
-                char row = command[ROW_INDEX];
-                if(validateTurn(factory, tile, row)){
-                    performTurn(factory, tile, row);
-                }
-            }
-            else if(command == "save")
-            {
-                validCommand = true;
-                int inputLength = turn.length();
-                string filename = turn.substr(COMMAND_LENGTH + 1,
-                    inputLength - 1 - COMMAND_LENGTH);
-                saveGame(filename);
-            }
-            else if(command == "exit")
-            {
-                validCommand = true;
-                userExit = true;
-            }
-            else
-            {
-                cout << "Invalid action, please try again with one of the"
-                        " following: \n" <<
-                        "turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
-                        "[Row: 1-5, B]\n"
-                        "save [filename] (ensure file exists)\n" <<
-                        "exit" << endl;
-            }
-        }
+    //         // Take action based on command and argument
+    //         if(command == "turn")
+    //         {
+    //             validCommand = true;
+    //             //seperate arguments into factory, tile and row
+    //             int factory = command[COMIN_START_INDEX] - '0'; // Subtract '0' for ASCII conversion
+    //             char tile = command[TILE_INDEX];
+    //             char row = command[ROW_INDEX];
+    //             if(validateTurn(factory, tile, row)){
+    //                 performTurn(factory, tile, row);
+    //             }
+    //         }
+    //         else if(command == "save")
+    //         {
+    //             validCommand = true;
+    //             int inputLength = turn.length();
+    //             string filename = turn.substr(COMMAND_LENGTH + 1,
+    //                 inputLength - 1 - COMMAND_LENGTH);
+    //             saveGame(filename);
+    //         }
+    //         else if(command == "exit")
+    //         {
+    //             validCommand = true;
+    //             userExit = true;
+    //         }
+    //         else
+    //         {
+    //             cout << "Invalid action, please try again with one of the"
+    //                     " following: \n" <<
+    //                     "turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
+    //                     "[Row: 1-5, B]\n"
+    //                     "save [filename] (ensure file exists)\n" <<
+    //                     "exit" << endl;
+    //         }
+    //     }
 
 
-    }
+    // }
 
 }
 
-void GameEngine::saveGame(string filename) {
+ void GameEngine::saveGame(string filename) {
     std::ofstream fileStream(filename);
     fileStream << player1->getName() << "\n"
                << player2->getName() << "\n"
@@ -356,17 +391,17 @@ void GameEngine::saveGame(string filename) {
     fileStream.close();
 }
 
-string GameEngine::factoriesToString(){
-    string strFactories = "";
-    strFactories += "0: " + factoryZero->toString() + "\n";
-    for(int i = 0; i < MAX_FACTORY_NUM; i++){
-        strFactories += std::to_string(i + 1) + ": " + factories[i]->toString();
-        if(i != MAX_FACTORY_NUM - 1){
-            strFactories += "\n";
-        }
-    }
-    return strFactories;
-}
+// string GameEngine::factoriesToString(){
+//     string strFactories = "";
+//     strFactories += "0: " + factoryZero->toString() + "\n";
+//     for(int i = 0; i < MAX_FACTORY_NUM; i++){
+//         strFactories += std::to_string(i + 1) + ": " + factories[i]->toString();
+//         if(i != MAX_FACTORY_NUM - 1){
+//             strFactories += "\n";
+//         }
+//     }
+//     return strFactories;
+// }
 
 bool GameEngine::validateTurn(int factory, char tile, char row) {
     // TODO implement
