@@ -294,7 +294,8 @@ void GameEngine::enterGame(){
             // Do not proceed until command is long enough
             while(cmdShort){
                 cout << PROMPT;
-                cin >> turn;
+                cin.ignore();
+                getline(cin, turn);
                 cmdShort = turn.length() < COMMAND_LENGTH;
                 if(cmdShort){
                     cout << "Invalid action, please try again with one of the"
@@ -324,9 +325,10 @@ void GameEngine::enterGame(){
             else if(command == "save")
             {
                 validCommand = true;
-                //if(checkFileExists()){
-                //    saveGame(filename);
-                //}
+                int inputLength = turn.length();
+                string filename = turn.substr(COMMAND_LENGTH + 1,
+                    inputLength - 1 - COMMAND_LENGTH);
+                saveGame(filename);
             }
             else if(command == "exit")
             {
@@ -350,9 +352,28 @@ void GameEngine::enterGame(){
 }
 
 void GameEngine::saveGame(string filename) {
-    // Assumes the file exists
-
-    // TODO(3) implement
+    std::ofstream fileStream(filename);
+    fileStream << player1->getName() << "\n"
+               << player2->getName() << "\n"
+               << player1->getPoints() << "\n"
+               << player2->getPoints() << "\n"
+               << nextTurn << "\n"
+               << factoryZero->toString() << "\n";
+    for(int i = 0; i < MAX_FACTORY_NUM; i++){
+        fileStream << factories[i]->toString() << "\n";
+    }
+    fileStream << player1->getMosaic()->toString() << "\n"
+               << player2->getMosaic()->toString() << "\n";
+    for(int i = 0; i < MAX_STORAGE_NUM; i++){
+        fileStream << player1->getStorageRow(i+1)->toString() << "\n";
+    }
+    for(int i = 0; i < MAX_STORAGE_NUM; i++){
+        fileStream << player2->getStorageRow(i+1)->toString() << "\n";
+    }
+    fileStream << player1->getBroken()->toString() << "\n"
+               << player2->getBroken()->toString();
+    //TODO write box lid, bag and seed to file
+    fileStream.close();
 }
 
 string GameEngine::factoriesToString(){
@@ -377,12 +398,6 @@ bool GameEngine::validateTurn(int factory, char tile, char row) {
      * factory has tile
      * row can accept tile (not occupied by diff colour, colour not already in mosaic for row
      */
-    return false;
-}
-
-bool GameEngine::fileExists(string filename) {
-    // TODO(2) implement
-
     return false;
 }
 

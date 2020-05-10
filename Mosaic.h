@@ -22,30 +22,32 @@ using std::string;
 
 class Mosaic {
 
-    public:
-        Mosaic();
-        ~Mosaic();
-        
-        string getRow(int rowNum);
-        void loadRow(int rowNum, string row);
-        void insertRow(int rowNum, char tile);
+public:
+    Mosaic();
+    ~Mosaic();
 
-        void printMosaic();
-        void clear();
+    string getRow(int rowNum);
+    void loadRow(int rowNum, string row);
+    void insertRow(int rowNum, char tile);
 
-        // To get a 2D array without white spaces.
-        void removeWhiteSpaceFromRow(string string, char* newString);
-        char** get2DMosaic();
-        void print2DMosaic();
+    void printMosaic();
+    void clear();
 
-        bool validRowNum(int rowNum);
-        bool validTile(char tile);
+    // To get a 2D array without white spaces.
+    void removeWhiteSpaceFromRow(string string, char* newString);
+    char** get2DMosaic();
+    void print2DMosaic();
 
-    private:
-        void update2DMosaic();
-        bool setTile(char* tileSpace, char* tile);
-        string rows[DIM];
-        char** mosaic;
+    bool validRowNum(int rowNum);
+    bool validTile(char tile);
+    string toString();
+
+private:
+    void update2DMosaic();
+    bool setTile(char* tileSpace, char* tile);
+    string rows[DIM];
+    char** mosaic;
+
 
 };
 #endif //  MOSAIC

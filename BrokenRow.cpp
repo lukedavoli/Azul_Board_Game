@@ -45,3 +45,15 @@ char BrokenRow::getTileAt(int index)
 void BrokenRow::print() {
     tiles->print();
 }
+
+string BrokenRow::toString(){
+    string strBroken = "";
+    int brokenTiles = getLength();
+    for(int t = 0; t < brokenTiles; t++){
+        strBroken += getTileAt(t);
+        if(t != brokenTiles - 1){
+            strBroken += " ";
+        }
+    }
+    return strBroken;
+}

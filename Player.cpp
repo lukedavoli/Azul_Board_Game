@@ -68,13 +68,7 @@ string Player::boardToString() {
         board += "\n";
     }
     board += "broken: ";
-    int brokenTiles = brokenRow->getLength();
-    for(int t = 0; t < brokenTiles; t++){
-        board += brokenRow->getTileAt(t);
-        if(t != brokenTiles - 1){
-            board += " ";
-        }
-    }
+    board += brokenRow->toString();
 
     return board;
 }

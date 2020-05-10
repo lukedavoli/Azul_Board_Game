@@ -125,3 +125,14 @@ bool Mosaic::validRowNum(int rowNum){
     }
     return valid;
 }
+
+string Mosaic::toString(){
+    string strMosaic = "";
+    for(int i = 0; i < DIM; i++){
+        strMosaic += getRow(i+1);
+        if(i != DIM - 1){
+            strMosaic += "\n";
+        }
+    }
+    return strMosaic;
+}

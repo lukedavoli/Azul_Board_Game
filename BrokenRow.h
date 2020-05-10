@@ -6,6 +6,7 @@
 
 using std::make_shared;
 using std::shared_ptr;
+using std::string;
 
 
 #define MAX_TILES 7
@@ -31,10 +32,12 @@ public:
     char getTileAt(int index);
 
     void print();
-
+    string toString();
 
 private:
     shared_ptr<LinkedList> tiles;
+
+
 };
 
 #endif //BROKENROW_H
