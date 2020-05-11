@@ -29,6 +29,8 @@ using std::cin;
 #define S2_EMAIL "s3783287@student.rmit.edu.au"
 #define S3_EMAIL "s3782747@student.rmit.edu.au"
 
+#define NUM_OF_PLAYERS 2
+
 
 
 class Menu{
@@ -48,7 +50,7 @@ private:
     std::string emails[STUDENTS] = {S1_EMAIL, S2_EMAIL, S3_EMAIL};
     
     shared_ptr<GameEngine> gameEngine;
-
+    
     //Takes a filename to load a saved game.
     void loadGame();
     // Booleans to check the file.

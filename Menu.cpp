@@ -112,11 +112,24 @@ bool Menu::fileExists(string filename){
 bool Menu::validFile(string filename){
     bool valid = true;
     ifstream inStream(filename);
+    
     string line = " ";
-    // while(!inStream.eof()){
-    //     // Check if each line is valid.
-    //     getline(inStream, line);
-    // }
+    int points = 0;
+    
+    for(int i = 0; i < NUM_OF_PLAYERS; ++i){
+         inStream >> line;
+         if(!inStream.good()){
+             valid = false;
+         }
+    }
+
+    for(int i = 0; i < NUM_OF_PLAYERS; ++i){
+        inStream >> points;
+        if(!inStream.good()){
+            valid = false;
+        }
+    }
+
     inStream.close();
     return valid;
 }

@@ -1,29 +1,42 @@
 #include "GameEngine.h"
-#define MAX_STR_STORAGE_1 1
-#define MAX_STR_STORAGE_2 3
-#define MAX_STR_STORAGE_3 5
-#define MAX_STR_STORAGE_4 7
-#define MAX_STR_STORAGE_5 9
 
 GameEngine::GameEngine(){
+    initialised = false;
 
 }
 GameEngine::~GameEngine(){
+    deleteFactories();
+}
 
+void GameEngine::deleteFactories() {
+    for(int i = 0; i < MAX_FACTORY_NUM; ++i){
+        delete factories[i];
+    }
 }
 
 void GameEngine::init() {
+    // Delete variables on the heap if they have already been created.
+    if(initialised == true){
+        deleteFactories();
+    }
+    // Set initialised to true, because factories will be created on the heap here.
+    initialised = true;
+
     string p1Name = " ";
     string p2Name = " ";
 
     player1 = make_shared<Player>(p1Name, INIT_POINTS);
     player2 = make_shared<Player>(p2Name, INIT_POINTS);
 
+<<<<<<< HEAD
+=======
+    nextTurn = player1->getName();
+>>>>>>> 9eca0cf76a5e7fcb0bcccf1e349152f30d45d64d
     factoryZero = make_shared<FactoryZero>();
+    
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
-        factories[i] = make_shared<Factory>( i + 1 );
+        factories[i] = new Factory(i+1);
     }
-
 }
 
 void GameEngine::newGame(){
@@ -47,11 +60,18 @@ void GameEngine::newGame(){
     std::cout << "Who most recently visited Portugal?\n" <<
                  "[1] " << p1Name << "\n" <<
                  "[2] " << p2Name << endl;
-    int mostRecent = 0;
-    while(1 != mostRecent && mostRecent != 2){
+          
+    char mostRecent =  ' ';
+    std::cout << PROMPT;
+    std::cin >> mostRecent;
+    while(!cin.good() || (mostRecent != '1' && mostRecent != '2')) {
+        std::cout <<  "Please enter an integer (1) or (2)." << endl;
         std::cout << PROMPT;
+        mostRecent = ' ';
         std::cin >> mostRecent;
     }
+  
+    
     if(mostRecent == 1){
         nextTurn = p1Name;
     } else{
@@ -82,146 +102,105 @@ void GameEngine::newGame(){
 
     factoryZero = make_shared<FactoryZero>();
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
-        factories[i] = make_shared<Factory>(i + 1);
+        factories[i] = new Factory(i+1);
     }
 
     std::cout << "\n" << player1->getName() << " and " << player2->getName() << ", Let's Play!\n" << std::endl;
-
     enterGame();
 }
 
 void GameEngine::loadGame(string filename){
     init();
     ifstream inStream(filename);
-
     string line = " ";
-    string p1Name = " ";
-    string p2Name = " ";
-    int p1Points = 0;
-    int p2Points = 0;
+    int points = 0;
+    
+    loadPlayerNames(inStream, line);
+    loadPoints(inStream, points);
 
-        inStream >> p1Name;
-        player1->setName(p1Name);
-        inStream >> p2Name;
-        player2->setName(p2Name);
+    inStream >> nextTurn;
+    inStream >> line;
 
-        inStream >> p1Points;
-        player1->setPoints(p1Points);
-        inStream >> p2Points;
-        player2->setPoints(p2Points);
-
-        inStream >> nextTurn;
-        
-        inStream >> line;
-
-        getline(inStream, line);
-        loadFactoryZero(line);
-
-        inStream >> p1Name;
-        player1->setName(p1Name);
-        inStream >> p2Name;
-        player2->setName(p2Name);
-
-        inStream >> p1Points;
-        player1->setPoints(p1Points);
-        inStream >> p2Points;
-        player2->setPoints(p2Points);
-
-        inStream >> nextTurn;
-        
-        inStream >> line;
-
-        getline(inStream, line);
-        loadFactoryZero(line);
-
-        for(int i = 0; i < MAX_FACTORY_NUM; ++i){
-            getline(inStream, line);
-            loadFactory(i+1, line);
-        }
-        
-        for(int i = 0; i < MAX_MOSAIC_ROW_NUM; ++i){
-            getline(inStream, line);
-            player1->getMosaic()->loadRow(i+1, line);
-        }
-
-        for(int i = 0; i < MAX_MOSAIC_ROW_NUM; ++i){
-            getline(inStream, line);
-            player2->getMosaic()->loadRow(i+1, line);
-        }
-
-        for(int i = 0; i < MAX_STORAGE_NUM; ++i){
-            getline(inStream, line);
-            loadStorageRow(i+1, player1, line);
-        }
-
-        for(int i = 0; i < MAX_STORAGE_NUM; ++i){
-            getline(inStream, line);
-            loadStorageRow(i+1, player2, line);
-        }
-
-        getline(inStream, line);
-        loadBrokenStorage(player1, line);
-
-        getline(inStream, line);
-        loadBrokenStorage(player2, line);
+    loadFactoryZero(inStream, line);
+    loadFactories(inStream, line);
+    loadMosaic(inStream, line, player1);    
+    loadMosaic(inStream, line, player2);
+    loadStorageRows(inStream, line, player1);
+    loadStorageRows(inStream, line, player2);
+    loadBrokenStorage(inStream, line, player1);
+    loadBrokenStorage(inStream, line, player2);
     
     inStream.close();
-
     printValues();
+    enterGame();
 
-
-    /*
-     * UNCOMMENT ME WHEN LOAD GAME IMPLEMENTED
-     * enterGame();
-     */
 }
 
+void GameEngine::loadPlayerNames(istream& inStream, string line) {
+    inStream >> line;
+    player1->setName(line);
+    inStream >> line;
+    player2->setName(line);
+}
 
-/* 
-    Loads in Factory Zero
-    Clears factory
-    While character != '\n';
-        IF character is valid.
-            ADD to factory.
-*/
-void GameEngine::loadFactoryZero(string strFactory) {
+void GameEngine::loadPoints(istream& inStream, int points){
+    inStream >> points;
+    player1->setPoints(points);
+    inStream >> points;
+    player2->setPoints(points);
+}
+
+void GameEngine::loadFactoryZero(istream& inStream, string strFactory) {
+    getline(inStream, strFactory);
     factoryZero->clear();
     for(string::iterator c = strFactory.begin(); c != strFactory.end(); ++c){
         if(validChar(*c)){
-            factoryZero->addToFac(move(*c));
+            char tile = *c;
+            factoryZero->addToFac(move(tile));
         }
     }
 }
 
-
-void GameEngine::loadFactory(int fNum, string strFactory){
-    if(fNum > 0 && fNum < 6) {
-        factories[fNum-1]->clear();
+void GameEngine::loadFactories(istream& inStream, string strFactory){
+    for(int i = 0; i < MAX_FACTORY_NUM; ++i){
+        getline(inStream, strFactory);
+        factories[i]->clear();
         for(string::iterator c = strFactory.begin(); c != strFactory.end(); ++c){
             if(validChar(*c)){
-                factories[fNum-1]->addToFactory(move(*c));
+                char tile = *c;
+                factories[i]->addToFactory(move(tile));
             }
         }
     }
 }
 
-void GameEngine::loadStorageRow(int rNum, shared_ptr<Player> player, string strStorage) {
-    if(rNum > 0  && rNum < 6) {
-        player->getStorageRow(rNum)->clearCompleteRow();
-         for(string::iterator c = strStorage.begin(); c != strStorage.end(); ++c){
+void GameEngine::loadMosaic(istream& inStream, string line, shared_ptr<Player> player){
+    for(int i = 0; i < MAX_MOSAIC_ROW_NUM; ++i){
+        getline(inStream, line);
+        player->getMosaic()->loadRow(i+1, line);
+    }
+}
+
+void GameEngine::loadStorageRows(istream& inStream, string strStorage, shared_ptr<Player> player) {
+     for(int i = 0; i < MAX_STORAGE_NUM; ++i){
+        getline(inStream, strStorage);
+        player->getStorageRow(i+1)->clearCompleteRow();
+        for(string::iterator c = strStorage.begin(); c != strStorage.end(); ++c){
             if(validChar(*c)){
-                 player->getStorageRow(rNum)->addTile(move(*c));
+                char tile = *c;
+                player->getStorageRow(i+1)->addTile(move(tile));
             }
-        }
+        }   
     }
-   
 }
 
-void GameEngine::loadBrokenStorage(shared_ptr<Player> player, string strBroken){
+void GameEngine::loadBrokenStorage(istream& inStream, string strBroken, shared_ptr<Player> player){
+    getline(inStream, strBroken);
     player->getBroken()->clearRow();
     for(string::iterator c = strBroken.begin(); c != strBroken.end(); ++c){
         if(validChar(*c)) {
-            player->getBroken()->addTile(move(*c));
+            char tile = *c;
+            player->getBroken()->addTile(move(tile));
         }
     }
 }
@@ -246,30 +225,29 @@ void GameEngine::printValues() {
     factoryZero->print();
     cout << endl;
 
-    int maxRowNum = 5;
-    for(int i = 0; i < maxRowNum; ++i){
+    for(int i = 0; i < MAX_FACTORY_NUM; ++i){
         cout << "Factory "<< i+1 << ": ";
         factories[i]->print();
         cout << endl;
     }
 
  
-    for(int i = 0; i < maxRowNum; ++i){
+    for(int i = 0; i < MAX_MOSAIC_ROW_NUM; ++i){
         cout << "Player 1 Mosaic Row "<< i+1 << ": " << player1->getMosaic()->getRow(i+1) << endl;
     }
 
-    for(int i = 0; i < maxRowNum; ++i){
+    for(int i = 0; i < MAX_MOSAIC_ROW_NUM; ++i){
         cout << "Player 2 Mosaic Row "<< i+1 << ": " << player2->getMosaic()->getRow(i+1) << endl;
     }
 
     
-    for(int i = 0; i < maxRowNum; ++i) {
+    for(int i = 0; i < MAX_STORAGE_NUM; ++i) {
         cout << "Player 1 Storage Row "  << i+1 << ": ";
         player1->getStorageRow(i+1)->print();
         cout << endl;
     }
 
-    for(int i = 0; i < maxRowNum; ++i) {
+    for(int i = 0; i < MAX_STORAGE_NUM; ++i) {
         cout << "Player 2 Storage Row " << i+1 << ": ";
         player2->getStorageRow(i+1)->print();
         cout << endl;
@@ -350,7 +328,10 @@ void GameEngine::enterGame(){
                 string filename = turn.substr(COMMAND_LENGTH + 1,
                                               inputLength - 1 - COMMAND_LENGTH);
                 saveGame(filename);
-            } else if (command == "exit") {
+                cout << "Game saved." << endl;
+            }
+            else if(command == "exit")
+            {
                 validCommand = true;
                 userExit = true;
             } else {
@@ -365,7 +346,7 @@ void GameEngine::enterGame(){
     }
 }
 
-void GameEngine::saveGame(string filename) {
+ void GameEngine::saveGame(string filename) {
     std::ofstream fileStream(filename);
     fileStream << player1->getName() << "\n"
                << player2->getName() << "\n"

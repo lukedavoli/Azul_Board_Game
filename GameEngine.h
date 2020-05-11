@@ -11,6 +11,7 @@
 #include <vector>
 
 using std::ifstream;
+using std::istream;
 using std::cout;
 using std::cin;
 using std::getline;
@@ -56,16 +57,19 @@ private:
     shared_ptr<Player> player2;
     shared_ptr<Player> activePlayer;
     shared_ptr<FactoryZero> factoryZero;
-    shared_ptr<Factory> factories[MAX_FACTORY_NUM];
+
+    bool initialised;
+    Factory* factories[MAX_FACTORY_NUM];
 
     void init();
-    void loadFactoryZero(string strFactory);
-    void loadFactory(int fNum, string strFactory);
-    void loadStorageRow(int rNum, shared_ptr<Player> player, string strStorage);
-    void loadBrokenStorage(shared_ptr<Player> player, string strStorage);
-
-    // Helper method to remove whitespece from string and places it in a char array.
-    void getCharArray(string string, char* charArray);
+    void loadPlayerNames(istream& inStream, string line);
+    void loadPoints(istream& inStream, int points);
+    void loadFactoryZero(istream& inStream, string line);
+    void loadFactories(istream& inStream, string line);
+    void loadMosaic(istream& inStream, string line, shared_ptr<Player> player);
+    void loadStorageRows(istream& inStream, string line, shared_ptr<Player> player);
+    void loadBrokenStorage(istream& inStream, string strStorage, shared_ptr<Player> player);
+    void deleteFactories();
 
     void printValues();
     bool validChar(char c);
