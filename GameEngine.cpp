@@ -57,11 +57,18 @@ void GameEngine::newGame(){
     std::cout << "Who most recently visited Portugal?\n" <<
                  "[1] " << p1Name << "\n" <<
                  "[2] " << p2Name << endl;
-    int mostRecent = 0;
-    while(1 != mostRecent && mostRecent != 2){
+          
+    char mostRecent =  ' ';
+    std::cout << PROMPT;
+    std::cin >> mostRecent;
+    while(!cin.good() || (mostRecent != '1' && mostRecent != '2')) {
+        std::cout <<  "Please enter an integer (1) or (2)." << endl;
         std::cout << PROMPT;
+        mostRecent = ' ';
         std::cin >> mostRecent;
     }
+  
+    
     if(mostRecent == 1){
         nextTurn = p1Name;
     } else{
@@ -75,14 +82,12 @@ void GameEngine::newGame(){
     }
 
     std::cout << "\n" << player1->getName() << " and " << player2->getName() << ", Let's Play!\n" << std::endl;
-
     enterGame();
 }
 
 void GameEngine::loadGame(string filename){
     init();
     ifstream inStream(filename);
-
     string line = " ";
     int points = 0;
     
@@ -297,6 +302,7 @@ void GameEngine::enterGame(){
                 string filename = turn.substr(COMMAND_LENGTH + 1,
                     inputLength - 1 - COMMAND_LENGTH);
                 saveGame(filename);
+                cout << "Game saved." << endl;
             }
             else if(command == "exit")
             {
@@ -347,6 +353,8 @@ void GameEngine::enterGame(){
 string GameEngine::factoriesToString(){
     string strFactories = "";
     strFactories += "0: " + factoryZero->toString() + "\n";
+    
+    factoryZero->print();
     for(int i = 0; i < MAX_FACTORY_NUM; i++){
         strFactories += std::to_string(i + 1) + ": " + factories[i]->toString();
         if(i != MAX_FACTORY_NUM - 1){

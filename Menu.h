@@ -50,7 +50,7 @@ private:
     std::string emails[STUDENTS] = {S1_EMAIL, S2_EMAIL, S3_EMAIL};
     
     shared_ptr<GameEngine> gameEngine;
-
+    
     //Takes a filename to load a saved game.
     void loadGame();
     // Booleans to check the file.
