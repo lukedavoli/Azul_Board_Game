@@ -111,27 +111,125 @@ bool Menu::fileExists(string filename){
 
 bool Menu::validFile(string filename){
     bool valid = true;
+    string p1Name = "";
+    string p2Name = "";
     ifstream inStream(filename);
     
-    string line = " ";
-    int points = 0;
-    
-    for(int i = 0; i < NUM_OF_PLAYERS; ++i){
-         inStream >> line;
-         if(!inStream.good()){
-             valid = false;
-         }
-    }
-
-    for(int i = 0; i < NUM_OF_PLAYERS; ++i){
-        inStream >> points;
-        if(!inStream.good()){
-            valid = false;
-        }
-    }
+    validPlayerNames(inStream, &p1Name, &p2Name, &valid);
+    validPlayerPoints(inStream, &valid);
+    validNextPlayer(inStream, p1Name, p2Name, &valid);
+    validFactoryZero(inStream, &valid);
+    validFactory(inStream, &valid);
 
     inStream.close();
     return valid;
+}
+
+void Menu::validPlayerNames(istream& inStream, string* p1Name, string* p2Name, bool* valid){
+    string line = "";
+    for(int i = 0; i < NUM_OF_PLAYERS; ++i){
+         inStream >> line;
+         if(!inStream.good()){
+             *valid = false;
+         } else if(i == 0){
+             *p1Name = line;
+         } else if(i == 1){
+             *p2Name = line;
+         }
+    }
+}
+
+void Menu::validPlayerPoints(istream& inStream, bool* valid) {
+    int points = 0;
+    for(int i = 0; i < NUM_OF_PLAYERS; ++i){
+        inStream >> points;
+        if(!inStream.good()){
+            *valid = false;
+        }
+    }
+}
+
+void Menu::validNextPlayer(istream& inStream, string p1Name, string p2Name, bool* valid) {
+    string line = "";
+    getline(inStream, line);
+    if(line.compare(p1Name) != 0 && line.compare(p2Name) != 0){
+        *valid = false;
+    }
+}
+
+void Menu::validFactoryZero(istream& inStream, bool* valid){
+    string line = "";
+    getline(inStream, line);
+    for(string::iterator c = line.begin(); c != line.end(); ++c){
+         validFacZandBrokenChar(*c, valid);
+    }
+}
+
+// Check length of string and whether each character is valid.
+void Menu::validFactory(istream& inStream, bool* valid) {
+    string line = "";
+    getline(inStream, line);
+    validFactoryLength(line, valid);
+    for(string::iterator c = line.begin(); c != line.end(); ++c){
+        validFactoryChar(*c, valid);
+    }
+}
+
+void Menu::validFactoryChar(char c, bool* valid) {
+     if(c != BLUE && c != YELLOW && c != RED && c != BLACK && c != LIGHT_BLUE && c != FIRST_PLAYER_MARKER) {
+        *valid = false;
+    }
+}
+
+void Menu::validFactoryLength(string line, bool* valid) {
+    const int maxStrLength = 7;
+    if(line.size() != maxStrLength) {
+        *valid = false;
+    }
+}
+
+void Menu::validFacZandBrokenChar(char c, bool* valid){
+    if(c != BLUE && c != YELLOW && c != RED && c != BLACK && c != LIGHT_BLUE && c != FIRST_PLAYER_MARKER) {
+        *valid = false;
+    }
+}
+
+
+// TODO: CHECK number of chARS IN STIRNG
+void Menu::validMosaics(istream& inStream, bool* valid){
+    string line = "";
+    for(int i = 0; i < NUM_OF_PLAYERS; ++i){
+         getline(inStream, line);
+         for(string::iterator c = line.begin(); c != line.end(); ++c){
+             validMosaicChar(*c, valid);
+         }
+
+    }
+}
+
+// TODO: CHECK EACH ROW NUMBER.
+void Menu::validStorageRows(istream& inStream, bool* valid){
+    string line = "";
+    for(int i = 0; i < NUM_OF_PLAYERS; ++i){
+        getline(inStream, line);
+        for(string::iterator c = line.begin(); c != line.end(); ++c){
+            validStorageChar(*c, valid);
+        }
+        
+    }
+}
+
+void Menu::validStorageChar(char c, bool* valid){
+     if(c != BLUE && c != YELLOW && c != RED && c != BLACK && c != LIGHT_BLUE && c != EMPTY) {
+        *valid = false;
+    }
+}
+
+void Menu::validMosaicChar(char c, bool* valid){
+    if( c != BLUE && c != YELLOW && c != RED && c != BLACK && c != LIGHT_BLUE &&
+        c != EMPTY_BLUE && c != EMPTY_YELLOW && c != EMPTY_RED && c != EMPTY_BLACK && c != EMPTY_LIGHT_BLUE) {
+        *valid = false;
+    }
 }
 
 

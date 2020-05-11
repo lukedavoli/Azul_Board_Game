@@ -56,7 +56,25 @@ private:
     // Booleans to check the file.
     bool fileExists(string filename);
     bool validFile(string filename);
-    bool validStrFactory(const string* strFactory);
+
+    void validPlayerNames(istream& inStream, string* p1Name, string* p2Name, bool* valid);
+    void validPlayerPoints(istream& inStream, bool* valid);
+    void validNextPlayer(istream& inStream, string p1Name, string p2Name, bool* valid);
+
+    void validFactoryZero(istream& inStream, bool* valid);
+    void validFacZandBrokenChar(char c, bool* valid);
+
+    void validFactory(istream& inStream, bool* valid);
+    void validFactoryLength(string line, bool* valid);
+    void validFactoryChar(char c, bool* valid);
+
+    void validMosaics(istream& inStream, bool* valid);
+
+    void validStorageRows(istream& inStream, bool* valid);
+    void validStorageChar(char c, bool* valid);
+ 
+    void validMosaicChar(char c, bool* valid);
+
 };
 
 
