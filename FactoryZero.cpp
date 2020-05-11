@@ -81,7 +81,7 @@ void FactoryZero::clear() {
 
 string FactoryZero::toString() {
     string tiles = "";
-    int size=tiles.size();
+    int size = tiles.size();
     for( int i = 0 ; i < size ; i++){
         tiles += tiles[i];
         if(i != size - 1){

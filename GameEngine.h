@@ -19,15 +19,19 @@ using std::move;
 #define MAX_BAG_TILES 101
 #define PROMPT "> "
 #define INIT_POINTS 0
-#define MAX_FACTORY_TILES 4
 #define MAX_FACTORY_NUM 5
 #define MAX_STORAGE_NUM 5
 #define MAX_MOSAIC_ROW_NUM 5
 #define COMMAND_LENGTH 4
 #define COMIN_START_INDEX 5
-#define SPACE 1
 #define TILE_INDEX 7
 #define ROW_INDEX 9
+#define TOTAL_TILES 100
+#define LAST_B_TILE 19
+#define LAST_L_TILE 39
+#define LAST_U_TILE 59
+#define LAST_R_TILE 79
+#define LAST_Y_TILE 99
 
 class GameEngine
 {
@@ -43,8 +47,9 @@ public:
 
 private:
 
-    // LinkedList* bag;
-    // LinkedList* box;
+    shared_ptr<LinkedList> tileBag;
+    char boxLid[TOTAL_TILES];
+
     string nextTurn;
 
     shared_ptr<Player> player1;

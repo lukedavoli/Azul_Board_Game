@@ -19,8 +19,6 @@ void GameEngine::init() {
     player1 = make_shared<Player>(p1Name, INIT_POINTS);
     player2 = make_shared<Player>(p2Name, INIT_POINTS);
 
-    nextTurn = player1->getName();
-
     factoryZero = make_shared<FactoryZero>();
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
         factories[i] = make_shared<Factory>( i + 1 );
@@ -60,6 +58,27 @@ void GameEngine::newGame(){
         nextTurn = p2Name;
     }
 
+    for(int i = 0; i < TOTAL_TILES; i++){
+        char nextTile = ' ';
+        if(i <= LAST_B_TILE){
+            nextTile = BLUE;
+            boxLid[i] = std::move(nextTile);
+        }else if(i <= LAST_L_TILE){
+            nextTile = LIGHT_BLUE;
+            boxLid[i] = std::move(nextTile);
+        }else if(i <= LAST_U_TILE){
+            nextTile = BLACK;
+            boxLid[i] = std::move(nextTile);
+        }else if(i <= LAST_R_TILE){
+            nextTile = RED;
+            boxLid[i] = std::move(nextTile);
+        }else if(i <= LAST_Y_TILE){
+            nextTile = YELLOW;
+            boxLid[i] = std::move(nextTile);
+        }
+    }
+
+    // TODO shuffle lid and fill bag sequentially, then fill factories from bag 
 
     factoryZero = make_shared<FactoryZero>();
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
@@ -270,6 +289,7 @@ void GameEngine::enterGame(){
     bool completeRow = false;
     bool userExit = false;
     string turn = "";
+    bool newGame = true;
 
     while(!userExit && !completeRow){
 
@@ -288,16 +308,20 @@ void GameEngine::enterGame(){
 
         // Get a command from the player whose turn it is
         bool validCommand = false;
-        while(!validCommand){
+        while(!validCommand) {
             turn = "";
             bool cmdShort = true;
             // Do not proceed until command is long enough
-            while(cmdShort){
+            while (cmdShort) {
                 cout << PROMPT;
-                cin.ignore();
+                if(newGame){
+                    // TODO find a better solution for this bug :)
+                    cin.ignore();
+                    newGame = false;
+                }
                 getline(cin, turn);
                 cmdShort = turn.length() < COMMAND_LENGTH;
-                if(cmdShort){
+                if (cmdShort) {
                     cout << "Invalid action, please try again with one of the"
                             " following: \n" <<
                          "turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
@@ -311,44 +335,34 @@ void GameEngine::enterGame(){
             string command = turn.substr(0, COMMAND_LENGTH);
 
             // Take action based on command and argument
-            if(command == "turn")
-            {
+            if (command == "turn") {
                 validCommand = true;
                 //seperate arguments into factory, tile and row
                 int factory = command[COMIN_START_INDEX] - '0'; // Subtract '0' for ASCII conversion
                 char tile = command[TILE_INDEX];
                 char row = command[ROW_INDEX];
-                if(validateTurn(factory, tile, row)){
+                if (validateTurn(factory, tile, row)) {
                     performTurn(factory, tile, row);
                 }
-            }
-            else if(command == "save")
-            {
+            } else if (command == "save") {
                 validCommand = true;
                 int inputLength = turn.length();
                 string filename = turn.substr(COMMAND_LENGTH + 1,
-                    inputLength - 1 - COMMAND_LENGTH);
+                                              inputLength - 1 - COMMAND_LENGTH);
                 saveGame(filename);
-            }
-            else if(command == "exit")
-            {
+            } else if (command == "exit") {
                 validCommand = true;
                 userExit = true;
-            }
-            else
-            {
+            } else {
                 cout << "Invalid action, please try again with one of the"
                         " following: \n" <<
-                        "turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
-                        "[Row: 1-5, B]\n"
-                        "save [filename] (ensure file exists)\n" <<
-                        "exit" << endl;
+                     "turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
+                     "[Row: 1-5, B]\n"
+                     "save [filename] (ensure file exists)\n" <<
+                     "exit" << endl;
             }
         }
-
-
     }
-
 }
 
 void GameEngine::saveGame(string filename) {
