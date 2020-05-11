@@ -42,14 +42,15 @@ public:
     ~GameEngine();
 
 
-    void newGame(); // Sets up an new game and then enters game loop
+    void newGame(int randomseed, bool seedUsed); // Sets up an new game and then enters game loop
     void loadGame(string filename); // Load in existing game from file and then enter game loop
     void enterGame(); // Enter game loop
 
 private:
+    int seed;
 
     shared_ptr<LinkedList> tileBag;
-    char boxLid[TOTAL_TILES];
+    std::array<char, TOTAL_TILES> boxLid;
 
     string nextTurn;
 
@@ -79,5 +80,12 @@ private:
     bool fileExists(string filename);
     void performTurn(int factory, char tile, char row);
 
+    void fillBoxLid();
+
+    void fillBagFromBox();
+
+    void fillBagFromBoxSeed(int seed);
+
+    void fillFactories();
 };
 #endif // GAMEENGINE_H

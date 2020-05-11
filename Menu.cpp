@@ -9,7 +9,7 @@ void Menu::displayWelcome()
                  std::endl;
 }
 
-void Menu::displayMenu()
+void Menu::displayMenu(int seed, bool seedUsed)
 {
     gameEngine=  make_shared<GameEngine>();
     bool quit = false;
@@ -31,7 +31,7 @@ void Menu::displayMenu()
 
         if(menuSelection == 1)
         {
-            gameEngine->newGame();
+            gameEngine->newGame(seed, seedUsed);
         }
         else if(menuSelection == 2)
         {

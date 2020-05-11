@@ -1,9 +1,13 @@
+#include <random>
+#include <set>
 #include "GameEngine.h"
 
 GameEngine::GameEngine(){
     initialised = false;
+    tileBag = make_shared<LinkedList>();
 
 }
+
 GameEngine::~GameEngine(){
     deleteFactories();
 }
@@ -28,10 +32,6 @@ void GameEngine::init() {
     player1 = make_shared<Player>(p1Name, INIT_POINTS);
     player2 = make_shared<Player>(p2Name, INIT_POINTS);
 
-<<<<<<< HEAD
-=======
-    nextTurn = player1->getName();
->>>>>>> 9eca0cf76a5e7fcb0bcccf1e349152f30d45d64d
     factoryZero = make_shared<FactoryZero>();
     
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
@@ -39,7 +39,7 @@ void GameEngine::init() {
     }
 }
 
-void GameEngine::newGame(){
+void GameEngine::newGame(int seed, bool seedUsed){
 
     std::string p1Name = "";
     std::string p2Name = "";
@@ -70,7 +70,6 @@ void GameEngine::newGame(){
         mostRecent = ' ';
         std::cin >> mostRecent;
     }
-  
     
     if(mostRecent == 1){
         nextTurn = p1Name;
@@ -78,32 +77,15 @@ void GameEngine::newGame(){
         nextTurn = p2Name;
     }
 
-    for(int i = 0; i < TOTAL_TILES; i++){
-        char nextTile = ' ';
-        if(i <= LAST_B_TILE){
-            nextTile = BLUE;
-            boxLid[i] = std::move(nextTile);
-        }else if(i <= LAST_L_TILE){
-            nextTile = LIGHT_BLUE;
-            boxLid[i] = std::move(nextTile);
-        }else if(i <= LAST_U_TILE){
-            nextTile = BLACK;
-            boxLid[i] = std::move(nextTile);
-        }else if(i <= LAST_R_TILE){
-            nextTile = RED;
-            boxLid[i] = std::move(nextTile);
-        }else if(i <= LAST_Y_TILE){
-            nextTile = YELLOW;
-            boxLid[i] = std::move(nextTile);
-        }
+    fillBoxLid();
+    if(seedUsed){
+        fillBagFromBoxSeed(seed);
+    }else{
+        fillBagFromBox();
     }
-
-    // TODO shuffle lid and fill bag sequentially, then fill factories from bag 
 
     factoryZero = make_shared<FactoryZero>();
-    for(int i = 0; i < MAX_FACTORY_NUM; ++i){
-        factories[i] = new Factory(i+1);
-    }
+    fillFactories();
 
     std::cout << "\n" << player1->getName() << " and " << player2->getName() << ", Let's Play!\n" << std::endl;
     enterGame();
@@ -400,6 +382,66 @@ void GameEngine::performTurn(int factory, char tile, char row) {
     // Assumes the move is already validated
 
     // TODO implement
+}
+
+void GameEngine::fillBoxLid() {
+    for(int i = 0; i < TOTAL_TILES; i++){
+        char nextTile = ' ';
+        if(i <= LAST_B_TILE){
+            nextTile = BLUE;
+            boxLid[i] = std::move(nextTile);
+        }else if(i <= LAST_L_TILE){
+            nextTile = LIGHT_BLUE;
+            boxLid[i] = std::move(nextTile);
+        }else if(i <= LAST_U_TILE){
+            nextTile = BLACK;
+            boxLid[i] = std::move(nextTile);
+        }else if(i <= LAST_R_TILE){
+            nextTile = RED;
+            boxLid[i] = std::move(nextTile);
+        }else if(i <= LAST_Y_TILE){
+            nextTile = YELLOW;
+            boxLid[i] = std::move(nextTile);
+        }
+    }
+}
+
+void GameEngine::fillBagFromBoxSeed(int seed) {
+    std::uniform_int_distribution<int> uniform_dist(0, TOTAL_TILES - 1);
+    std::default_random_engine engine(seed);
+    std::set<int> selected;
+
+    while(tileBag->size() != TOTAL_TILES){
+        int index = uniform_dist(engine);
+        if(selected.find(index) == selected.end()){
+            tileBag->addFront(std::move(boxLid.at(index)));
+        }
+    }
+    boxLid.fill('\0');
+}
+
+void GameEngine::fillBagFromBox() {
+    std::uniform_int_distribution<int> uniform_dist(0, TOTAL_TILES - 1);
+    std::random_device engine;
+    std::set<int> selected;
+
+    while(tileBag->size() != TOTAL_TILES){
+        int index = uniform_dist(engine);
+        if(selected.find(index) == selected.end()){
+            tileBag->addFront(std::move(boxLid.at(index)));
+        }
+    }
+    boxLid.fill('\0');
+}
+
+void GameEngine::fillFactories() {
+    for(int i = 0; i < MAX_FACTORY_NUM; ++i){
+        factories[i] = new Factory(i+1);
+        for(int t = 0; t < NUM_OF_TILES; t++){
+            factories[i]->setTile(t, std::move(tileBag->get(0)));
+            tileBag->removeFront();
+        }
+    }
 }
 
 

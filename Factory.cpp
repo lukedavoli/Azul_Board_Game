@@ -21,8 +21,8 @@ Factory::Factory(Factory&& other):
         {
          for (int i = 0; i < NUM_OF_TILES; i++) {
             tiles[i] = other.tiles[i];
-    }
-    }
+        }
+        }
 
 Factory::~Factory(){
 }
@@ -103,4 +103,8 @@ string Factory::toString() {
         }
     }
     return strTiles;
+}
+
+void Factory::setTile(int index, char&& tile) {
+    tiles[index] = tile;
 }

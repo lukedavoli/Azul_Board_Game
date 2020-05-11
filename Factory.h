@@ -39,6 +39,8 @@ public:
 
     string toString();
 
+    void setTile(int index, char&& tile);
+
 
 private:
 

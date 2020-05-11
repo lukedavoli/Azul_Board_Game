@@ -39,7 +39,7 @@ public:
     void displayWelcome();
 
     //Opens the menu
-    void displayMenu();
+    void displayMenu(int seed, bool seedUsed);
 
     //Displays students name, id and email
     void showCredits();
