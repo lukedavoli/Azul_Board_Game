@@ -6,6 +6,7 @@
 FactoryZero::FactoryZero(){
     this->startingPlayer = 'F';
     tiles.push_back(startingPlayer);
+    
 }
 
 FactoryZero::FactoryZero(FactoryZero& other):
@@ -80,13 +81,13 @@ void FactoryZero::clear() {
 }
 
 string FactoryZero::toString() {
-    string tiles = "";
+    string strTiles = "";
     int size = tiles.size();
     for( int i = 0 ; i < size ; i++){
-        tiles += tiles[i];
+        strTiles += tiles[i];
         if(i != size - 1){
-            tiles += " ";
+            strTiles += " ";
         }
     }
-    return tiles;
+    return strTiles;
 }

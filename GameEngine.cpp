@@ -353,8 +353,6 @@ void GameEngine::enterGame(){
 string GameEngine::factoriesToString(){
     string strFactories = "";
     strFactories += "0: " + factoryZero->toString() + "\n";
-    
-    factoryZero->print();
     for(int i = 0; i < MAX_FACTORY_NUM; i++){
         strFactories += std::to_string(i + 1) + ": " + factories[i]->toString();
         if(i != MAX_FACTORY_NUM - 1){

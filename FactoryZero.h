@@ -38,7 +38,6 @@ char startingPlayer;
 
 private:
     // startingPlayerMarker
-  
     std::vector<char> tiles;
 };
 #endif // FACTORYZERO_H
