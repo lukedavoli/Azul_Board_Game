@@ -2,6 +2,8 @@
 #ifndef FACTORY_ZERO
 #define FACTORY_ZERO
 
+#include <memory>
+
 #define NUM_OF_TILES 4
 #include "FactoryZero.h"
 class Factory
@@ -25,10 +27,10 @@ public:
     int getNumberOfColour(char&& colour);
 
     // Remove tiles given the color selected (set them to null)
-    void removeTile(char&& colour, FactoryZero* factory);
+    void removeTile(char&& colour, std::shared_ptr<FactoryZero> factory);
 
     //  Move excess tiles to Factory Zero
-    void moveToFactoryZ(FactoryZero* factory);
+    void moveToFactoryZ(std::shared_ptr<FactoryZero> factory);
 
     // Resets all chars in factory to '.'
     void clear();

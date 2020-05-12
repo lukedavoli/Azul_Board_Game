@@ -2,6 +2,8 @@
 #include <iostream>
 #include<vector>
 #include<utility>
+#include<iterator>
+#include<algorithm>
 
 FactoryZero::FactoryZero(){
     this->startingPlayer = 'F';
@@ -56,18 +58,12 @@ int FactoryZero::getNumOfCoulour(char&& colour){
 }
 
 void FactoryZero::removeTile(char&& colour){
-  int size=tiles.size();
-  for (int i = 0; i < size; ++i)
-    {
-        if (tiles[i]==colour)
-        {   
-            tiles.erase(tiles.begin()+i);   
-            
-        }
+ 
+   tiles.erase(std::remove(tiles.begin(),tiles.end(),colour),tiles.end());
         
     }
 
-}
+
 
 void FactoryZero::print(){
     int size=tiles.size();
