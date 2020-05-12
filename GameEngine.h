@@ -9,6 +9,7 @@
 #include <fstream>
 #include <utility>
 #include <vector>
+#include <array>
 
 using std::ifstream;
 using std::istream;

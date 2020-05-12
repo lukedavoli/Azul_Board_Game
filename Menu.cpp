@@ -82,7 +82,7 @@ void Menu::loadGame()
     if(fileExists(filename)){
         if(validFile(filename)){
             cout << "Loading game..." << endl;
-            gameEngine->loadGame(filename);
+            //gameEngine->loadGame(filename);
 
         } else{
             cout << MEDIUM_LB << endl;
@@ -111,16 +111,23 @@ bool Menu::fileExists(string filename){
 
 bool Menu::validFile(string filename){
     bool valid = true;
+    string line = "";
     string p1Name = "";
     string p2Name = "";
     ifstream inStream(filename);
     
     validPlayerNames(inStream, &p1Name, &p2Name, &valid);
     validPlayerPoints(inStream, &valid);
+    getline(inStream, line);
     validNextPlayer(inStream, p1Name, p2Name, &valid);
     validFactoryZero(inStream, &valid);
     validFactory(inStream, &valid);
-
+    validMosaics(inStream, &valid);
+    validStorageRows(inStream, &valid);
+    validBrokenStorage(inStream, &valid);
+    validBag(inStream, &valid);
+    validBoxLid(inStream, &valid);
+    
     inStream.close();
     return valid;
 }
@@ -145,6 +152,7 @@ void Menu::validPlayerPoints(istream& inStream, bool* valid) {
         inStream >> points;
         if(!inStream.good()){
             *valid = false;
+            cout << "Error - Invalid Player Points." << endl;
         }
     }
 }
@@ -152,8 +160,10 @@ void Menu::validPlayerPoints(istream& inStream, bool* valid) {
 void Menu::validNextPlayer(istream& inStream, string p1Name, string p2Name, bool* valid) {
     string line = "";
     getline(inStream, line);
+    
     if(line.compare(p1Name) != 0 && line.compare(p2Name) != 0){
         *valid = false;
+        cout << "Error - Invalid Next Player: "<< line << endl;
     }
 }
 
@@ -161,74 +171,186 @@ void Menu::validFactoryZero(istream& inStream, bool* valid){
     string line = "";
     getline(inStream, line);
     for(string::iterator c = line.begin(); c != line.end(); ++c){
-         validFacZandBrokenChar(*c, valid);
+        if(*c != ' '){
+            validFacZandBrokenChar(*c, valid);
+        }
     }
 }
 
-// Check length of string and whether each character is valid.
 void Menu::validFactory(istream& inStream, bool* valid) {
     string line = "";
-    getline(inStream, line);
-    validFactoryLength(line, valid);
-    for(string::iterator c = line.begin(); c != line.end(); ++c){
-        validFactoryChar(*c, valid);
+    for(int i = 0; i < MAX_FACTORY_NUM; ++i){
+        getline(inStream, line);
+        validFactoryLength(line, valid);
+        for(string::iterator c = line.begin(); c != line.end(); ++c){
+            if(*c != ' '){
+                validFactoryChar(*c, valid);
+            }
+        }
     }
 }
 
 void Menu::validFactoryChar(char c, bool* valid) {
-     if(c != BLUE && c != YELLOW && c != RED && c != BLACK && c != LIGHT_BLUE && c != FIRST_PLAYER_MARKER) {
+     if(c != BLUE && c != YELLOW && c != RED && c != BLACK && c != LIGHT_BLUE) {
         *valid = false;
+        cout << "Error - Invalid Factory Character: " << c << endl;
     }
 }
 
 void Menu::validFactoryLength(string line, bool* valid) {
-    const int maxStrLength = 7;
-    if(line.size() != maxStrLength) {
+    if(line.size() != MAX_CHARS_FOR_FACTORY) {
         *valid = false;
+        cout << "Error - Invalid Factory Length: " << line.size() << endl;
     }
 }
 
 void Menu::validFacZandBrokenChar(char c, bool* valid){
     if(c != BLUE && c != YELLOW && c != RED && c != BLACK && c != LIGHT_BLUE && c != FIRST_PLAYER_MARKER) {
         *valid = false;
+        cout << "Error - Invalid Factory Zero or Broken Storage Character: " << c << endl;
     }
 }
 
+/*  
+    For each player:
+        For each row:
+        If line size is not 9 (max size for mosaic string = 5 tiles + 4 white space)
+            Set valid to false
+        Else if valid is still true:
+        For each character in the string:
+            If character is not white space.
+            Check that each char within the row is valid.
+*/
 
-// TODO: CHECK number of chARS IN STIRNG
 void Menu::validMosaics(istream& inStream, bool* valid){
     string line = "";
     for(int i = 0; i < NUM_OF_PLAYERS; ++i){
-         getline(inStream, line);
-         for(string::iterator c = line.begin(); c != line.end(); ++c){
-             validMosaicChar(*c, valid);
-         }
-
+        for(int i = 0; i < MAX_MOSAIC_ROW_NUM; ++i){
+            getline(inStream, line);
+            if(line.size() != MAX_CHARS_FOR_MOSAIC) {
+                *valid = false;
+                cout << "Error - Invalid Mosaic Size: " << line.size() << endl;
+            } else if(*valid) {
+                for(string::iterator c = line.begin(); c != line.end(); ++c) {
+                    if(*c != ' '){
+                        validMosaicChar(*c, valid);
+                    }
+                }
+            }   
+        }   
     }
 }
 
-// TODO: CHECK EACH ROW NUMBER.
+
+void Menu::validMosaicChar(char c, bool* valid){
+    if( c != BLUE && c != YELLOW && c != RED && c != BLACK && c != LIGHT_BLUE &&
+        c != EMPTY_BLUE && c != EMPTY_YELLOW && c != EMPTY_RED && c != EMPTY_BLACK && c != EMPTY_LIGHT_BLUE) {
+        *valid = false;
+        cout << "Error - Invalid Mosaic Character: " << c << endl;
+    }
+}
+
+/*  
+    For each player:
+        For each row:
+        Check that the row is size is valid.
+        If valid is still true:
+        For each character in the string:
+            If character is not white space.
+            Check that each char within the row is valid.
+*/
 void Menu::validStorageRows(istream& inStream, bool* valid){
     string line = "";
     for(int i = 0; i < NUM_OF_PLAYERS; ++i){
-        getline(inStream, line);
-        for(string::iterator c = line.begin(); c != line.end(); ++c){
-            validStorageChar(*c, valid);
+        for(int i = 0; i < STORAGE_ROWS; ++i){
+            getline(inStream, line);
+            validStorageSize(inStream, valid, i, line);
+            if(*valid){
+                for(string::iterator c = line.begin(); c != line.end(); ++c){
+                    if(*c != ' '){
+                        validStorageChar(*c, valid);
+                    }
+                }
+            }
         }
-        
+    }
+}
+
+/*  If index == 0, then there should be only 1 character, if it is larger than 1, 
+    then the string should be 2*index + 1 characters.
+    R           = 1 character       index = 0
+    B B         = 3 characters      index = 1
+    Y Y Y       = 5 characters      index = 2
+    U U U U     = 7 characters      index = 3
+    L L L L L   = 9 characters      index = 4
+*/
+
+void Menu::validStorageSize(istream& inStream, bool* valid, int index, string line) {
+    if(index == 0){
+        if(line.size() != 1){
+            *valid = false;
+            cout << "Error - Invalid Storage Size: "<< line.size() << endl;
+        }
+    } else if(index > 0){
+        if(line.size() != 2*index + 1){
+            *valid = false;
+            cout << "Error - Invalid Storage Size: "<< line.size() << endl;
+        }
     }
 }
 
 void Menu::validStorageChar(char c, bool* valid){
      if(c != BLUE && c != YELLOW && c != RED && c != BLACK && c != LIGHT_BLUE && c != EMPTY) {
         *valid = false;
+        cout << "Error - Invalid Storage Character: "<< c << endl;
     }
 }
 
-void Menu::validMosaicChar(char c, bool* valid){
-    if( c != BLUE && c != YELLOW && c != RED && c != BLACK && c != LIGHT_BLUE &&
-        c != EMPTY_BLUE && c != EMPTY_YELLOW && c != EMPTY_RED && c != EMPTY_BLACK && c != EMPTY_LIGHT_BLUE) {
+
+void Menu::validBrokenStorage(istream& inStream, bool* valid){
+    string line = "";
+    for(int i = 0; i < NUM_OF_PLAYERS; ++i){
+        getline(inStream, line);
+        if(line.size() > MAX_CHARS_FOR_BROKEN){
+            *valid = false;
+            cout << "Error - Invalid Broken Storage Size: " << line.size() << endl;
+        } else if(*valid){
+            for(string::iterator c = line.begin(); c != line.end(); ++c){
+                if(*c != ' '){
+                    validFacZandBrokenChar(*c, valid);
+                }
+            }
+        }
+    }
+}
+
+void Menu::validBag(istream& inStream, bool* valid){
+    string line = "";
+    getline(inStream, line);
+    if(line.size() > MAX_CHARS_FOR_BAG) {
         *valid = false;
+        cout << "Error - Invalid Bag Size: " << line.size() << endl;
+    } else if(*valid){
+        for(string::iterator c = line.begin(); c != line.end(); ++c){
+            if(*c != ' '){
+                validFactoryChar(*c, valid);
+            }
+        }
+    }
+}
+
+void Menu::validBoxLid(istream& inStream, bool* valid) {
+    string line = "";
+    getline(inStream, line);
+    if(line.size() > MAX_CHARS_FOR_BOX) {
+        *valid = false;
+        cout << "Error - Invalid Bag Size: " << line.size() << endl;
+    } else if(*valid){
+        for(string::iterator c = line.begin(); c != line.end(); ++c){
+            if(*c != ' '){
+                validFactoryChar(*c, valid);
+            }
+        }
     }
 }
 

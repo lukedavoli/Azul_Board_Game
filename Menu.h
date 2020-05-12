@@ -30,6 +30,12 @@ using std::cin;
 #define S3_EMAIL "s3782747@student.rmit.edu.au"
 
 #define NUM_OF_PLAYERS 2
+#define MAX_CHARS_FOR_MOSAIC 9
+#define MAX_CHARS_FOR_FACTORY 7
+#define MAX_CHARS_FOR_BROKEN 13
+#define MAX_CHARS_FOR_BAG 199
+#define MAX_CHARS_FOR_BOX 199
+
 
 
 
@@ -69,11 +75,16 @@ private:
     void validFactoryChar(char c, bool* valid);
 
     void validMosaics(istream& inStream, bool* valid);
+    void validMosaicChar(char c, bool* valid);
 
     void validStorageRows(istream& inStream, bool* valid);
+    void validStorageSize(istream& inStream, bool* valid, int index, string line);
     void validStorageChar(char c, bool* valid);
  
-    void validMosaicChar(char c, bool* valid);
+    void validBrokenStorage(istream& inStream, bool*valid);
+
+    void validBag(istream& inStream, bool* valid);
+    void validBoxLid(istream& inSTream, bool* valid); 
 
 };
 
