@@ -15,7 +15,7 @@ Player 2 Name: P-Body
 Player 1 Points: 25
 Player 2 Points: 39
 Next Turn: P-Body
-Factory Zero: R B B B L 
+Factory Zero: F R B B B L 
 Factory 1: R R Y L 
 Factory 2: R R R L 
 Factory 3: R B B B 
@@ -45,7 +45,7 @@ Player 1 Broken Tiles: R R B
 Player 2 Broken Tiles: 
 TURN FOR PLAYER: P-Body
 Factories: 
-0: R B B B L
+0: F R B B B L
 1: R R Y L
 2: R R R L
 3: R B B B

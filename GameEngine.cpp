@@ -101,8 +101,7 @@ void GameEngine::loadGame(string filename){
     loadPoints(inStream, points);
 
     inStream >> nextTurn;
-    inStream >> line;
-
+    getline(inStream, line);
     loadFactoryZero(inStream, line);
     loadFactories(inStream, line);
     loadMosaic(inStream, line, player1);    
@@ -298,12 +297,17 @@ void GameEngine::enterGame(){
             if (command == "turn") {
                 validCommand = true;
                 //seperate arguments into factory, tile and row
-                int factory = command[COMIN_START_INDEX] - '0'; // Subtract '0' for ASCII conversion
-                char tile = command[TILE_INDEX];
-                char row = command[ROW_INDEX];
-                if (validateTurn(factory, tile, row)) {
-                    performTurn(factory, tile, row);
-                }
+                int factory = turn[COMIN_START_INDEX] - 0;
+                char tile = turn[TILE_INDEX];
+                char row = turn[ROW_INDEX];
+                // string factory = turn.substr(COMIN_START_INDEX, 1);
+                // string tile = turn.substr(TILE_INDEX, 1);
+                // string row = turn.substr(ROW_INDEX, 1);
+
+                cout << factory << tile << row << endl;
+                // if (validateTurn(factory, tile, row)) {
+                //     performTurn(factory, tile, row);
+                // }
             } else if (command == "save") {
                 validCommand = true;
                 int inputLength = turn.length();
@@ -378,17 +382,17 @@ bool GameEngine::validateTurn(int factory, char tile, char row) {
     return false;
 }
 
-bool GameEngine::validTileInRow(char tile, char row){
-    // Checks if row can accept tile
-    // If mosaic row doesnt have the tile
-        // If storage row isnt full
-            // If storage row is empty
-                // valid = true;
-            // Else (there are other tile(s) in the row)
-                // If storage rowTile == tile (same colour)
-                    //valid = true
+// bool GameEngine::validTileInRow(char tile, char row){
+//     // Checks if row can accept tile
+//     // If mosaic row doesnt have the tile
+//         // If storage row isnt full
+//             // If storage row is empty
+//                 // valid = true;
+//             // Else (there are other tile(s) in the row)
+//                 // If storage rowTile == tile (same colour)
+//                     //valid = true
 
-}
+// }
 
 void GameEngine::performTurn(int factory, char tile, char row) {
     // Assumes the move is already validated

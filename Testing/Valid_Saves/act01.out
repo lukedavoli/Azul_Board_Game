@@ -15,7 +15,7 @@ Player 2 Name: Joel
 Player 1 Points: 12
 Player 2 Points: 6
 Next Turn: Ellie
-Factory Zero: 
+Factory Zero: F 
 Factory 1: B B B B 
 Factory 2: Y Y Y Y 
 Factory 3: R B B B 
@@ -45,7 +45,7 @@ Player 1 Broken Tiles:
 Player 2 Broken Tiles: 
 TURN FOR PLAYER: Ellie
 Factories: 
-0: 
+0: F
 1: B B B B
 2: Y Y Y Y
 3: R B B B
