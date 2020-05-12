@@ -1,2 +1,0 @@
-2
-invalid_save00.in
