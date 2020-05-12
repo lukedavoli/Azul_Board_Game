@@ -21,9 +21,11 @@ using std::move;
 #define MAX_BAG_TILES 101
 #define PROMPT "> "
 #define INIT_POINTS 0
+#define NUM_OF_PLAYERS 2
 #define MAX_FACTORY_NUM 5
 #define MAX_STORAGE_NUM 5
 #define MAX_MOSAIC_ROW_NUM 5
+
 #define COMMAND_LENGTH 4
 #define COMIN_START_INDEX 5
 #define TILE_INDEX 7
@@ -78,6 +80,7 @@ private:
     void saveGame(string filename);
     string factoriesToString();
     bool validateTurn(int factory, char tile, char row);
+    bool validTileInRow(char tile, char row);
     bool fileExists(string filename);
     void performTurn(int factory, char tile, char row);
 
@@ -88,5 +91,8 @@ private:
     void fillBagFromBoxSeed(int seed);
 
     void fillFactories();
+
+    void moveTilesEOR(shared_ptr<Player> player);
+    bool factoriesEmpty();
 };
 #endif // GAMEENGINE_H

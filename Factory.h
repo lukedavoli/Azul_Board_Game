@@ -41,7 +41,7 @@ public:
 
     void setTile(int index, char&& tile);
 
-
+    bool isClear();
 private:
 
     char tiles[NUM_OF_TILES];

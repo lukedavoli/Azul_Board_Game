@@ -34,10 +34,11 @@ std::string toString();
 
 void clear();
 
-char startingPlayer;
+int getSize();
 
 private:
     // startingPlayerMarker
+    char startingPlayer;
     std::vector<char> tiles;
 };
 #endif // FACTORYZERO_H

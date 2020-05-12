@@ -108,3 +108,13 @@ string Factory::toString() {
 void Factory::setTile(int index, char&& tile) {
     tiles[index] = tile;
 }
+
+bool Factory::isClear() {
+    bool clear = true;
+    for(int i = 0; i < NUM_OF_TILES; ++i){
+        if(tiles[i] != '.') {
+            clear = false;
+        }
+    }
+    return clear;
+}

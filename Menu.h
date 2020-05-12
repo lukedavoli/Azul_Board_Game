@@ -29,14 +29,11 @@ using std::cin;
 #define S2_EMAIL "s3783287@student.rmit.edu.au"
 #define S3_EMAIL "s3782747@student.rmit.edu.au"
 
-#define NUM_OF_PLAYERS 2
 #define MAX_CHARS_FOR_MOSAIC 9
 #define MAX_CHARS_FOR_FACTORY 7
 #define MAX_CHARS_FOR_BROKEN 13
 #define MAX_CHARS_FOR_BAG 199
 #define MAX_CHARS_FOR_BOX 199
-
-
 
 
 class Menu{

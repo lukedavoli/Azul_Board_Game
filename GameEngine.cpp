@@ -373,9 +373,21 @@ bool GameEngine::validateTurn(int factory, char tile, char row) {
      * tile in range
      * row in range
      * factory has tile
-     * row can accept tile (not occupied by diff colour, colour not already in mosaic for row
+     * validTileInRow() - checks if row can accept tile.
      */
     return false;
+}
+
+bool GameEngine::validTileInRow(char tile, char row){
+    // Checks if row can accept tile
+    // If mosaic row doesnt have the tile
+        // If storage row isnt full
+            // If storage row is empty
+                // valid = true;
+            // Else (there are other tile(s) in the row)
+                // If storage rowTile == tile (same colour)
+                    //valid = true
+
 }
 
 void GameEngine::performTurn(int factory, char tile, char row) {
@@ -442,6 +454,33 @@ void GameEngine::fillFactories() {
             tileBag->removeFront();
         }
     }
+}
+
+// Moving tiles at the end of round.
+void GameEngine::moveTilesEOR(shared_ptr<Player> player) {
+    if(factoriesEmpty()){
+        for(int i = 0; i < NUM_OF_PLAYERS; ++i){
+            for(int j = 0; j < MAX_STORAGE_NUM; ++j){
+                int rowNum = j+1;
+                if(player->getStorageRow(rowNum)->isFull()) {
+                    char tile = player->getStorageRow(rowNum)->getFirstTile();
+                    player->getMosaic()->insertRow(rowNum, tile);
+                }
+            }
+        }
+    }
+}
+
+bool GameEngine::factoriesEmpty(){
+    bool empty = false;
+    if(factoryZero->getSize() == 0){
+        for(int i = 0; i  < MAX_FACTORY_NUM; ++i){
+            if(factories[i]->isClear()){
+                empty = true;
+            }
+        }
+    }
+    return empty;
 }
 
 

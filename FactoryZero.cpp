@@ -91,3 +91,7 @@ string FactoryZero::toString() {
     }
     return strTiles;
 }
+
+int FactoryZero::getSize(){
+    return tiles.size();
+}
