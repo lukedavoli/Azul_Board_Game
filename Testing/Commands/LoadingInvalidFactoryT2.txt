@@ -1,0 +1,3 @@
+2
+Testing/Invalid_Saves/invalid_factory2.in
+exit

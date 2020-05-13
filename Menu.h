@@ -68,20 +68,21 @@ private:
     void validFacZandBrokenChar(char c, bool* valid);
 
     void validFactory(istream& inStream, bool* valid);
-    void validFactoryLength(string line, bool* valid);
-    void validFactoryChar(char c, bool* valid);
+    void validFactoryLength(string line, bool* valid, int i);
+    void validFactoryChar(char c, bool* valid, int i);
 
     void validMosaics(istream& inStream, bool* valid);
-    void validMosaicChar(char c, bool* valid);
+    void validMosaicChar(char c, bool* valid, int i);
 
     void validStorageRows(istream& inStream, bool* valid);
     void validStorageSize(istream& inStream, bool* valid, int index, string line);
-    void validStorageChar(char c, bool* valid);
+    void validStorageChar(char c, bool* valid, int i);
  
     void validBrokenStorage(istream& inStream, bool*valid);
 
     void validBag(istream& inStream, bool* valid);
-    void validBoxLid(istream& inSTream, bool* valid); 
+    void validBoxLid(istream& inSTream, bool* valid);
+    void validBoxOrBagChar(char c, bool* valid);
 
 };
 

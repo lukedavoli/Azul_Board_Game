@@ -1,0 +1,30 @@
+Welcome to Azul!
+-------------------
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits
+4. Quit
+
+> 
+Enter the filename from which to load the game
+> Error - Invalid Factory Zero or Broken Storage Character: l
+Error - Invalid Factory Zero or Broken Storage Character: m
+Error - Invalid Factory Zero or Broken Storage Character: 0
+Error - Invalid Factory Zero or Broken Storage Character: k
+Error - Invalid Factory Zero or Broken Storage Character: j
+Error - Invalid Factory Zero or Broken Storage Character: b
+Error - Invalid Factory Zero or Broken Storage Character: k
+-------------------
+Invalid file.
+-------------------
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits
+4. Quit
+
+> 
+Goodbye

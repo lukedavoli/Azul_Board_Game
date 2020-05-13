@@ -1,0 +1,101 @@
+
+# Testing Valid Save00
+./azul <Testing/Commands/LoadingValidFile00.txt >Testing/Valid_Saves/act_00.out
+cd Testing/Valid_Saves
+diff act_00.out  exp_00.out
+cd ..
+cd ..
+
+# Testing Valid Save01
+./azul <Testing/Commands/LoadingValidFile01.txt >Testing/Valid_Saves/act_01.out
+cd Testing/Valid_Saves
+diff act_01.out  exp_01.out
+cd ..
+cd ..
+
+# Testing Invalid Save - Invalid Next Player:  "Handsome_Jack"
+./azul <Testing/Commands/LoadingInvalidNextPlayer.txt >Testing/Invalid_Saves/act_invalid_nextPlayer.out
+cd Testing/Invalid_Saves
+diff act_invalid_nextPlayer.out  exp_invalid_nextPlayer.out
+cd ..
+cd ..
+
+# Testing Invalid Save - Invalid Points:  "-m"
+./azul <Testing/Commands/LoadingInvalidPlayerPoints.txt >Testing/Invalid_Saves/act_invalid_points.out
+cd Testing/Invalid_Saves
+diff act_invalid_points.out  exp_invalid_points.out
+cd ..
+cd ..
+
+# Testing Invalid Save - Invalid Factory 1 "B B B "
+./azul <Testing/Commands/LoadingInvalidFactoryT1.txt >Testing/Invalid_Saves/act_invalid_factoryT1.out
+cd Testing/Invalid_Saves
+diff  act_invalid_factoryT1.out  exp_invalid_factoryT1.out
+cd ..
+cd ..
+
+# Testing Invalid Save - Invalid Factory 2 "Y m m y"
+./azul <Testing/Commands/LoadingInvalidFactoryT2.txt >Testing/Invalid_Saves/act_invalid_factoryT2.out
+cd Testing/Invalid_Saves
+diff  act_invalid_factoryT2.out  exp_invalid_factoryT2.out
+cd ..
+cd ..
+
+# Testing Invalid Save - Invalid Factory 4 "m009i45"
+./azul <Testing/Commands/LoadingInvalidFactoryT3.txt >Testing/Invalid_Saves/act_invalid_factoryT3.out
+cd Testing/Invalid_Saves
+diff  act_invalid_factoryT3.out  exp_invalid_factoryT3.out
+cd ..
+cd ..
+
+# Testing Invalid Save - Invalid Mosaic Row "0 fjk"
+./azul <Testing/Commands/LoadingInvalidMosaicRowT1.txt >Testing/Invalid_Saves/act_invalid_mosaicRowT1.out
+cd Testing/Invalid_Saves
+diff  act_invalid_mosaicRowT1.out  exp_invalid_mosaicRowT1.out
+cd ..
+cd ..
+
+
+# Testing Invalid Save - Invalid Mosaic Row "0 9 k k k"
+./azul <Testing/Commands/LoadingInvalidMosaicRowT2.txt >Testing/Invalid_Saves/act_invalid_mosaicRowT2.out
+cd Testing/Invalid_Saves
+diff  act_invalid_mosaicRowT2.out  exp_invalid_mosaicRowT2.out
+cd ..
+cd ..
+
+
+# Testing Invalid Save - Invalid Storage Row "0 0 0"
+./azul <Testing/Commands/LoadingInvalidStorageRowT1.txt >Testing/Invalid_Saves/act_invalid_storageRowT1.out
+cd Testing/Invalid_Saves
+diff  act_invalid_storageRowT1.out  exp_invalid_storageRowT1.out
+cd ..
+cd ..
+
+# Testing Invalid Save - Invalid Storage Row "M . N"
+./azul <Testing/Commands/LoadingInvalidStorageRowT2.txt >Testing/Invalid_Saves/act_invalid_storageRowT2.out
+cd Testing/Invalid_Saves
+diff  act_invalid_storageRowT2.out  exp_invalid_storageRowT2.out
+cd ..
+cd ..
+
+
+# Testing Invalid Save - Invalid Broken Storage:  "lm 0 k jbk "
+./azul <Testing/Commands/LoadingInvalidBrokenStorage.txt >Testing/Invalid_Saves/act_invalid_broken.out
+cd Testing/Invalid_Saves
+diff  act_invalid_broken.out  exp_invalid_broken.out
+cd ..
+cd ..
+
+# Testing Invalid Save - Invalid Bag "9idf"
+./azul <Testing/Commands/LoadingInvalidBag.txt >Testing/Invalid_Saves/act_invalid_bag.out
+cd Testing/Invalid_Saves
+diff  act_invalid_bag.out  exp_invalid_bag.out
+cd ..
+cd ..
+
+# Testing Invalid Save - Invalid Lid (over 100 characters)
+./azul <Testing/Commands/LoadingInvalidLid.txt >Testing/Invalid_Saves/act_invalid_Lid.out
+cd Testing/Invalid_Saves
+diff  act_invalid_lid.out  exp_invalid_lid.out
+cd ..
+cd ..
