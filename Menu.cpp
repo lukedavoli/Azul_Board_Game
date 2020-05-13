@@ -41,7 +41,6 @@ void Menu::displayMenu(int seed, bool seedUsed)
         {
             showCredits();
         }
-         
         else if(menuSelection == 4 || !cin.good())
         {
             quit = true;
@@ -311,7 +310,8 @@ void Menu::validStorageSize(istream& inStream, bool* valid, int index, string li
                 cout << "Error - Invalid Storage Size: "<< line.size() << endl;
             }
     } else if(index > 0){
-            if(line.size() != 2*index + 1){
+            int size = line.size();
+            if(size != 2*index + 1){
                 *valid = false;
                 cout << "Error - Invalid Storage Size: "<< line.size() << endl;
             }

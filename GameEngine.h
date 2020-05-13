@@ -94,5 +94,9 @@ private:
 
     void moveTilesEOR(shared_ptr<Player> player);
     bool factoriesEmpty();
+
+    void setActivePlayer();
+
+    void displayTurnUpdate();
 };
 #endif // GAMEENGINE_H

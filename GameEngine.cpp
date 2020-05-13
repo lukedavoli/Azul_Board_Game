@@ -245,8 +245,8 @@ void GameEngine::printValues() {
     cout << endl;
 
 }
-
-void GameEngine::enterGame(){
+/*
+void GameEngine::nterGame(){
     bool completeRow = false;
     bool userExit = false;
     string turn = "";
@@ -305,23 +305,18 @@ void GameEngine::enterGame(){
                 char row =  turn[9];
                 
                 cout <<factory<<","<<tile<<","<<row<<endl;
-                
-                
-                    if (validateTurn(factory, tile, row)) {
+
+                if(validateTurn(factory, tile, row)) {
                     performTurn(factory, tile, row);
-                    
-                    }
-                
-                
-               
-                
+                }
+
                 if (this->nextTurn.compare(player1->getName())==0)
                 {
-                    nextTurn=player2->getName();
+                    nextTurn = player2->getName();
                 }
                 else
                 {
-                    nextTurn=player1->getName();
+                    nextTurn = player1->getName();
                 }
                 
                 
@@ -344,6 +339,96 @@ void GameEngine::enterGame(){
                      "[Row: 1-5, B]\n"
                      "save [filename] (ensure file exists)\n" <<
                      "exit" << endl;
+            }
+        }
+    }
+}
+*/
+void GameEngine::enterGame(){
+    bool completeRow = false;
+    bool userExit = false;
+    bool validCommand = false;
+    bool cmdShort = true;
+    bool firstLoop = true;
+    string turn = "";
+
+    while(!userExit && !completeRow){
+
+        setActivePlayer();
+        displayTurnUpdate();
+        validCommand = false;
+
+        while(!validCommand && !userExit){
+            cmdShort = true;
+            turn = "";
+            cout << PROMPT;
+            while (cmdShort && !userExit){
+                if(firstLoop){
+                    cin.ignore();
+                    firstLoop = false;
+                }
+                getline(cin, turn);
+                if(cin.eof()){
+                    userExit = true;
+                }else{
+                    cmdShort = turn.length() < COMMAND_LENGTH;
+                    if(cmdShort){
+                        cout << "Invalid action, please try again with one of the"
+                                " following: \n" <<
+                             "turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
+                             "[Row: 1-5, B]\n"
+                             "save [filename] (ensure file exists)\n" <<
+                             "exit" << endl;
+                    }
+                }
+            }
+
+            if(!userExit){
+                string command = turn.substr(0, COMMAND_LENGTH);
+
+                // Take action based on command and argument
+                if (command == "turn") {
+
+                    //seperate arguments into factory, tile and row
+                    int factory = turn[5]-'0'; // Subtract '0' for ASCII conversion
+                    char tile =   turn[7];
+                    char row =  turn[9];
+
+                    cout <<factory<<","<<tile<<","<<row<<endl;
+
+                    if(validateTurn(factory, tile, row)) {
+                        validCommand = true;
+                        performTurn(factory, tile, row);
+                        if (this->nextTurn.compare(player1->getName())==0)
+                        {
+                            nextTurn = player2->getName();
+                        }
+                        else
+                        {
+                            nextTurn = player1->getName();
+                        }
+                    }else{
+                        cout << "You can't perform that move, try again..." << endl;
+                    }
+
+                } else if (command == "save") {
+                    validCommand = true;
+                    int inputLength = turn.length();
+                    string filename = turn.substr(COMMAND_LENGTH + 1,
+                                                  inputLength - 1 - COMMAND_LENGTH);
+                    saveGame(filename);
+                    cout << "Game saved." << endl;
+                }else if(command == "exit"){
+                    validCommand = true;
+                    userExit = true;
+                } else {
+                    cout << "Invalid action, please try again with one of the"
+                            " following: \n" <<
+                         "turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
+                         "[Row: 1-5, B]\n"
+                         "save [filename] (ensure file exists)\n" <<
+                         "exit" << endl;
+                }
             }
         }
     }
@@ -828,6 +913,21 @@ bool GameEngine::factoriesEmpty(){
         }
     }
     return empty;
+}
+
+void GameEngine::setActivePlayer() {
+    if(nextTurn == player1->getName()){
+        activePlayer = player1;
+    }else{
+        activePlayer = player2;
+    }
+}
+
+void GameEngine::displayTurnUpdate() {
+    cout << "TURN FOR PLAYER: " << activePlayer->getName() << endl;
+    cout << "Factories: \n" << factoriesToString() << "\n" << endl;
+    cout << activePlayer->getName() << "'s board:\n" <<
+         activePlayer->boardToString() << endl;
 }
 
 
