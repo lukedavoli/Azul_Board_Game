@@ -841,6 +841,7 @@ string GameEngine::boxLidToString(){
             strBoxLid += " ";
         }
     }
+    return strBoxLid;
 }
 
 string GameEngine::tileBagToString(){
@@ -853,6 +854,7 @@ string GameEngine::tileBagToString(){
             strBag += " ";
         }
     }
+    return strBag;
 }
 
 
