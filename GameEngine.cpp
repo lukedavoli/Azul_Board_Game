@@ -6,7 +6,6 @@
 GameEngine::GameEngine(){
     initialised = false;
     tileBag = make_shared<LinkedList>();
-
 }
 
 GameEngine::~GameEngine(){
@@ -84,7 +83,6 @@ void GameEngine::newGame(int seed, bool seedUsed){
     }else{
         fillBagFromBox();
     }
-
     factoryZero = make_shared<FactoryZero>();
     fillFactories();
 
@@ -336,7 +334,7 @@ void GameEngine::enterGame(){
     }
 }
 
- void GameEngine::saveGame(string filename) {
+void GameEngine::saveGame(string filename) {
     std::ofstream fileStream(filename);
     fileStream << player1->getName() << "\n"
                << player2->getName() << "\n"
@@ -356,8 +354,10 @@ void GameEngine::enterGame(){
         fileStream << player2->getStorageRow(i+1)->toString() << "\n";
     }
     fileStream << player1->getBroken()->toString() << "\n"
-               << player2->getBroken()->toString();
-    //TODO write box lid, bag and seed to file
+               << player2->getBroken()->toString() << "\n";
+    fileStream << boxLidToString() << "\n"
+               << tileBagToString() << "\n"
+               << seed;
     fileStream.close();
 }
 
@@ -832,6 +832,28 @@ void GameEngine::displayTurnUpdate() {
          activePlayer->boardToString() << endl;
 }
 
+string GameEngine::boxLidToString(){
+    string strBoxLid = "";
+    int i = 0;
+    while(boxLid[i] != '\000'){
+        strBoxLid += boxLid[i];
+        if(boxLid[i + 1] != '\000'){
+            strBoxLid += " ";
+        }
+    }
+}
+
+string GameEngine::tileBagToString(){
+    string strBag = "";
+    int size = tileBag->size();
+    for (int i = 0; i < size; i++)
+    {
+        strBag += tileBag->get(i);
+        if(i != size - 1){
+            strBag += " ";
+        }
+    }
+}
 
 
    

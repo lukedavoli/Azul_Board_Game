@@ -98,5 +98,9 @@ private:
     void setActivePlayer();
 
     void displayTurnUpdate();
+
+    string boxLidToString();
+
+    string tileBagToString();
 };
 #endif // GAMEENGINE_H
