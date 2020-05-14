@@ -4,25 +4,25 @@ Joel
 6
 Ellie
 F
-B B B B
-Y Y Y Y
-R B B B
-Y Y Y L
-L L U L
-b y l u r
+R L Y B
+. . . .
+U L U R
+R L R B
+L R Y R
+b y r u l
 l b y r u
 u l b y r
 r u l b y
 y r u l b
-B Y L U R
+b y r u l
 l b y r u
 u l b y r
 r u l b y
-y R U L b
+y r u l b
 .
 . .
 . . .
-. . . .
+B B B B
 . . . . .
 .
 . .
@@ -33,3 +33,4 @@ y R U L b
 
 9idf
 R R R R R R R L L L L Y Y Y Y Y Y Y
+2

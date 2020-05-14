@@ -101,7 +101,6 @@ void GameEngine::loadGame(string filename){
 
     inStream >> nextTurn;
     getline(inStream, line);
-
     loadFactoryZero(inStream, line);
     loadFactories(inStream, line);
     loadMosaic(inStream, line, player1);    
@@ -110,6 +109,9 @@ void GameEngine::loadGame(string filename){
     loadStorageRows(inStream, line, player2);
     loadBrokenStorage(inStream, line, player1);
     loadBrokenStorage(inStream, line, player2);
+    loadBag(inStream, line);
+    loadBoxLid(inStream, line);
+    inStream >> seed;
     
     inStream.close();
     printValues();
@@ -186,6 +188,31 @@ void GameEngine::loadBrokenStorage(istream& inStream, string strBroken, shared_p
     }
 }
 
+void GameEngine::loadBag(istream& inStream, string strBag) {
+    getline(inStream, strBag);
+    tileBag->clear();
+    for(string::iterator c = strBag.begin(); c != strBag.end(); ++c){
+        if(validChar(*c)){
+            char tile = *c;
+            tileBag->addBack(move(tile));
+        }
+    }
+}
+
+void GameEngine::loadBoxLid(istream& inStream, string strLid){
+    getline(inStream, strLid);
+    int index = 0;
+    boxLid.fill('\0');
+    for(string::iterator c = strLid.begin(); c != strLid.end(); ++c){
+        if(validChar(*c)){
+            boxLid[index] = *c;
+            ++index;
+        }
+    }
+}
+
+
+
 bool GameEngine::validChar(char c) {
     bool valid = false;
     if(c == BLUE || c == YELLOW || c == RED || c == BLACK || c == LIGHT_BLUE || c == FIRST_PLAYER_MARKER || c == EMPTY){
@@ -193,6 +220,8 @@ bool GameEngine::validChar(char c) {
     }
     return valid;
 }
+
+
 
 void GameEngine::printValues() {
 
@@ -209,7 +238,7 @@ void GameEngine::printValues() {
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
         cout << "Factory "<< i+1 << ": ";
         factories[i]->print();
-        cout << endl;
+        cout << endl;       
     }
     for(int i = 0; i < MAX_MOSAIC_ROW_NUM; ++i){
         cout << "Player 1 Mosaic Row "<< i+1 << ": " << player1->getMosaic()->getRow(i+1) << endl;
@@ -234,6 +263,11 @@ void GameEngine::printValues() {
     cout << "Player 2 Broken Tiles: ";
     player2->getBroken()->print();
     cout << endl;
+
+    cout << "Bag: " << tileBagToString() << endl;
+    cout << "Box Lid: " << boxLidToString() << endl;
+    
+    cout << "Seed: " << seed << endl;
 }
 
 void GameEngine::enterGame(){
@@ -827,11 +861,12 @@ void GameEngine::displayTurnUpdate() {
 string GameEngine::boxLidToString(){
     string strBoxLid = "";
     int i = 0;
-    while(boxLid[i] != '\000'){
+    while(boxLid[i] != '\0'){
         strBoxLid += boxLid[i];
-        if(boxLid[i + 1] != '\000'){
+        if((i + 1) != '\0'){
             strBoxLid += " ";
         }
+        ++i;
     }
     return strBoxLid;
 }

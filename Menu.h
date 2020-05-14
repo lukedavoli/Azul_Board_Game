@@ -12,6 +12,7 @@ using std::ifstream;
 using std::cout;
 using std::cin;
 
+
 #define SHORT_LB "----"
 #define MEDIUM_LB "-------------------"
 #define LONG_LB "----------------------------------"
@@ -72,17 +73,24 @@ private:
     void validFactoryChar(char c, bool* valid, int i);
 
     void validMosaics(istream& inStream, bool* valid);
-    void validMosaicChar(char c, bool* valid, int i);
+    void validMosaicChar(string row, bool* valid, int i);
+    void validMosaicRow(string row, bool* valid, int rowNum);
 
-    void validStorageRows(istream& inStream, bool* valid);
+    void validStorage(istream& inStream, bool* valid);
+    void validStorageRow(int i, bool* valid, string line);
+    void validCharsInStorage(string row, bool* valid, int rowNum);
     void validStorageSize(istream& inStream, bool* valid, int index, string line);
     void validStorageChar(char c, bool* valid, int i);
  
-    void validBrokenStorage(istream& inStream, bool*valid);
+    void validBrokenStorage(istream& inStream, bool* valid);
 
     void validBag(istream& inStream, bool* valid);
     void validBoxLid(istream& inSTream, bool* valid);
     void validBoxOrBagChar(char c, bool* valid);
+
+    void validSeed(istream& inStream, bool* valid);
+    void validTiles(string filename, bool* valid);
+
 
 };
 

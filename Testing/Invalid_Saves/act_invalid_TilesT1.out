@@ -9,7 +9,7 @@ Menu
 
 > 
 Enter the filename from which to load the game
-> Error - Invalid Mosaic Character: 0 in Mosaic Row 1 Column 1
+> Error - Invalid number of tiles: R = 20, B = 20, U = 20, Y = 20, L = 19
 -------------------
 Invalid file.
 -------------------

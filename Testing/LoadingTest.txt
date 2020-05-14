@@ -63,6 +63,20 @@ diff  act_invalid_mosaicRowT2.out  exp_invalid_mosaicRowT2.out
 cd ..
 cd ..
 
+# Testing Invalid Save - Invalid Mosaic Row "B Y r u R"
+./azul <Testing/Commands/LoadingInvalidMosaicRowT3.txt >Testing/Invalid_Saves/act_invalid_mosaicRowT3.out
+cd Testing/Invalid_Saves
+diff  act_invalid_mosaicRowT3.out  exp_invalid_mosaicRowT3.out
+cd ..
+cd ..
+
+# Testing Invalid Save - Invalid Mosaic Row "BkY R U L"
+./azul <Testing/Commands/LoadingInvalidMosaicRowT4.txt >Testing/Invalid_Saves/act_invalid_mosaicRowT4.out
+cd Testing/Invalid_Saves
+diff  act_invalid_mosaicRowT4.out  exp_invalid_mosaicRowT4.out
+cd ..
+cd ..
+
 
 # Testing Invalid Save - Invalid Storage Row "0 0 0"
 ./azul <Testing/Commands/LoadingInvalidStorageRowT1.txt >Testing/Invalid_Saves/act_invalid_storageRowT1.out
@@ -79,12 +93,34 @@ cd ..
 cd ..
 
 
+# Testing Invalid Save - Invalid Storage Row "R M"
+./azul <Testing/Commands/LoadingInvalidStorageRowT3.txt >Testing/Invalid_Saves/act_invalid_storageRowT3.out
+cd Testing/Invalid_Saves
+diff  act_invalid_storageRowT3.out  exp_invalid_storageRowT3.out
+cd ..
+cd ..
+
+# Testing Invalid Save - Invalid Storage Row "R.."
+./azul <Testing/Commands/LoadingInvalidStorageRowT4.txt >Testing/Invalid_Saves/act_invalid_storageRowT4.out
+cd Testing/Invalid_Saves
+diff  act_invalid_storageRowT4.out  exp_invalid_storageRowT4.out
+cd ..
+cd ..
+
+# Testing Invalid Save - Invalid Storage Row "R . R"
+./azul <Testing/Commands/LoadingInvalidStorageRowT5.txt >Testing/Invalid_Saves/act_invalid_storageRowT5.out
+cd Testing/Invalid_Saves
+diff  act_invalid_storageRowT5.out  exp_invalid_storageRowT5.out
+cd ..
+cd ..
+
 # Testing Invalid Save - Invalid Broken Storage:  "lm 0 k jbk "
 ./azul <Testing/Commands/LoadingInvalidBrokenStorage.txt >Testing/Invalid_Saves/act_invalid_broken.out
 cd Testing/Invalid_Saves
 diff  act_invalid_broken.out  exp_invalid_broken.out
 cd ..
 cd ..
+
 
 # Testing Invalid Save - Invalid Bag "9idf"
 ./azul <Testing/Commands/LoadingInvalidBag.txt >Testing/Invalid_Saves/act_invalid_bag.out
@@ -97,5 +133,12 @@ cd ..
 ./azul <Testing/Commands/LoadingInvalidLid.txt >Testing/Invalid_Saves/act_invalid_Lid.out
 cd Testing/Invalid_Saves
 diff  act_invalid_lid.out  exp_invalid_lid.out
+cd ..
+cd ..
+
+# Testing Invalid Save - Invalid Number of Tiles ('L' == 19)
+./azul <Testing/Commands/LoadingInvalidTilesT1.txt >Testing/Invalid_Saves/act_invalid_TilesT1.out
+cd Testing/Invalid_Saves
+diff  act_invalid_tilesT1.out  exp_invalid_tilesT1.out
 cd ..
 cd ..
