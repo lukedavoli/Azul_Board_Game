@@ -325,6 +325,61 @@ void GameEngine::enterGame(){
                     if(validateTurn(factory, tile, row)) {
                         validCommand = true;
                         performTurn(factory, tile, row);
+                           if (emptyFactories())
+                         {
+
+                            //   
+                            //   player1->getMosaic()->insertRow(1,'R');
+                            //   player1->getMosaic()->insertRow(1,'Y');
+                            //   player1->getMosaic()->insertRow(1,'U');
+                            //    player1->getMosaic()->insertRow(1,'L');
+
+                                    
+                          player1->getMosaic()->printMosaic();
+                             for (int i = 1; i < 6; i++)
+                             { 
+                                
+                                 if (player1->getStorageRow(i)->isFull())
+                                 {
+                                    //  player1->getStorageRow(i)->print() ;
+                                    cout<<"PLAYER 1 ROW: "<<player1->getStorageRow(i)->getOccupyingColour()<<endl;
+                                     char tile=player1->getStorageRow(i)->getOccupyingColour();
+                                       player1->getMosaic()->insertRow(i,tile);
+                                        score(*player1,i,tile);
+                                    
+                                     player1->getStorageRow(i)->resetRow();
+                                      cout<<endl;
+                                    //  player1->getMosaic()->printMosaic();
+                                     player1->getBroken()->clearRow();
+                                    //  player1->getMosaic()->printMosaic();
+                                 }
+                         }
+                         
+                    
+                
+                             
+                              for (int i = 1; i < 6; i++)
+                             {
+                                 if (player2->getStorageRow(i)->isFull())
+                                 {
+                                     cout<<"Player 2 row:"<<player2->getStorageRow(i)->getOccupyingColour()<<endl;
+                                     char tile=player2->getStorageRow(i)->getOccupyingColour();
+                                     player2->getMosaic()->insertRow(i,tile);
+                                     score(*player2,i,tile);
+                                     player2->getStorageRow(i)->resetRow();
+                                     cout<<endl;
+                                    //  player2->getMosaic()->printMosaic();
+                                     player2->getBroken()->clearRow();
+                                    //  player2->getMosaic()->printMosaic();
+
+                                 }
+                             } 
+                                
+                         }
+                        
+                        
+                        
+
                         if (this->nextTurn.compare(player1->getName())==0)
                         {
                             nextTurn = player2->getName();
@@ -436,7 +491,7 @@ bool GameEngine::validateTurn(int factoryN, char tile, char row) {
          exists=true;
     }
     
-    if (exists && validTileInRow(tile,row) )
+    if ((exists && validTileInRow(tile,row)) ||( row=='B' && exists)  )
     {
         cout<<"Yeees"<<endl;
         validTurn=true;
@@ -581,7 +636,8 @@ void GameEngine::performTurn(int factoryN, char tile, char row) {
       {
         if (row=='B')
           {
-              player1->getBroken()->addTile(std::move(tileC));
+              
+              
           }
           
           int avLength=r-player1->getStorageRow(r)->getLength();
@@ -755,6 +811,248 @@ void GameEngine::performTurn(int factoryN, char tile, char row) {
     // TODO implement
 }
 
+bool GameEngine::emptyFactories(){
+ bool empty=false;
+
+ if((*factoryZero).getSize()==0 ){
+  
+
+
+for (int i = 0; i <MAX_FACTORY_NUM; i++)
+{
+   if (factories[i]->isClear()){
+       empty=true;
+   }
+   else
+   {
+
+       empty=false;
+       i=5;
+    }
+   
+}
+ }
+return empty;
+}
+
+void GameEngine::score(Player player,int row,char tile){
+    shared_ptr<Mosaic> m;
+    cout<<"TILEE:"<<tile<<endl;
+    
+     if(player.getName().compare((*player1).getName())==0){
+        m=player1->getMosaic();  
+      
+       }
+       else
+       {
+         m=player2->getMosaic();
+
+       }
+    int x=0;
+       for (int n = 0; n < 5; n++)
+       {
+           if (m->get2DMosaic()[row-1][n]==tile)
+           {
+               x=n;
+
+               
+           }
+           
+       }
+       int begginingX=x;
+       cout<<"BeggingX:"<<begginingX<<endl;
+   
+       bool CANgU=true;
+       bool CANgD=true;
+       bool CANgR=true;
+       bool CANgL=true;
+       bool hadUp=false;
+       bool hadRight=false;
+       bool hadDown=false;
+       bool hadLeft=false;
+       int beggingY =row-1;
+       cout<<"Y:"<<beggingY<<endl;
+       int score=0;
+      
+       if ((beggingY-1)<0 )  {
+           CANgU=false;
+
+       }
+        if ((beggingY+1)>4 )  {
+           CANgD=false;
+
+       }
+        if ((begginingX-1)<0 )  {
+           CANgL=false;
+
+       }
+        if ((begginingX+1)>4)  {
+           CANgR=false;
+
+       }
+      cout<<CANgU<<CANgR<<CANgD<<CANgL<<endl;
+            
+      
+       while ( CANgU )
+       {
+            
+           cout<<"CHECKING UP:" <<endl;
+           
+              
+             if ( beggingY>0 &&  m->validTile(m->get2DMosaic()[beggingY-1][begginingX]))
+             {
+           cout<<player1->getMosaic()->get2DMosaic()[beggingY-1][begginingX]<<endl;
+           hadUp=true;
+           cout<<"UP"<<endl;
+           beggingY--;
+           score++;
+               
+           }
+           
+          
+
+
+       
+       else
+       {
+           beggingY=row-1;
+            begginingX=x;
+
+           CANgU=false;
+       }
+       
+       }
+       
+       
+       while ( CANgR )
+       {
+            
+           cout<<"CHECKING RIGHT:"<< endl;
+           
+                // cout<<"CHECKR ROW:"<<player1->getMosaic()->get2DMosaic()[beggingY][begginingX+1]<<endl;
+                    if ( begginingX<4 &&  m->validTile(m->get2DMosaic()[beggingY][begginingX+1])  )
+              {
+                    cout<<m->get2DMosaic()[beggingY][begginingX+1]<<endl;
+                    hadRight=true;
+                    cout<<"RIGHT"<<endl;
+                    begginingX++;
+                    score++;
+
+
+             }
+       
+           
+       
+       else
+       {
+             beggingY=row-1;
+            begginingX=x;
+           CANgR=false;
+       }
+       }
+
+       
+       
+        
+       while (CANgD )
+       {
+        //  
+                 
+           cout<<"CHECKING DOWN:"<<endl;
+           cout<<beggingY<<endl;
+          
+            //    cout<<"CHECKDOWN ROW:"<<player1->getMosaic()->get2DMosaic()[beggingY+1][begginingX]<<endl;
+                 
+            if (  (beggingY)<4 && m->validTile(m->get2DMosaic()[beggingY+1][begginingX])  )
+       {
+           cout<<m->get2DMosaic()[beggingY+1][begginingX]<<endl;
+           hadDown=true;
+           cout<<"DOWN"<<endl;
+           beggingY++;
+           score++;
+
+
+       }
+          
+         
+       else
+       {
+            beggingY=row-1;
+            begginingX=x;
+           CANgD=false;
+       }
+       }
+       
+       
+
+        
+       while (CANgL  )
+       {
+          cout<<"CHECKING LEFT:"<<endl;
+         
+            
+                
+         if (  begginingX>0 && m->validTile(m->get2DMosaic()[beggingY][begginingX-1]))
+       {
+           cout<<player1->getMosaic()->get2DMosaic()[beggingY][begginingX-1]<<endl;
+           hadLeft=true;
+           cout<<"LEFT"<<endl;
+           begginingX--;
+           score++;
+
+
+       }
+            
+            
+          
+       else
+       {
+            beggingY=row-1;
+            begginingX=x;
+           
+           CANgL=false;
+       }
+       
+       
+       }
+
+       
+       if (hadUp==true || hadDown==true)
+       {
+           score++;
+       }
+        if (hadRight==true || hadLeft==true)
+       {
+           score++;
+       }
+       if(hadUp==false && hadDown==false && hadRight ==false && hadLeft==false){
+           score++;
+
+       }
+       if(player.getName().compare((*player1).getName())==0){
+         int prevS=(*player1).getPoints();
+         cout<<"Previous Points P1:"<<prevS<<endl;
+         (*player1).setPoints(prevS+score);
+         cout<<"After this count:"<< (*player1).getPoints()<<endl;
+
+       }
+       else
+       {
+             int prevS2=(*player2).getPoints();
+             cout<<"Previous Point P2:"<<prevS2<<endl;
+         (*player2).setPoints(prevS2+score);
+         cout<<"After this count:"<<(*player2).getPoints()<<endl;
+
+       }
+       
+       
+      
+    
+
+
+
+
+}
 
 void GameEngine::fillBoxLid() {
     for(int i = 0; i < TOTAL_TILES; i++){

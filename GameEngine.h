@@ -104,5 +104,10 @@ private:
     string boxLidToString();
 
     string tileBagToString();
+
+      bool emptyFactories();
+
+    void score(Player player,int row,char tile);
+
 };
 #endif // GAMEENGINE_H
