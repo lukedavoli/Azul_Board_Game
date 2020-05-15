@@ -135,14 +135,14 @@ bool Menu::validFile(string filename){
 void Menu::validPlayerNames(istream& inStream, string* p1Name, string* p2Name, bool* valid){
     string line = "";
     for(int i = 0; i < NUM_OF_PLAYERS; ++i){
-         inStream >> line;
-         if(!inStream.good()){
-             *valid = false;
-         } else if(i == 0){
-             *p1Name = line;
-         } else if(i == 1){
-             *p2Name = line;
-         }
+        inStream >> line;
+        if(!inStream.good()){
+            *valid = false;
+        } else if(i == 0){
+            *p1Name = line;
+        } else if(i == 1){
+            *p2Name = line;
+        }
     }
 }
 
@@ -166,8 +166,8 @@ void Menu::validNextPlayer(istream& inStream, string p1Name, string p2Name, bool
     if(*valid == true){
         getline(inStream, line);
         if(line.compare(p1Name) != 0 && line.compare(p2Name) != 0){
-        *valid = false;
-        cout << "Error - Invalid Next Player: "<< line << endl;
+            *valid = false;
+            cout << "Error - Invalid Next Player: "<< line << endl;
         }
     }
    
@@ -178,10 +178,10 @@ void Menu::validFactoryZero(istream& inStream, bool* valid){
     if(*valid == true){
         getline(inStream, line);
         for(string::iterator c = line.begin(); c != line.end(); ++c){
-        if(*c != ' '){
-            validFacZandBrokenChar(*c, valid);
+            if(*c != ' '){
+                validFacZandBrokenChar(*c, valid);
+            }
         }
-    }
     }
    
 }
