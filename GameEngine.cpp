@@ -1039,6 +1039,33 @@ void GameEngine::score(Player player,int row,char tile){
        }
        if(player.getName().compare((*player1).getName())==0){
          int prevS=(*player1).getPoints();
+         if(player1->getBroken()->getLength()==1){
+             score=score-1;
+         }
+        else if(player1->getBroken()->getLength()==2){
+             score=score-2;
+         }
+        else if(player1->getBroken()->getLength()==3){
+             score=score-4;
+         }
+         else if(player1->getBroken()->getLength()==4){
+             score=score-6;
+         }
+         else if(player1->getBroken()->getLength()==5){
+             score=score-8;
+         }
+         else if(player1->getBroken()->getLength()==6){
+             score=score-11;
+         }
+         else if(player1->getBroken()->getLength()==7){
+             score=score-13;
+         }
+         if (score<0)
+         {
+             score=0;
+         }
+         
+         
          cout<<"Previous Points P1:"<<prevS<<endl;
          (*player1).setPoints(prevS+score);
          cout<<"After this count:"<< (*player1).getPoints()<<endl;
@@ -1047,6 +1074,31 @@ void GameEngine::score(Player player,int row,char tile){
        else
        {
              int prevS2=(*player2).getPoints();
+              if(player2->getBroken()->getLength()==1){
+             score=score-1;
+         }
+        else if(player2->getBroken()->getLength()==2){
+             score=score-2;
+         }
+        else if(player2->getBroken()->getLength()==3){
+             score=score-4;
+         }
+         else if(player2->getBroken()->getLength()==4){
+             score=score-6;
+         }
+         else if(player2->getBroken()->getLength()==5){
+             score=score-8;
+         }
+         else if(player2->getBroken()->getLength()==6){
+             score=score-11;
+         }
+         else if(player2->getBroken()->getLength()==7){
+             score=score-13;
+         }
+         if (score<0)
+         {
+             score=0;
+         }
              cout<<"Previous Point P2:"<<prevS2<<endl;
          (*player2).setPoints(prevS2+score);
          cout<<"After this count:"<<(*player2).getPoints()<<endl;
