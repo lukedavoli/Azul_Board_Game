@@ -618,6 +618,46 @@ void GameEngine::performTurn(int factoryN, char tile, char row) {
     {
         if(row=='B')
         {
+               char test10=tile;
+              
+              char test12=tile;
+             
+             
+             
+              if(factoryN==0 ){
+                   int s1= (*factoryZero).getNumOfCoulour(std::move(test12));
+                
+
+             for (int i = 0; i <s1 ; i++)
+             {
+                 char test20=tile;
+                  player1->getBroken()->addTile(std::move(test20));
+             }
+                (*factoryZero).removeTile(std::move(test10));
+                if ((*factoryZero).getNumOfCoulour('F')==1)  
+           {
+               player1->getBroken()->addTile(std::move('F'));
+               (*factoryZero).removeTile(std::move('F'));
+           }
+              
+              }
+              else
+              {
+                   int s=(*factories[factoryN-1]).getNumberOfColour(std::move(test12));
+                       for (int i = 0; i <s ; i++)
+             {
+                 char test20=tile;
+                  player1->getBroken()->addTile(std::move(test20));
+             }
+                  for (int i = 0; i < s; i++)
+                  {
+                      char test15=tile;
+                      (*factories[factoryN-1]).removeTile(move(test15),factoryZero);
+                  }
+               
+                  
+                 
+              }
               
               
         }
