@@ -325,19 +325,18 @@ void GameEngine::enterGame(){
                     if(validateTurn(factory, tile, row)) {
                         validCommand = true;
                         performTurn(factory, tile, row);
-                           if (emptyFactories())
-                         {
+                        if (emptyFactories())
+                        {
 
-                            //   
                             //   player1->getMosaic()->insertRow(1,'R');
                             //   player1->getMosaic()->insertRow(1,'Y');
                             //   player1->getMosaic()->insertRow(1,'U');
                             //    player1->getMosaic()->insertRow(1,'L');
 
                                     
-                          player1->getMosaic()->printMosaic();
-                             for (int i = 1; i < 6; i++)
-                             { 
+                            player1->getMosaic()->printMosaic();
+                            for (int i = 1; i < 6; i++)
+                            {
                                 
                                  if (player1->getStorageRow(i)->isFull())
                                  {
@@ -353,15 +352,15 @@ void GameEngine::enterGame(){
                                      player1->getBroken()->clearRow();
                                     //  player1->getMosaic()->printMosaic();
                                  }
-                         }
+                            }
                          
                     
                 
                              
-                              for (int i = 1; i < 6; i++)
-                             {
-                                 if (player2->getStorageRow(i)->isFull())
-                                 {
+                            for (int i = 1; i < 6; i++)
+                            {
+                                if (player2->getStorageRow(i)->isFull())
+                                {
                                      cout<<"Player 2 row:"<<player2->getStorageRow(i)->getOccupyingColour()<<endl;
                                      char tile=player2->getStorageRow(i)->getOccupyingColour();
                                      player2->getMosaic()->insertRow(i,tile);
@@ -372,13 +371,10 @@ void GameEngine::enterGame(){
                                      player2->getBroken()->clearRow();
                                     //  player2->getMosaic()->printMosaic();
 
-                                 }
-                             } 
+                                }
+                            }
                                 
-                         }
-                        
-                        
-                        
+                        }
 
                         if (this->nextTurn.compare(player1->getName())==0)
                         {
@@ -388,6 +384,7 @@ void GameEngine::enterGame(){
                         {
                             nextTurn = player1->getName();
                         }
+
                     }else{
                         cout << "You can't perform that move, try again..." << endl;
                     }
