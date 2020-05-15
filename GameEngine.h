@@ -73,6 +73,8 @@ private:
     void loadMosaic(istream& inStream, string line, shared_ptr<Player> player);
     void loadStorageRows(istream& inStream, string line, shared_ptr<Player> player);
     void loadBrokenStorage(istream& inStream, string strStorage, shared_ptr<Player> player);
+    void loadBag(istream& inStream, string strBag);
+    void loadBoxLid(istream& inStream, string strLid);
     void deleteFactories();
 
     void printValues();
@@ -87,7 +89,7 @@ private:
     void fillBoxLid();
 
     void fillBagFromBox();
-
+    
     void fillBagFromBoxSeed(int seed);
 
     void fillFactories();
@@ -102,5 +104,10 @@ private:
     string boxLidToString();
 
     string tileBagToString();
+
+      bool emptyFactories();
+
+    void score(Player player,int row,char tile);
+
 };
 #endif // GAMEENGINE_H

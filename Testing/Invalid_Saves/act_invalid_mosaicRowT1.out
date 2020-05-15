@@ -1,0 +1,24 @@
+Welcome to Azul!
+-------------------
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits
+4. Quit
+
+> 
+Enter the filename from which to load the game
+> Error - Invalid Mosaic Size: 5 in Mosaic Row 1
+-------------------
+Invalid file.
+-------------------
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits
+4. Quit
+
+> 
+Goodbye
