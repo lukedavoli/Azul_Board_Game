@@ -84,7 +84,7 @@ private:
     bool validateTurn(int factory, char tile, char row);
     bool validTileInRow(char tile, char row);
     bool fileExists(string filename);
-    void performTurn(int factory, char tile, char row);
+    void performTurn(shared_ptr<Player> player,int factory, char tile, char row);
 
     void fillBoxLid();
 
@@ -105,9 +105,13 @@ private:
 
     string tileBagToString();
 
-      bool emptyFactories();
+    bool emptyFactories();
 
-    void score(Player player,int row,char tile);
+    void score(shared_ptr<Player> player,int row,char tile);
+
+    int rowChecker(char row);
+
+    void brokenScore(shared_ptr<Player> player);
 
 };
 #endif // GAMEENGINE_H
