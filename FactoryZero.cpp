@@ -1,12 +1,8 @@
 #include "FactoryZero.h"
-#include <iostream>
-#include<vector>
-#include<utility>
-#include<iterator>
-#include<algorithm>
+
 
 FactoryZero::FactoryZero(){
-    this->startingPlayer = 'F';
+    this->startingPlayer = FIRST_PLAYER_MARKER;
     tiles.push_back(startingPlayer);
     
 }
@@ -91,3 +87,11 @@ string FactoryZero::toString() {
 int FactoryZero::getSize(){
     return tiles.size();
 }
+
+// Clears all tiles and adds the First Player Marker.
+void FactoryZero::reset() {
+    tiles.clear();
+    tiles.push_back(startingPlayer);
+}
+
+

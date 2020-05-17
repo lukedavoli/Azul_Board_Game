@@ -55,9 +55,10 @@ private:
 
     shared_ptr<LinkedList> tileBag;
     std::array<char, TOTAL_TILES> boxLid;
+    // Get the number of tiles currently in the box lid.
+    int getNumOfBoxTiles();
 
     string nextTurn;
-
     shared_ptr<Player> player1;
     shared_ptr<Player> player2;
     shared_ptr<Player> activePlayer;
@@ -98,17 +99,26 @@ private:
 
     void fillBoxLid();
 
+    // Fill the bag with tiles from the box lid randomly.
     void fillBagFromBox();
-    
+
+    // Fill the bag with tiles from the box lid randomly with the seed.
     void fillBagFromBoxSeed(int seed);
 
+    // Fill the tile bag with tiles from the box lid sequentially.
+    void fillBagSequentially();
+
+    // Fill the factories from the tile bag sequentially.
     void fillFactories();
 
     // Moves the tiles at the end of round and scores.
     void moveTilesAndScore(shared_ptr<Player> player);
 
-    // Moves the excess tiles from a full storage row to the tile bag.
-    void moveTilesToBag(int rowNum, char tile);
+    // Moves the excess tiles from a full storage row to the box lid.
+    void moveStorageTilesToBox(int rowNum, char tile);
+
+    // Move Broken Storage tiles to box lid.
+    void moveBrokenTilesToBox(shared_ptr<Player> player);
 
     void setActivePlayer();
 

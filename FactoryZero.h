@@ -3,6 +3,11 @@
 
 #include <vector>
 #include <string>
+#include <iostream>
+#include<utility>
+#include<iterator>
+#include<algorithm>
+#include "Tiles.h"
 using std::string;
 
 #define FACTORY_NUM 0
@@ -35,6 +40,10 @@ std::string toString();
 void clear();
 
 int getSize();
+
+
+// Reset for the next round.
+void reset();
 
 private:
     // startingPlayerMarker

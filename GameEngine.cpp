@@ -84,6 +84,9 @@ void GameEngine::newGame(int seed, bool seedUsed){
         fillBagFromBox();
     }
     factoryZero = make_shared<FactoryZero>();
+    for(int i = 0; i < MAX_FACTORY_NUM; ++i){
+        factories[i] = new Factory(i+1);
+    }
     fillFactories();
 
     std::cout << "\n" << player1->getName() << " and " << player2->getName() << ", Let's Play!\n" << std::endl;
@@ -98,7 +101,6 @@ void GameEngine::loadGame(string filename){
     
     loadPlayerNames(inStream, line);
     loadPoints(inStream, points);
-
     inStream >> nextTurn;
     getline(inStream, line);
     loadFactoryZero(inStream, line);
@@ -116,7 +118,6 @@ void GameEngine::loadGame(string filename){
     inStream.close();
     printValues();
     enterGame();
-
 }
 
 void GameEngine::loadPlayerNames(istream& inStream, string line) {
@@ -211,8 +212,6 @@ void GameEngine::loadBoxLid(istream& inStream, string strLid){
     }
 }
 
-
-
 bool GameEngine::validChar(char c) {
     bool valid = false;
     if(c == BLUE || c == YELLOW || c == RED || c == BLACK || c == LIGHT_BLUE || c == FIRST_PLAYER_MARKER || c == EMPTY){
@@ -220,8 +219,6 @@ bool GameEngine::validChar(char c) {
     }
     return valid;
 }
-
-
 
 void GameEngine::printValues() {
 
@@ -263,10 +260,8 @@ void GameEngine::printValues() {
     cout << "Player 2 Broken Tiles: ";
     player2->getBroken()->print();
     cout << endl;
-
     cout << "Bag: " << tileBagToString() << endl;
     cout << "Box Lid: " << boxLidToString() << endl;
-    
     cout << "Seed: " << seed << endl;
 }
 
@@ -328,12 +323,22 @@ void GameEngine::enterGame(){
                             performTurn(player2,factory, tile, row);
                         }
                         
-                        if (emptyFactories()){    
+                        if(emptyFactories()){
                             moveTilesAndScore(player1);
                             moveTilesAndScore(player2);
-                            player1->boardToString();
-                            player2->boardToString();     
+                            cout << player1->getName() << ":" << endl;
+                            cout << player1->boardToString() << endl;
+                            cout << endl;
+                            cout << player2->getName() << ":" << endl;
+                            cout << player2->boardToString() << endl;
+                            factoryZero->reset();
+                            if(tileBag->size() != 0) {
+                                fillFactories();
+                            } else {
+                                fillBagSequentially();
+                            }
                         }
+                        
 
                         if (this->nextTurn.compare(player1->getName())==0){
                             nextTurn = player2->getName();
@@ -369,26 +374,60 @@ void GameEngine::enterGame(){
 }
 
 // Moving tiles at the end of round.
+// Under the assumption that all factories are empty.
 void GameEngine::moveTilesAndScore(shared_ptr<Player> player) {
     for(int j = 0; j < MAX_STORAGE_NUM; ++j){
         int rowNum = j+1;
         if(player->getStorageRow(rowNum)->isFull()) {
             char tile = player->getStorageRow(rowNum)->getOccupyingColour();
-            moveTilesToBag(rowNum, tile);
             player->getMosaic()->insertRow(rowNum, tile);
             score(player,rowNum,tile);
+            moveStorageTilesToBox(rowNum, tile);
             player->getStorageRow(rowNum)->resetRow();
         }
     }
     brokenScore(player);
+    moveBrokenTilesToBox(player);
     player->getBroken()->clearRow();
 }
 
-// Under the assumption that the row is full
-void GameEngine::moveTilesToBag(int rowNum, char tile){
+// Moving excess tiles from full storage rows into the box.
+// Under the assumption that the row is full.
+void GameEngine::moveStorageTilesToBox(int rowNum, char tile){
    for(int i = 0; i != rowNum - 1; ++i){
-        tileBag->addBack(move(tile));
+       int lastIndex = getNumOfBoxTiles();
+       boxLid[lastIndex] = tile;
    }
+}
+
+ // Move Broken Storage tiles to box.
+void GameEngine::moveBrokenTilesToBox(shared_ptr<Player> player){
+    for(int i = 0; i != player->getBroken()->getLength(); ++i){
+        char tile = player->getBroken()->getTileAt(i);
+        if(tile != FIRST_PLAYER_MARKER){
+            int lastIndex= getNumOfBoxTiles();
+            boxLid[lastIndex] = tile;
+        }
+    }
+}
+
+// Move tiles from the box to the bag.
+// Under the assumption that the bag is empty and the box is full.
+void GameEngine::fillBagSequentially() {
+    int index = 0;
+    while(tileBag->size() != TOTAL_TILES) {
+        tileBag->addFront(std::move(boxLid.at(index)));
+        ++index;
+    }
+    boxLid.fill('\0');
+}
+
+int GameEngine::getNumOfBoxTiles() {
+    int count = 0;
+    while(boxLid[count] != '\0'){
+        ++count;
+    }
+    return count;
 }
 
 void GameEngine::saveGame(string filename) {
@@ -732,24 +771,19 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
 
 void GameEngine::brokenScore(shared_ptr<Player> player){
     int brokenScore[MAX_BROKEN_TILES] = {-1, -2, -4, -6, -8, -11, -14};
-    int prevScore=(*player).getPoints();
+    int prevScore = (*player).getPoints();
     int lostPoints=0;
-
     for(int i = 0; i != MAX_BROKEN_TILES; ++i){
         if(player->getBroken()->getLength() == i+1) {
             lostPoints = brokenScore[i];
         }
     }
-
-    if (prevScore+lostPoints<0) {
+    if (prevScore+lostPoints < 0) {
         (*player).setPoints(0);
     } else {
         (*player).setPoints(prevScore+lostPoints);
     }
-    
-    cout<<"Player: "<<(*player).getName()<<" Final Points :"<<(*player).getPoints()<<endl;
-    cout << endl;
-    
+    cout<<"Player: "<<(*player).getName()<<" | Final Points : "<<(*player).getPoints()<<endl;
 }
 
 void GameEngine::fillBoxLid() {
@@ -804,7 +838,6 @@ void GameEngine::fillBagFromBox() {
 
 void GameEngine::fillFactories() {
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
-        factories[i] = new Factory(i+1);
         for(int t = 0; t < NUM_OF_TILES; t++){
             factories[i]->setTile(t, std::move(tileBag->get(0)));
             tileBag->removeFront();
