@@ -25,6 +25,7 @@ using std::move;
 #define MAX_FACTORY_NUM 5
 #define MAX_STORAGE_NUM 5
 #define MAX_MOSAIC_ROW_NUM 5
+#define MAX_BROKEN_TILES 7
 
 #define COMMAND_LENGTH 4
 #define COMIN_START_INDEX 5
@@ -94,8 +95,7 @@ private:
 
     void fillFactories();
 
-    void moveTilesEOR(shared_ptr<Player> player);
-    bool factoriesEmpty();
+    void moveTilesAndScore(shared_ptr<Player> player);
 
     void setActivePlayer();
 
@@ -105,8 +105,10 @@ private:
 
     string tileBagToString();
 
+    // Checks if all the factories are empty.
     bool emptyFactories();
 
+    // Calculate the score of the player.
     void score(shared_ptr<Player> player,int row,char tile);
 
     int rowChecker(char row);

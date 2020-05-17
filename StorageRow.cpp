@@ -80,7 +80,7 @@ string StorageRow::toString() {
 
     for(int i = 0; i < size; i++){
         row += getTileAt(i);
-        if(i != size - 1){
+        if(i != size){
             row += " ";
         }
     }

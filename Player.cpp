@@ -49,7 +49,7 @@ shared_ptr<StorageRow> Player::getStorageRow(int row)
     return storageRows[row - 1];
 }
 
-shared_ptr<BrokenRow> Player::getBroken()
+shared_ptr<BrokenRow> Player::getBroken() 
 {
     return brokenRow;
 }

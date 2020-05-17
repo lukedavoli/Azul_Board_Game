@@ -320,76 +320,28 @@ void GameEngine::enterGame(){
                     char tile =   turn[7];
                     char row =  turn[9];
 
-                    cout <<factory<<","<<tile<<","<<row<<endl;
-
                     if(validateTurn(factory, tile, row)) {
                         validCommand = true;
-                         if (this->nextTurn.compare(player1->getName())==0)
-                        {
+                        if (this->nextTurn.compare(player1->getName())==0){
                             performTurn(player1,factory, tile, row);
-                        }
-                        else
-                        {
+                        } else {
                             performTurn(player2,factory, tile, row);
                         }
                         
-                        if (emptyFactories())
-                        {
-
-                            
-                                    
-                            player1->getMosaic()->printMosaic();
-                            for (int i = 1; i < 6; i++)
-                            {
-                                
-                                 if (player1->getStorageRow(i)->isFull())
-                                 {
-                                    //  player1->getStorageRow(i)->print() ;
-                                    cout<<"PLAYER 1 ROW: "<<player1->getStorageRow(i)->getOccupyingColour()<<endl;
-                                     char tile=player1->getStorageRow(i)->getOccupyingColour();
-                                       player1->getMosaic()->insertRow(i,tile);
-                                        score(player1,i,tile);
-                                    
-                                     player1->getStorageRow(i)->resetRow();
-                                      cout<<endl;
-                                   
-                                 }
-                            }
-                         
-                    
-                
-                             
-                            for (int i = 1; i < 6; i++)
-                            {
-                                if (player2->getStorageRow(i)->isFull())
-                                {
-                                     cout<<"Player 2 row:"<<player2->getStorageRow(i)->getOccupyingColour()<<endl;
-                                     char tile=player2->getStorageRow(i)->getOccupyingColour();
-                                     player2->getMosaic()->insertRow(i,tile);
-                                     score(player2,i,tile);
-                                     player2->getStorageRow(i)->resetRow();
-                                     cout<<endl;
-
-                                }
-                            }
-                            this->brokenScore(player1);
-                            this->brokenScore(player2);
-                            player1->getBroken()->clearRow();
-                            player2->getBroken()->clearRow();
-
-                                
+                        if (emptyFactories()){    
+                            moveTilesAndScore(player1);
+                            moveTilesAndScore(player2);
+                            player1->boardToString();
+                            player2->boardToString();     
                         }
 
-                        if (this->nextTurn.compare(player1->getName())==0)
-                        {
+                        if (this->nextTurn.compare(player1->getName())==0){
                             nextTurn = player2->getName();
-                        }
-                        else
-                        {
+                        } else{
                             nextTurn = player1->getName();
                         }
 
-                    }else{
+                    } else {
                         cout << "You can't perform that move, try again..." << endl;
                     }
 
@@ -415,6 +367,22 @@ void GameEngine::enterGame(){
         }
     }
 }
+
+// Moving tiles at the end of round.
+void GameEngine::moveTilesAndScore(shared_ptr<Player> player) {
+    for(int j = 0; j < MAX_STORAGE_NUM; ++j){
+        int rowNum = j+1;
+        if(player->getStorageRow(rowNum)->isFull()) {
+            char tile = player->getStorageRow(rowNum)->getOccupyingColour();
+            player->getMosaic()->insertRow(rowNum, tile);
+            score(player,rowNum,tile);
+            player->getStorageRow(rowNum)->resetRow();
+        }
+    }
+    brokenScore(player);
+    player->getBroken()->clearRow();
+}
+
 
 void GameEngine::saveGame(string filename) {
     std::ofstream fileStream(filename);
@@ -475,7 +443,6 @@ bool GameEngine::validateTurn(int factoryN, char tile, char row) {
     if(tile==RED || tile==YELLOW || tile==BLACK || tile== BLUE || tile==LIGHT_BLUE ){
         if(factoryN>=0 && factoryN<=5 && (row=='1' || row=='2' || row=='3' || row=='4' || row=='5' || row=='B')){
            validInput=true;
-           cout<<"test1"<<endl;
         }
     }
      
@@ -494,10 +461,8 @@ bool GameEngine::validateTurn(int factoryN, char tile, char row) {
     
     if ((exists && validTileInRow(tile,row)) ||( row=='B' && exists)  )
     {
-        cout<<"Yeees"<<endl;
         validTurn=true;
     }
-    
 
     return validTurn;
 }
@@ -505,15 +470,12 @@ bool GameEngine::validateTurn(int factoryN, char tile, char row) {
 int GameEngine::rowChecker(char row){
     int r=0;
     char array[MAX_FACTORY_NUM]={'1','2','3','4','5'};
-    for (int i = 0; i < MAX_FACTORY_NUM; i++)
-     {
-         if (row==array[i])
-         {
-             r=i+1;
-         }
-         
-     }
-     return r;
+    for (int i = 0; i < MAX_FACTORY_NUM; i++) {
+        if (row==array[i]){
+            r=i+1;
+        }
+    }
+    return r;
 }
 
 bool GameEngine::validTileInRow(char tile, char row){
@@ -522,53 +484,34 @@ bool GameEngine::validTileInRow(char tile, char row){
     bool exists = false;
     int r =this->rowChecker(row);
 
-    if (this->nextTurn.compare( player1->getName())==0)
-    {
-        for (int i = 0; i < 9; i+=2)
-        {
-              
-            if (player1->getMosaic()->getRow(r)[i]==tile)
-            {
+    if (this->nextTurn.compare( player1->getName())==0) {
+        for (int i = 0; i < 9; i+=2){
+            if (player1->getMosaic()->getRow(r)[i]==tile){
                 exists=true;
-            }
-              
+            }  
         }
-         if (!exists && !player1->getStorageRow(r)->isFull())
-         {
-             if (player1->getStorageRow(r)->getLength()==0)
-             {
-                 valid=true;
-             }
-             else if (player1->getStorageRow(r)->getOccupyingColour()==tile)
-             {
-                 valid=true;
-             }
-         }
-    }
-    else
-    {
-        for (int i = 0; i < 9; i+=2)
-        {
-            if (player2->getMosaic()->getRow(r)[i]==tile)
-            {
+        if (!exists && !player1->getStorageRow(r)->isFull()){
+            if (player1->getStorageRow(r)->getLength()==0){
+                valid=true;
+            } else if (player1->getStorageRow(r)->getOccupyingColour()==tile){
+                valid=true;
+            }
+        }
+    } else {
+        for (int i = 0; i < 9; i+=2){
+            if (player2->getMosaic()->getRow(r)[i]==tile) {
                 exists=true;
-            }
-              
+            } 
         }
-        if (!exists && !player2->getStorageRow(r)->isFull())
-        {
-             if (player2->getStorageRow(r)->getLength()==0)
-             {
-                 valid=true;
-             }
-             else if (player2->getStorageRow(r)->getOccupyingColour()==tile)
-             {
-                 valid=true;
-             }
+        if (!exists && !player2->getStorageRow(r)->isFull()){
+            if (player2->getStorageRow(r)->getLength()==0){
+                valid=true;
+            } else if (player2->getStorageRow(r)->getOccupyingColour()==tile){
+                valid=true;
+            }
         }
     }
     return valid;
-
 }
 
 void GameEngine::performTurn(shared_ptr<Player> player,int factoryN, char tile, char row) {
@@ -580,141 +523,103 @@ void GameEngine::performTurn(shared_ptr<Player> player,int factoryN, char tile, 
     char tileA=tile;
     char Fp='F';
     // char tileC=tile;
-       
-    
     int timesInZ=(*factoryZero).getNumOfCoulour(std::move(tileE));
  
-        if(row=='B')
-        {
-               char test10=tile;
-              
-              char test12=tile;
-              if(factoryN==0 ){
-                   int s1= (*factoryZero).getNumOfCoulour(std::move(test12));
-                
-
-             for (int i = 0; i <s1 ; i++)
-             {
-                 char test20=tile;
-                  player->getBroken()->addTile(std::move(test20));
-             }
-                (*factoryZero).removeTile(std::move(test10));
-                if ((*factoryZero).getNumOfCoulour('F')==1)  
-           {
-               player->getBroken()->addTile(std::move('F'));
-               (*factoryZero).removeTile(std::move('F'));
-           }
-              
-              }
-              else
-              {
-                   int s=(*factories[factoryN-1]).getNumberOfColour(std::move(test12));
-                       for (int i = 0; i <s ; i++)
-             {
-                 char test20=tile;
-                  player->getBroken()->addTile(std::move(test20));
-             }
-                  for (int i = 0; i < s; i++)
-                  {
-                      char test15=tile;
-                      (*factories[factoryN-1]).removeTile(move(test15),factoryZero);
-                  }
-              }
-        }
-          
-        int avLength=r-player->getStorageRow(r)->getLength();
-        if(factoryN==0 && row!='B')
-        {
-            if(timesInZ<=avLength)
+    if(row=='B')
+    {
+        char test10=tile;
+        char test12=tile;
+        if(factoryN==0 ){
+            int s1= (*factoryZero).getNumOfCoulour(std::move(test12));
+            for (int i = 0; i <s1 ; i++){
+                char test20=tile;
+                player->getBroken()->addTile(std::move(test20));
+            }
+            (*factoryZero).removeTile(std::move(test10));
+            if((*factoryZero).getNumOfCoulour('F')==1) {
+                player->getBroken()->addTile(std::move('F'));
+                (*factoryZero).removeTile(std::move('F'));
+            }
+            
+        } else {
+            int s=(*factories[factoryN-1]).getNumberOfColour(std::move(test12));
+            for (int i = 0; i <s ; i++){
+                char test20=tile;
+                player->getBroken()->addTile(std::move(test20));
+            }
+            for (int i = 0; i < s; i++)
             {
-                char test3=tile;
-                for (int i = 0; i < timesInZ; ++i)
-                {
-                   char test=tile;
-                   player->getStorageRow(r)->addTile(std::move(test));
-                }
-                if ((*factoryZero).getNumOfCoulour(std::move(Fp))==1)
-                {
-                    player->getBroken()->addTile(std::move('F'));
-                   (*factoryZero).removeTile(std::move('F'));
-                }
-                (*factoryZero).removeTile(std::move(test3));
-                }
-                else
-                {
-                    char test4=tile;
-                    for (int i = 0; i < avLength; ++i)
-                    {
-                        char test =tile;
-                        player->getStorageRow(r)->addTile(std::move(test));
-                    }
-
-                    for (int i = 0; i < (timesInZ-avLength); ++i)
-                    {
-                        char test10 =tile;
-                        player->getBroken()->addTile(std::move(test10));
-                    }
-                    if ((*factoryZero).getNumOfCoulour('F')==1)
-                    {
-                   player->getBroken()->addTile(std::move('F'));
-                   (*factoryZero).removeTile(std::move('F'));
-                    }
-
-                    (*factoryZero).removeTile(std::move(test4));
-                }
-
+                char test15=tile;
+                (*factories[factoryN-1]).removeTile(move(test15),factoryZero);
+            }
         }
-        else if(  row!='B')
-        {
-            char test5 = tile;
-            int  timesInF=(*factories[factoryN-1]).getNumberOfColour(std::move(tileA));
-
-            if(timesInF<=avLength){
-                for (int i = 0; i < timesInF; ++i)
-                {
-                    char test = tile;
-                    player->getStorageRow(r)->addTile(std::move(test));
-                }
+    }
         
-                (*factories[factoryN-1]).removeTile(std::move(test5),factoryZero);
+    int avLength=r-player->getStorageRow(r)->getLength();
+    if(factoryN==0 && row!='B') {
+        if(timesInZ<=avLength){
+            char test3=tile;
+            for (int i = 0; i < timesInZ; ++i){
+                char test=tile;
+                player->getStorageRow(r)->addTile(std::move(test));
             }
-            else
-            {
-                char test2=tile;
-                for (int i = 0; i < avLength; i++)
-                {
-                    char test = tile;
-                    player->getStorageRow(r)->addTile(std::move(test));
-                }
-                
-                for (int i = 0; i <(timesInF- avLength); i++)
-                {
-                    char test=tile;
-                    player->getBroken()->addTile(std::move(test));
-                }
-                (*factories[factoryN-1]).removeTile(std::move(test2),factoryZero);
+            if ((*factoryZero).getNumOfCoulour(std::move(Fp))==1){
+                player->getBroken()->addTile(std::move('F'));
+                (*factoryZero).removeTile(std::move('F'));
             }
+            (*factoryZero).removeTile(std::move(test3));
+        } 
+        else
+        {
+            char test4=tile;
+            for (int i = 0; i < avLength; ++i){
+                char test =tile;
+                player->getStorageRow(r)->addTile(std::move(test));
+            }
+            for (int i = 0; i < (timesInZ-avLength); ++i){
+                char test10 =tile;
+                player->getBroken()->addTile(std::move(test10));
+            }
+            if ((*factoryZero).getNumOfCoulour('F')==1) {
+                player->getBroken()->addTile(std::move('F'));
+                (*factoryZero).removeTile(std::move('F'));
+            }
+            (*factoryZero).removeTile(std::move(test4));
         }
-    
-      
-    // TODO implement
+
+    } else if( row!='B'){
+        char test5 = tile;
+        int  timesInF=(*factories[factoryN-1]).getNumberOfColour(std::move(tileA));
+        if(timesInF<=avLength){
+            for (int i = 0; i < timesInF; ++i){
+                char test = tile;
+                player->getStorageRow(r)->addTile(std::move(test));
+            }
+            (*factories[factoryN-1]).removeTile(std::move(test5),factoryZero);
+        } else {
+            char test2=tile;
+            for (int i = 0; i < avLength; i++){
+                char test = tile;
+                player->getStorageRow(r)->addTile(std::move(test));
+            }
+            for (int i = 0; i <(timesInF- avLength); i++){
+                char test=tile;
+                player->getBroken()->addTile(std::move(test));
+            }
+            (*factories[factoryN-1]).removeTile(std::move(test2),factoryZero);
+        }
+    }
 }
 
-bool GameEngine::emptyFactories()
-{
+bool GameEngine::emptyFactories(){
     bool empty=false;
-
-    if((*factoryZero).getSize()==0 )
-    {
-        for (int i = 0; i <MAX_FACTORY_NUM; i++)
-        {
+    if((*factoryZero).getSize()==0 ){
+        for (int i = 0; i < MAX_FACTORY_NUM; i++){
             if (factories[i]->isClear()){
                empty=true;
-            }
-            else
-            {
+            } else {
                 empty=false;
-                i=5;
+                i = MAX_FACTORY_NUM;
             }
         }
     }
@@ -722,225 +627,126 @@ bool GameEngine::emptyFactories()
 }
 
 void GameEngine::score(shared_ptr<Player> player,int row,char tile){
-    shared_ptr<Mosaic> m=player->getMosaic();  ;
-    cout<<"TILEE:"<<tile<<endl;
-
+    shared_ptr<Mosaic> m=player->getMosaic();
     int x=0;
-       for (int n = 0; n < 5; n++)
-       {
-           if (m->get2DMosaic()[row-1][n]==tile)
-           {
-               x=n;
+    for (int n = 0; n < 5; n++){
+        if (m->get2DMosaic()[row-1][n]==tile){
+            x=n;
+        }
+    }
 
-               
-           }
-           
-       }
-       int begginingX=x;
-       cout<<"BeggingX:"<<begginingX<<endl;
+    int begginingX=x;
    
-       bool CANgU=true;// Can Go UP
-       bool CANgD=true;// Can Go Down
-       bool CANgR=true;// Can Go Right
-       bool CANgL=true;// Can Go left
-       bool hadUp=false;
-       bool hadRight=false;
-       bool hadDown=false;
-       bool hadLeft=false;
-       int beggingY =row-1;
-       cout<<"Y:"<<beggingY<<endl;
-       int score=0;
-      
-       if ((beggingY-1)<0 )  {
-           CANgU=false;
-
-       }
-        if ((beggingY+1)>4 )  {
-           CANgD=false;
-
-       }
-        if ((begginingX-1)<0 )  {
-           CANgL=false;
-
-       }
-        if ((begginingX+1)>4)  {
-           CANgR=false;
-
-       }
-      cout<<CANgU<<CANgR<<CANgD<<CANgL<<endl;
+    bool CANgU=true;// Can Go UP
+    bool CANgD=true;// Can Go Down
+    bool CANgR=true;// Can Go Right
+    bool CANgL=true;// Can Go left
+    bool hadUp=false;
+    bool hadRight=false;
+    bool hadDown=false;
+    bool hadLeft=false;
+    int beggingY =row-1;
+    int score=0;
+       
+    if ((beggingY-1)<0 ){
+        CANgU=false;
+    }
+    if ((beggingY+1)>4 ){
+        CANgD=false;
+    }
+    if ((begginingX-1)<0 ){
+        CANgL=false;
+    }
+    if ((begginingX+1)>4)  {
+        CANgR=false;
+    }
             
-      
-       while ( CANgU )
-       {
-            
-           cout<<"CHECKING UP:" <<endl;
-           
-              
-             if ( beggingY>0 &&  m->validTile(m->get2DMosaic()[beggingY-1][begginingX]))
-             {
-           cout<<m->get2DMosaic()[beggingY-1][begginingX]<<endl;
-           hadUp=true;
-           cout<<"UP"<<endl;
-           beggingY--;
-           score++;
-               
-           }
-    
-       else
-       {
-           beggingY=row-1;
-            begginingX=x;
-
-           CANgU=false;
-       }
-       
-       }
-       
-       
-       while ( CANgR )
-       {
-            
-           cout<<"CHECKING RIGHT:"<< endl;
-           
-                // cout<<"CHECKR ROW:"<<player1->getMosaic()->get2DMosaic()[beggingY][begginingX+1]<<endl;
-                    if ( begginingX<4 &&  m->validTile(m->get2DMosaic()[beggingY][begginingX+1])  )
-              {
-                    cout<<m->get2DMosaic()[beggingY][begginingX+1]<<endl;
-                    hadRight=true;
-                    cout<<"RIGHT"<<endl;
-                    begginingX++;
-                    score++;
-
-
-             }  
-       
-       else
-       {
-             beggingY=row-1;
-            begginingX=x;
-           CANgR=false;
-       }
-       }
-
-       while (CANgD )
-       {
-        //  
-                 
-           cout<<"CHECKING DOWN:"<<endl;
-           cout<<beggingY<<endl;
-          
-            //    cout<<"CHECKDOWN ROW:"<<player1->getMosaic()->get2DMosaic()[beggingY+1][begginingX]<<endl;
-                 
-            if (  (beggingY)<4 && m->validTile(m->get2DMosaic()[beggingY+1][begginingX])  )
-       {
-           cout<<m->get2DMosaic()[beggingY+1][begginingX]<<endl;
-           hadDown=true;
-           cout<<"DOWN"<<endl;
-           beggingY++;
-           score++;
-       }
-           
-       else
-       {
+    while ( CANgU ){     
+        if(beggingY>0 &&  m->validTile(m->get2DMosaic()[beggingY-1][begginingX])){
+            cout<<m->get2DMosaic()[beggingY-1][begginingX]<<endl;
+            hadUp=true;
+            beggingY--;
+            score++;
+        } else {
             beggingY=row-1;
             begginingX=x;
-           CANgD=false;
-       }
-       }
-       
-       while (CANgL  )
-       {
-          cout<<"CHECKING LEFT:"<<endl;
-         
-            
-                
-         if (  begginingX>0 && m->validTile(m->get2DMosaic()[beggingY][begginingX-1]))
-       {
-           cout<<m->get2DMosaic()[beggingY][begginingX-1]<<endl;
-           hadLeft=true;
-           cout<<"LEFT"<<endl;
-           begginingX--;
-           score++;
+            CANgU=false;
+        }
+    }
 
-       }
-               
-       else
-       {
+    while ( CANgR ){
+        if (begginingX<4 &&  m->validTile(m->get2DMosaic()[beggingY][begginingX+1])){
+            cout<<m->get2DMosaic()[beggingY][begginingX+1]<<endl;
+            hadRight=true;
+            begginingX++;
+            score++;
+        } else {
             beggingY=row-1;
             begginingX=x;
-           
-           CANgL=false;
-       }
+            CANgR=false;
+        }
+    }
+
+    while (CANgD ){
+        cout<<beggingY<<endl;
+        if ((beggingY)<4 && m->validTile(m->get2DMosaic()[beggingY+1][begginingX])  ){
+            cout<<m->get2DMosaic()[beggingY+1][begginingX]<<endl;
+            hadDown=true;
+            beggingY++;
+            score++;
+        } else {
+            beggingY=row-1;
+            begginingX=x;
+            CANgD=false;
+        }
+    }
        
-       }
+    while (CANgL) {     
+        if(begginingX>0 && m->validTile(m->get2DMosaic()[beggingY][begginingX-1])){
+            cout<<m->get2DMosaic()[beggingY][begginingX-1]<<endl;
+            hadLeft=true;
+            begginingX--;
+            score++;
+        } else {
+            beggingY=row-1;
+            begginingX=x;
+            CANgL=false;
+        }
+    }
 
-       
-       if (hadUp==true || hadDown==true)
-       {
+    if (hadUp==true || hadDown==true){
            score++;
-       }
-        if (hadRight==true || hadLeft==true)
-       {
+    }
+    if (hadRight==true || hadLeft==true){
            score++;
-       }
-       if(hadUp==false && hadDown==false && hadRight ==false && hadLeft==false){
-           score++;
-
-       }
+    }
+    if(hadUp==false && hadDown==false && hadRight ==false && hadLeft==false){
+        score++;
+    }
         
-         int prevS=(*player).getPoints();
-        
-         
-         
-         cout<<"Previous Points P:"<<prevS<<endl;
-         (*player).setPoints(prevS+score);
-         cout<<"After this count:"<< (*player).getPoints()<<endl;
-
+    int prevS=(*player).getPoints();
+    (*player).setPoints(prevS+score);
 }
 
 void GameEngine::brokenScore(shared_ptr<Player> player){
+    int brokenScore[MAX_BROKEN_TILES] = {-1, -2, -4, -6, -8, -11, -14};
     int prevScore=(*player).getPoints();
     int lostPoints=0;
-     if(player->getBroken()->getLength()==1){
-             lostPoints= -1;
-         }
-        else if(player->getBroken()->getLength()==2){
-             lostPoints= -2;
-         }
-        else if(player->getBroken()->getLength()==3){
-             lostPoints= -4;
-         }
-         else if(player->getBroken()->getLength()==4){
-             lostPoints= -6;
-         }
-         else if(player->getBroken()->getLength()==5){
-             lostPoints= -8;
-         }
-         else if(player->getBroken()->getLength()==6){
-             lostPoints= -11;
-         }
-         else if(player->getBroken()->getLength()==7){
-             lostPoints=-13;
-         }
-         cout<<"BROKEN L1:"<<player1->getBroken()->getLength()<<endl;
-         cout<<"BROKEN L2:"<<player2->getBroken()->getLength()<<endl;
-         cout<<"LOST:"<<lostPoints<<endl;
-         if (prevScore+lostPoints<0)
-         {
-            (*player).setPoints(0);
-         }
-         else
-         {
-             (*player).setPoints(prevScore+lostPoints);
-         }
-         
 
-         
-         cout<<"Players/ "<<(*player).getName()<<" Final Points :"<<(*player).getPoints()<<endl;
+    for(int i = 0; i != MAX_BROKEN_TILES; ++i){
+        if(player->getBroken()->getLength() == i+1) {
+            lostPoints = brokenScore[i];
+        }
+    }
 
-
-
+    if (prevScore+lostPoints<0) {
+        (*player).setPoints(0);
+    } else {
+        (*player).setPoints(prevScore+lostPoints);
+    }
+    cout<<"Players/ "<<(*player).getName()<<" Final Points :"<<(*player).getPoints()<<endl;
 }
+
 void GameEngine::fillBoxLid() {
     for(int i = 0; i < TOTAL_TILES; i++){
         char nextTile = ' ';
@@ -1001,33 +807,6 @@ void GameEngine::fillFactories() {
     }
 }
 
-// Moving tiles at the end of round.
-void GameEngine::moveTilesEOR(shared_ptr<Player> player) {
-    if(factoriesEmpty()){
-        for(int i = 0; i < NUM_OF_PLAYERS; ++i){
-            for(int j = 0; j < MAX_STORAGE_NUM; ++j){
-                int rowNum = j+1;
-                if(player->getStorageRow(rowNum)->isFull()) {
-                    char tile = player->getStorageRow(rowNum)->getFirstTile();
-                    player->getMosaic()->insertRow(rowNum, tile);
-                }
-            }
-        }
-    }
-}
-
-bool GameEngine::factoriesEmpty(){
-    bool empty = false;
-    if(factoryZero->getSize() == 0){
-        for(int i = 0; i  < MAX_FACTORY_NUM; ++i){
-            if(factories[i]->isClear()){
-                empty = true;
-            }
-        }
-    }
-    return empty;
-}
-
 void GameEngine::setActivePlayer() {
     if(nextTurn == player1->getName()){
         activePlayer = player1;
@@ -1059,8 +838,7 @@ string GameEngine::boxLidToString(){
 string GameEngine::tileBagToString(){
     string strBag = "";
     int size = tileBag->size();
-    for (int i = 0; i < size; i++)
-    {
+    for (int i = 0; i < size; i++) {
         strBag += tileBag->get(i);
         if(i != size - 1){
             strBag += " ";
@@ -1068,8 +846,3 @@ string GameEngine::tileBagToString(){
     }
     return strBag;
 }
-
-
-   
- 
-
