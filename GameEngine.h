@@ -20,6 +20,7 @@ using std::move;
 
 #define MAX_BAG_TILES 101
 #define PROMPT "> "
+#define BROKEN_ROW 'B'
 #define INIT_POINTS 0
 #define NUM_OF_PLAYERS 2
 #define MAX_FACTORY_NUM 5
@@ -134,7 +135,9 @@ private:
     // Calculate the score of the player.
     void score(shared_ptr<Player> player,int row,char tile);
 
-    int rowChecker(char row);
+    // Checks if the row character inputted is valid.
+    // Takes in an int to return a row number if the character is valid.
+    bool validRowChar(char row, int* r);
 
     void brokenScore(shared_ptr<Player> player);
 
