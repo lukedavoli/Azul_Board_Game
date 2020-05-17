@@ -374,6 +374,7 @@ void GameEngine::moveTilesAndScore(shared_ptr<Player> player) {
         int rowNum = j+1;
         if(player->getStorageRow(rowNum)->isFull()) {
             char tile = player->getStorageRow(rowNum)->getOccupyingColour();
+            moveTilesToBag(rowNum, tile);
             player->getMosaic()->insertRow(rowNum, tile);
             score(player,rowNum,tile);
             player->getStorageRow(rowNum)->resetRow();
@@ -383,6 +384,12 @@ void GameEngine::moveTilesAndScore(shared_ptr<Player> player) {
     player->getBroken()->clearRow();
 }
 
+// Under the assumption that the row is full
+void GameEngine::moveTilesToBag(int rowNum, char tile){
+   for(int i = 0; i != rowNum - 1; ++i){
+        tileBag->addBack(move(tile));
+   }
+}
 
 void GameEngine::saveGame(string filename) {
     std::ofstream fileStream(filename);
@@ -663,7 +670,6 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
             
     while ( CANgU ){     
         if(beggingY>0 &&  m->validTile(m->get2DMosaic()[beggingY-1][begginingX])){
-            cout<<m->get2DMosaic()[beggingY-1][begginingX]<<endl;
             hadUp=true;
             beggingY--;
             score++;
@@ -676,7 +682,6 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
 
     while ( CANgR ){
         if (begginingX<4 &&  m->validTile(m->get2DMosaic()[beggingY][begginingX+1])){
-            cout<<m->get2DMosaic()[beggingY][begginingX+1]<<endl;
             hadRight=true;
             begginingX++;
             score++;
@@ -687,10 +692,8 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
         }
     }
 
-    while (CANgD ){
-        cout<<beggingY<<endl;
+    while (CANgD){
         if ((beggingY)<4 && m->validTile(m->get2DMosaic()[beggingY+1][begginingX])  ){
-            cout<<m->get2DMosaic()[beggingY+1][begginingX]<<endl;
             hadDown=true;
             beggingY++;
             score++;
@@ -703,7 +706,6 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
        
     while (CANgL) {     
         if(begginingX>0 && m->validTile(m->get2DMosaic()[beggingY][begginingX-1])){
-            cout<<m->get2DMosaic()[beggingY][begginingX-1]<<endl;
             hadLeft=true;
             begginingX--;
             score++;
@@ -744,7 +746,10 @@ void GameEngine::brokenScore(shared_ptr<Player> player){
     } else {
         (*player).setPoints(prevScore+lostPoints);
     }
-    cout<<"Players/ "<<(*player).getName()<<" Final Points :"<<(*player).getPoints()<<endl;
+    
+    cout<<"Player: "<<(*player).getName()<<" Final Points :"<<(*player).getPoints()<<endl;
+    cout << endl;
+    
 }
 
 void GameEngine::fillBoxLid() {

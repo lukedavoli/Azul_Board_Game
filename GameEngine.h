@@ -63,9 +63,13 @@ private:
     shared_ptr<Player> activePlayer;
     shared_ptr<FactoryZero> factoryZero;
 
+    // To check whether the factories ( or other objects ) have been created on the heap.
     bool initialised;
-    Factory* factories[MAX_FACTORY_NUM];
 
+    Factory* factories[MAX_FACTORY_NUM];
+    void deleteFactories();
+
+    // Methods to load data in.
     void init();
     void loadPlayerNames(istream& inStream, string line);
     void loadPoints(istream& inStream, int points);
@@ -76,11 +80,16 @@ private:
     void loadBrokenStorage(istream& inStream, string strStorage, shared_ptr<Player> player);
     void loadBag(istream& inStream, string strBag);
     void loadBoxLid(istream& inStream, string strLid);
-    void deleteFactories();
 
+    // Prints all the values from loading the file in.
     void printValues();
+
+    // Checks if character is valid (valid chars = 'B', 'Y', 'R', 'U', 'L', 'F', '.')
     bool validChar(char c);
+
+    // Saves the data into a file.
     void saveGame(string filename);
+
     string factoriesToString();
     bool validateTurn(int factory, char tile, char row);
     bool validTileInRow(char tile, char row);
@@ -95,7 +104,11 @@ private:
 
     void fillFactories();
 
+    // Moves the tiles at the end of round and scores.
     void moveTilesAndScore(shared_ptr<Player> player);
+
+    // Moves the excess tiles from a full storage row to the tile bag.
+    void moveTilesToBag(int rowNum, char tile);
 
     void setActivePlayer();
 
