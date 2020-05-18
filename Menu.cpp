@@ -322,7 +322,8 @@ void Menu::validStorageSize(istream& inStream, bool* valid, int index, string li
 void Menu::validStorageRow(int i, bool* valid, string line) {
     int index = 0;
     string row = "00000";
-    for(int j = 0; j != line.size(); ++j){
+    int size = line.size();
+    for(int j = 0; j != size; ++j){
         if(j%2 == 1){
             if((line[j] != ' ') && (*valid)){
                 *valid = false;

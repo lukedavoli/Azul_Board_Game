@@ -12,7 +12,7 @@ GameEngine::~GameEngine(){
     deleteFactories();
 }
 
-void GameEngine::deleteFactories() {
+void GameEngine::deleteFactories(){
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
         delete factories[i];
     }
@@ -282,7 +282,7 @@ void GameEngine::enterGame(){
             cout << PROMPT;
             while (cmdShort && !userExit){
                 if(firstLoop){
-                    cin.ignore();
+                    getline(cin, turn);
                     firstLoop = false;
                 }
                 getline(cin, turn);
