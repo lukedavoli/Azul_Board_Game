@@ -1,15 +1,3 @@
-# Test for 1 Round
-./azul 7
-1
-Luke
-Michael
-1
-turn 1 L 1
-turn 2 U 2
-turn 3 R 2
-turn 4 R 3
-turn 5 U 3
-turn 0 U 4
-turn 0 Y 4
-turn 0 B 5
-turn 0 R 5
+# Test for 1 Round, seed = 7.
+./azul 7 <Testing/Commands/endOneRound-S7.txt
+
