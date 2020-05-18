@@ -26,7 +26,6 @@ char StorageRow::getOccupyingColour()
 bool StorageRow::isFull()
 {
     bool full = false;
-    std::cout << maxTiles << std::endl;
     if(maxTiles == tiles->size())
     {
         full = true;

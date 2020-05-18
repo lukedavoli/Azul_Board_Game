@@ -227,11 +227,9 @@ void GameEngine::printValues() {
     cout << "Player 1 Points: " << player1->getPoints() << endl;
     cout << "Player 2 Points: " << player2->getPoints() << endl;
     cout << "Next Turn: " << nextTurn << endl;
-
     cout << "Factory Zero: ";
     factoryZero->print();
     cout << endl;
-
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
         cout << "Factory "<< i+1 << ": ";
         factories[i]->print();
@@ -243,7 +241,6 @@ void GameEngine::printValues() {
     for(int i = 0; i < MAX_MOSAIC_ROW_NUM; ++i){
         cout << "Player 2 Mosaic Row "<< i+1 << ": " << player2->getMosaic()->getRow(i+1) << endl;
     }
-    
     for(int i = 0; i < MAX_STORAGE_NUM; ++i) {
         cout << "Player 1 Storage Row "  << i+1 << ": ";
         player1->getStorageRow(i+1)->print();
@@ -322,7 +319,11 @@ void GameEngine::enterGame(){
                         } else {
                             performTurn(player2,factory, tile, row);
                         }
-                        
+                        /* If the factories are empty 
+                            Proceed to move tiles and score
+                            Display each player's board
+                            Refill the factories if the tile bag is empty
+                            Otherwise refill the bag first, then the factories. */
                         if(emptyFactories()){
                             moveTilesAndScore(player1);
                             moveTilesAndScore(player2);
@@ -336,6 +337,7 @@ void GameEngine::enterGame(){
                                 fillFactories();
                             } else {
                                 fillBagSequentially();
+                                fillFactories();
                             }
                         }
                         
@@ -348,6 +350,7 @@ void GameEngine::enterGame(){
 
                     } else {
                         cout << "You can't perform that move, try again..." << endl;
+                        cout << "Valid Command: " << validCommand << endl;
                     }
 
                 } else if (command == "save") {
@@ -487,8 +490,10 @@ bool GameEngine::validateTurn(int factoryN, char tile, char row) {
     bool exists=false;
   
     if(tile==RED || tile==YELLOW || tile==BLACK || tile== BLUE || tile==LIGHT_BLUE ){
-        if(factoryN>=0 && factoryN<=5 && (row=='1' || row=='2' || row=='3' || row=='4' || row=='5' || row=='B')){
-           validInput=true;
+        if(factoryN>=0 && factoryN<=5) {
+            if(row=='1' || row=='2' || row=='3' || row=='4' || row=='5' || row=='B'){
+                 validInput=true;
+            }
         }
     }
      
@@ -507,7 +512,7 @@ bool GameEngine::validateTurn(int factoryN, char tile, char row) {
             validTurn = true;
         }
     }
-    
+
     return validTurn;
 }
 
@@ -578,7 +583,7 @@ void GameEngine::performTurn(shared_ptr<Player> player,int factoryN, char tile, 
     // char tileC=tile;
     int timesInZ=(*factoryZero).getNumOfCoulour(std::move(tileE));
 
-    if(row=='B')
+    if(row == BROKEN_ROW)
     {
         char test10=tile;
         char test12=tile;
@@ -604,7 +609,9 @@ void GameEngine::performTurn(shared_ptr<Player> player,int factoryN, char tile, 
                 (*factories[factoryN-1]).removeTile(move(test15),factoryZero);
             }
         }
-    } else {
+    // Else Statement on next line to prevent code from segfaulting (When player 
+    // tries to move a tile to their Broken Storage).
+    } else if(row != BROKEN_ROW){
         int avLength = r-player->getStorageRow(r)->getLength();
         if(factoryN==0 && row!='B') {
             if(timesInZ<=avLength){
