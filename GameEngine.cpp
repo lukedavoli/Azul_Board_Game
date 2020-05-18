@@ -320,9 +320,8 @@ void GameEngine::enterGame(){
                             performTurn(player2,factory, tile, row);
                         }
                         /* If the factories are empty 
-                            Proceed to move tiles and score
-                            Display each player's board
-                            Refill the factories if the tile bag is empty
+                            Proceed to move tiles and score and display the player's board.
+                            Refill the factories if the tile bag is empty.
                             Otherwise refill the bag first, then the factories. */
                         if(emptyFactories()){
                             moveTilesAndScore(player1);
@@ -350,7 +349,6 @@ void GameEngine::enterGame(){
 
                     } else {
                         cout << "You can't perform that move, try again..." << endl;
-                        cout << "Valid Command: " << validCommand << endl;
                     }
 
                 } else if (command == "save") {
@@ -512,6 +510,11 @@ bool GameEngine::validateTurn(int factoryN, char tile, char row) {
             validTurn = true;
         }
     }
+
+    // if ((exists && validTileInRow(tile,row)) ||( row=='B' && exists)  )
+    // {
+    //     validTurn=true;
+    // }
 
     return validTurn;
 }
