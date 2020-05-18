@@ -122,9 +122,9 @@ void LinkedList::removeBack()
 
 void LinkedList::removeFront()
 {
-    Node *toDelete = head;
-    head = head->next;
-    delete toDelete;
+   Node* current = head->next;
+   delete head;
+   head = current;
     if (size() > 0)
     {
         this->length--;

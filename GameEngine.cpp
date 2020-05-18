@@ -311,7 +311,7 @@ void GameEngine::enterGame(){
                     int factory = turn[5]-'0'; // Subtract '0' for ASCII conversion
                     char tile =   turn[7];
                     char row =  turn[9];
-
+                    // player1->getStorageRow()->clearCompleteRow()
                     if(validateTurn(factory, tile, row)) {
                         validCommand = true;
                         if (this->nextTurn.compare(player1->getName())==0){
@@ -384,10 +384,14 @@ void GameEngine::moveTilesAndScore(shared_ptr<Player> player) {
             player->getMosaic()->insertRow(rowNum, tile);
             score(player,rowNum,tile);
             moveStorageTilesToBox(rowNum, tile);
-            player->getStorageRow(rowNum)->resetRow();
+            player->getStorageRow(rowNum)->clearCompleteRow();
+            
+
         }
+         
     }
-    brokenScore(player);
+
+    brokenScore(player);  
     moveBrokenTilesToBox(player);
     player->getBroken()->clearRow();
 }
