@@ -56,11 +56,11 @@ Factories:
 5: . . . .
 
 P-Body's board:
-1:         L || b y R U l
-2:       Y Y || l b y R U
-3:     R R R || u l b Y r
-4:   . . . . || r u l B y
-5: . . . . . || y r u l b
+1:         L  || b y R U l
+2:       Y Y  || l b y R U
+3:     R R R  || u l b Y r
+4:   . . . .  || r u l B y
+5: . . . . .  || y r u l b
 broken: F
 > Menu
 ----
