@@ -26,7 +26,9 @@ char StorageRow::getOccupyingColour()
 bool StorageRow::isFull()
 {
     bool full = false;
-    if(maxTiles == tiles->size())
+    int occupied = getOccupied();
+    
+    if(maxTiles == occupied)
     {
         full = true;
     }
@@ -87,6 +89,17 @@ string StorageRow::toString() {
     }
 
     return row;
+}
+
+int StorageRow::getOccupied(){
+    int occupied = 0;
+    int size = tiles->size();
+    for(int i = 0; i < size; i++){
+        if(getTileAt(i) != '.'){
+            occupied++;
+        }
+    }
+    return occupied;
 }
 
 

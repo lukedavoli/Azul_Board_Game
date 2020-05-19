@@ -551,7 +551,7 @@ bool GameEngine::validTileInRow(char tile, char storageRow){
                 }  
             }
             if (!exists && !player1->getStorageRow(rowNum)->isFull()){
-                if (player1->getStorageRow(rowNum)->getLength()==0){
+                if (player1->getStorageRow(rowNum)->getOccupied()==0){
                     valid=true;
                 } else if (player1->getStorageRow(rowNum)->getOccupyingColour()==tile){
                     valid=true;
@@ -565,7 +565,7 @@ bool GameEngine::validTileInRow(char tile, char storageRow){
                 } 
             }
             if (!exists && !player2->getStorageRow(rowNum)->isFull()){
-                if (player2->getStorageRow(rowNum)->getLength()==0){
+                if (player2->getStorageRow(rowNum)->getOccupied()==0){
                     valid=true;
                 } else if (player2->getStorageRow(rowNum)->getOccupyingColour()==tile){
                     valid=true;

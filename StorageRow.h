@@ -44,6 +44,8 @@ public:
 
     void print();
 
+    int getOccupied();
+
 private:
     shared_ptr<LinkedList> tiles;
     int maxTiles;
