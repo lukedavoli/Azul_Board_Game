@@ -56,11 +56,11 @@ Factories:
 5: L R Y R
 
 Ellie's board:
-1:         . || b y r u l
-2:       . . || l b y r u
-3:     . . . || u l b y r
-4:   B B B B || r u l b y
-5: . . . . . || y r u l b
+1:         .  || b y r u l
+2:       . .  || l b y r u
+3:     . . .  || u l b y r
+4:   B B B B  || r u l b y
+5: . . . . .  || y r u l b
 broken: 
 > Menu
 ----
