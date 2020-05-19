@@ -324,8 +324,10 @@ void GameEngine::enterGame(){
                         validCommand = true;
                         if (this->nextTurn.compare(player1->getName())==0){
                             performTurn(player1,factory, tile, row);
+                            nextTurn = player2->getName();
                         } else {
                             performTurn(player2,factory, tile, row);
+                            nextTurn = player1->getName();
                         }
                         /* If the factories are empty 
                             Proceed to move tiles and score and display the player's board.
@@ -346,13 +348,12 @@ void GameEngine::enterGame(){
                                 fillBagSequentially();
                                 fillFactories();
                             }
-                        }
-                        
-
-                        if (this->nextTurn.compare(player1->getName())==0){
-                            nextTurn = player2->getName();
-                        } else{
-                            nextTurn = player1->getName();
+                            if(player1->getBroken()->hasFirstPlayerMarker()){
+                                nextTurn = player1->getName();
+                            }else{
+                                nextTurn = player2->getName();
+                            }
+                            
                         }
 
                     } else {

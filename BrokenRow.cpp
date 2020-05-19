@@ -46,6 +46,17 @@ void BrokenRow::print() {
     tiles->print();
 }
 
+bool BrokenRow::hasFirstPlayerMarker(){
+    bool hasF = false;
+    int size = tiles->size();
+    for(int i = 0; i < size; i++){
+        if(getTileAt(i) == 'F'){
+            hasF = true;
+        }
+    }
+    return hasF;
+}
+
 string BrokenRow::toString(){
     string strBroken = "";
     int brokenTiles = getLength();

@@ -35,6 +35,8 @@ public:
     void print();
     string toString();
 
+    bool hasFirstPlayerMarker();
+
 private:
     shared_ptr<LinkedList> tiles;
 
