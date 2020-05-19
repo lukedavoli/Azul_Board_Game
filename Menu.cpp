@@ -177,13 +177,14 @@ void Menu::validFactoryZero(istream& inStream, bool* valid){
     string line = "";
     if(*valid == true){
         getline(inStream, line);
-        for(string::iterator c = line.begin(); c != line.end(); ++c){
-            if(*c != ' ' || *c != '\n' || *c != '\r'){
-                validFacZandBrokenChar(*c, valid);
+        if(line.size() != 0){
+            for(string::iterator c = line.begin(); c != line.end(); ++c){
+                if(*c != ' ' || *c != '\n' || *c != '\r'){
+                    validFacZandBrokenChar(*c, valid);
+                }
             }
         }
     }
-   
 }
 
 void Menu::validFactory(istream& inStream, bool* valid) {
@@ -373,7 +374,7 @@ void Menu::validBrokenStorage(istream& inStream, bool* valid){
             if(line.size() > MAX_CHARS_FOR_BROKEN){
                 *valid = false;
                 cout << "Error - Invalid Broken Storage Size: " << line.size() << endl;
-            } else if(*valid){
+            } else if(*valid && line.size() != 0){
                 for(string::iterator c = line.begin(); c != line.end(); ++c){
                     if(*c != ' ' || *c != '\n' || *c != '\r'){
                         validFacZandBrokenChar(*c, valid);
@@ -391,7 +392,7 @@ void Menu::validBag(istream& inStream, bool* valid){
         if(line.size() > MAX_CHARS_FOR_BAG) {
             *valid = false;
             cout << "Error - Invalid Bag Size: " << line.size() << endl;
-        } else if(*valid){
+        } else if(*valid && line.size() != 0){
             for(string::iterator c = line.begin(); c != line.end(); ++c){
                 if(*c != ' ' || *c != '\n' || *c != '\r'){
                     validBoxOrBagChar(*c, valid);
@@ -408,7 +409,7 @@ void Menu::validBoxLid(istream& inStream, bool* valid) {
         if(line.size() > MAX_CHARS_FOR_BOX) {
             *valid = false;
             cout << "Error - Invalid Lid Size: " << line.size() << endl;
-        } else if(*valid){
+        } else if(*valid && line.size() != 0){
             for(string::iterator c = line.begin(); c != line.end(); ++c){
                 if(*c != ' ' || *c != '\n' || *c != '\r'){
                     validBoxOrBagChar(*c, valid);
