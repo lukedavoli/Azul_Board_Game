@@ -1,3 +1,2 @@
 # Test for 1 Round, seed = 7.
 ./azul 7 <Testing/Commands/endOneRound-S7.txt
-

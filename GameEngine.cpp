@@ -170,7 +170,7 @@ void GameEngine::loadStorageRows(istream& inStream, string strStorage, shared_pt
         getline(inStream, strStorage);
         player->getStorageRow(i+1)->clearCompleteRow();
         for(string::iterator c = strStorage.begin(); c != strStorage.end(); ++c){
-            if(validChar(*c)){
+            if(validStorageChar(*c)){
                 char tile = *c;
                 player->getStorageRow(i+1)->addTile(move(tile));
             }
@@ -215,6 +215,14 @@ void GameEngine::loadBoxLid(istream& inStream, string strLid){
 bool GameEngine::validChar(char c) {
     bool valid = false;
     if(c == BLUE || c == YELLOW || c == RED || c == BLACK || c == LIGHT_BLUE || c == FIRST_PLAYER_MARKER || c == EMPTY){
+        valid = true;
+    }
+    return valid;
+}
+
+bool GameEngine::validStorageChar(char c) {
+    bool valid = false;
+    if(c == BLUE || c == YELLOW || c == RED || c == BLACK || c == LIGHT_BLUE) {
         valid = true;
     }
     return valid;

@@ -89,6 +89,9 @@ private:
     // Checks if character is valid (valid chars = 'B', 'Y', 'R', 'U', 'L', 'F', '.')
     bool validChar(char c);
 
+    // Checks if a storage character is valid ( valid chars = 'B', 'Y', 'R', 'U', 'L')
+    bool validStorageChar(char c);
+    
     // Saves the data into a file.
     void saveGame(string filename);
 
