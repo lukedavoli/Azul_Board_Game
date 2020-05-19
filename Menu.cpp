@@ -177,7 +177,7 @@ void Menu::validFactoryZero(istream& inStream, bool* valid){
     string line = "";
     if(*valid == true){
         getline(inStream, line);
-        if(line.size() != 0){
+        if(line.size() != 0 && line.size() != 1){
             for(string::iterator c = line.begin(); c != line.end(); ++c){
                 if(*valid){
                     if(*c != ' ' && *c != '\n' && *c != '\r'){
@@ -213,7 +213,7 @@ void Menu::validFactoryChar(char c, bool* valid, int i) {
 
 void Menu::validFactoryLength(string line, bool* valid, int i) {
 
-    if(line.size() != MAX_CHARS_FOR_FACTORY) {
+    if(line.size() != MAX_CHARS_FOR_FACTORY && (line.size() != (MAX_CHARS_FOR_FACTORY + 1))) {
         *valid = false;
         cout << "Error - Invalid Factory Length: " << line.size() << " in Factory " << i+1 << endl;
     }
@@ -233,7 +233,7 @@ void Menu::validMosaics(istream& inStream, bool* valid){
         for(int i = 0; i < NUM_OF_PLAYERS; ++i){
             for(int rowNum = 0; rowNum < MAX_MOSAIC_ROW_NUM; ++rowNum){
                 getline(inStream, line);
-                if(line.size() != MAX_CHARS_FOR_MOSAIC) {
+                if(line.size() != MAX_CHARS_FOR_MOSAIC &&  (line.size() != (MAX_CHARS_FOR_MOSAIC+1))) {
                     *valid = false;
                     cout << "Error - Invalid Mosaic Size: " << line.size() << " in Mosaic Row " << rowNum+1 << endl;
                 } else if(*valid) {
@@ -308,13 +308,14 @@ void Menu::validStorage(istream& inStream, bool* valid){
 void Menu::validStorageSize(istream& inStream, bool* valid, int index, string line) {
     if(*valid == true){
         if(index == 0){
-            if(line.size() != 1){
+            if(line.size() != 1 && line.size() != 2){
                 *valid = false;
                 cout << "Error - Invalid Storage Size: "<< line.size() << " in Storage Row " << index + 1 << endl;
             }
     } else if(index > 0){
             int size = line.size();
-            if(size != 2*index + 1){
+            int expSize = (2*index + 1);
+            if(size != expSize && (size != (expSize + 1))){
                 *valid = false;
                 cout << "Error - Invalid Storage Size: "<< line.size() << " in Storage Row " << index + 1 << endl;
             }
@@ -376,7 +377,7 @@ void Menu::validBrokenStorage(istream& inStream, bool* valid){
             if(line.size() > MAX_CHARS_FOR_BROKEN){
                 *valid = false;
                 cout << "Error - Invalid Broken Storage Size: " << line.size() << endl;
-            } else if(*valid && line.size() != 0){
+            } else if(*valid && line.size() != 0 && line.size() != 1){
                 for(string::iterator c = line.begin(); c != line.end(); ++c){
                     if(*valid){
                         if(*c != ' ' || *c != '\n' || *c != '\r'){
@@ -396,7 +397,7 @@ void Menu::validBag(istream& inStream, bool* valid){
         if(line.size() > MAX_CHARS_FOR_BAG) {
             *valid = false;
             cout << "Error - Invalid Bag Size: " << line.size() << endl;
-        } else if(*valid && line.size() != 0){
+        } else if(*valid && line.size() != 0 && line.size() != 1){
             for(string::iterator c = line.begin(); c != line.end(); ++c){
                 if(*valid){
                     if(*c != ' ' && *c != '\n' && *c != '\r'){
@@ -415,7 +416,7 @@ void Menu::validBoxLid(istream& inStream, bool* valid) {
         if(line.size() > MAX_CHARS_FOR_BOX) {
             *valid = false;
             cout << "Error - Invalid Lid Size: " << line.size() << endl;
-        } else if(*valid && line.size() != 0){
+        } else if(*valid && line.size() != 0 &&  line.size() != 1){
             for(string::iterator c = line.begin(); c != line.end(); ++c){
                 if(*valid){
                     if(*c != ' ' && *c != '\n' && *c != '\r'){
