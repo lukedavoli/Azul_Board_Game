@@ -179,8 +179,10 @@ void Menu::validFactoryZero(istream& inStream, bool* valid){
         getline(inStream, line);
         if(line.size() != 0){
             for(string::iterator c = line.begin(); c != line.end(); ++c){
-                if(*c != ' ' || *c != '\n' || *c != '\r'){
-                    validFacZandBrokenChar(*c, valid);
+                if(*valid){
+                    if(*c != ' ' && *c != '\n' && *c != '\r'){
+                        validFacZandBrokenChar(*c, valid);
+                    }
                 }
             }
         }
@@ -194,7 +196,7 @@ void Menu::validFactory(istream& inStream, bool* valid) {
         getline(inStream, line);
         validFactoryLength(line, valid, i);
             for(string::iterator c = line.begin(); c != line.end(); ++c){
-                if(*c != ' '){
+                if(*c != ' ' && *c != '\n' && *c != '\r'){
                     validFactoryChar(*c, valid, i);
                 }
             }
@@ -326,7 +328,7 @@ void Menu::validStorageRow(int i, bool* valid, string line) {
     int size = line.size();
     for(int j = 0; j != size; ++j){
         if(j%2 == 1){
-            if((line[j] != ' ') && (*valid)){
+            if((line[j] != ' ' && line[j] != '\n' && line[j] != '\r') && (*valid)){
                 *valid = false;
                 cout << "Error - Invalid Storage Character: " 
                 << line[j] << " in Storage Row " << i+1 << endl;
@@ -376,8 +378,10 @@ void Menu::validBrokenStorage(istream& inStream, bool* valid){
                 cout << "Error - Invalid Broken Storage Size: " << line.size() << endl;
             } else if(*valid && line.size() != 0){
                 for(string::iterator c = line.begin(); c != line.end(); ++c){
-                    if(*c != ' ' || *c != '\n' || *c != '\r'){
+                    if(*valid){
+                        if(*c != ' ' || *c != '\n' || *c != '\r'){
                         validFacZandBrokenChar(*c, valid);
+                        }
                     }
                 }
             }
@@ -394,8 +398,10 @@ void Menu::validBag(istream& inStream, bool* valid){
             cout << "Error - Invalid Bag Size: " << line.size() << endl;
         } else if(*valid && line.size() != 0){
             for(string::iterator c = line.begin(); c != line.end(); ++c){
-                if(*c != ' ' || *c != '\n' || *c != '\r'){
-                    validBoxOrBagChar(*c, valid);
+                if(*valid){
+                    if(*c != ' ' && *c != '\n' && *c != '\r'){
+                        validBoxOrBagChar(*c, valid);
+                    }
                 }
             }
         }
@@ -411,9 +417,12 @@ void Menu::validBoxLid(istream& inStream, bool* valid) {
             cout << "Error - Invalid Lid Size: " << line.size() << endl;
         } else if(*valid && line.size() != 0){
             for(string::iterator c = line.begin(); c != line.end(); ++c){
-                if(*c != ' ' || *c != '\n' || *c != '\r'){
-                    validBoxOrBagChar(*c, valid);
+                if(*valid){
+                    if(*c != ' ' && *c != '\n' && *c != '\r'){
+                        validBoxOrBagChar(*c, valid);
+                    }
                 }
+                
             }
         }
     }
