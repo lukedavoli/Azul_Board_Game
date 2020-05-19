@@ -178,7 +178,7 @@ void Menu::validFactoryZero(istream& inStream, bool* valid){
     if(*valid == true){
         getline(inStream, line);
         for(string::iterator c = line.begin(); c != line.end(); ++c){
-            if(*c != ' '){
+            if(*c != ' ' || *c != '\n' || *c != '\r'){
                 validFacZandBrokenChar(*c, valid);
             }
         }
@@ -375,7 +375,7 @@ void Menu::validBrokenStorage(istream& inStream, bool* valid){
                 cout << "Error - Invalid Broken Storage Size: " << line.size() << endl;
             } else if(*valid){
                 for(string::iterator c = line.begin(); c != line.end(); ++c){
-                    if(*c != ' '){
+                    if(*c != ' ' || *c != '\n' || *c != '\r'){
                         validFacZandBrokenChar(*c, valid);
                     }
                 }
@@ -393,7 +393,7 @@ void Menu::validBag(istream& inStream, bool* valid){
             cout << "Error - Invalid Bag Size: " << line.size() << endl;
         } else if(*valid){
             for(string::iterator c = line.begin(); c != line.end(); ++c){
-                if(*c != ' '){
+                if(*c != ' ' || *c != '\n' || *c != '\r'){
                     validBoxOrBagChar(*c, valid);
                 }
             }
@@ -410,7 +410,7 @@ void Menu::validBoxLid(istream& inStream, bool* valid) {
             cout << "Error - Invalid Lid Size: " << line.size() << endl;
         } else if(*valid){
             for(string::iterator c = line.begin(); c != line.end(); ++c){
-                if(*c != ' '){
+                if(*c != ' ' || *c != '\n' || *c != '\r'){
                     validBoxOrBagChar(*c, valid);
                 }
             }
