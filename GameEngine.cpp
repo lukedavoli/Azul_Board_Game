@@ -421,7 +421,7 @@ bool GameEngine::endGame() {
 
 bool GameEngine::completeMosaic(shared_ptr<Player> player) {
    bool completed = false;
-   if(completeRow(player) || completeCol(player)){
+   if(completeRow(player)){
        completed = true;
    }
    return completed;
@@ -434,27 +434,15 @@ bool GameEngine::completeRow(shared_ptr<Player> player){
         counter = 0;
         for(int col = 0; col < MAX_MOSAIC_COL_NUM; ++col){
             char tile = player->getMosaic()->get2DMosaic()[row][col];
-            checkRowORCol(tile, &completed, &counter, &row, &col);
-        }
-    }
-    return completed;
-}
-
-bool GameEngine::completeCol(shared_ptr<Player> player){
-    bool completed = false;
-    int counter = 0;
-    for(int col = 0; col < MAX_MOSAIC_COL_NUM; ++col){
-        counter = 0;
-        for(int row = 0; row < MAX_MOSAIC_ROW_NUM; ++row){
-            char tile = player->getMosaic()->get2DMosaic()[row][col];
-            checkRowORCol(tile, &completed, &counter, &row, &col);
+            checkRow(tile, &completed, &counter, &row, &col);
         }
     }
     return completed;
 }
 
 
-void GameEngine::checkRowORCol(char tile, bool* completed, int* counter, int* row, int* col){
+
+void GameEngine::checkRow(char tile, bool* completed, int* counter, int* row, int* col){
     if(tile == toupper(tile)){
         (*counter)++;
     }
