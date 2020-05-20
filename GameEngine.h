@@ -110,8 +110,7 @@ private:
     // Checks a player's mosaic to see if a row/col is completed.
     bool completeMosaic(shared_ptr<Player> player); 
     bool completeRow(shared_ptr<Player> player);
-    bool completeCol(shared_ptr<Player> player);
-    void checkRowORCol(char tile, bool* completed, int* counter, int* row, int* col);
+    void checkRow(char tile, bool* completed, int* counter, int* row, int* col);
 
     void fillBoxLid();
 

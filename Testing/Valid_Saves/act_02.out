@@ -1,0 +1,73 @@
+Welcome to Azul!
+-------------------
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits
+4. Quit
+
+> 
+Enter the filename from which to load the game
+> Loading game...
+Player 1 Name: Jon
+Player 2 Name: Arya
+Player 1 Points: 4
+Player 2 Points: 5
+Next Turn: Jon
+Factory Zero: B B L L U U Y Y R R 
+Factory 1: . . . . 
+Factory 2: . . . . 
+Factory 3: . . . . 
+Factory 4: . . . . 
+Factory 5: . . . . 
+Player 1 Mosaic Row 1: B Y R U l
+Player 1 Mosaic Row 2: l b y r u
+Player 1 Mosaic Row 3: u l b y r
+Player 1 Mosaic Row 4: r u l b y
+Player 1 Mosaic Row 5: y r u l b
+Player 2 Mosaic Row 1: B Y r u l
+Player 2 Mosaic Row 2: L B Y r u
+Player 2 Mosaic Row 3: u l b y r
+Player 2 Mosaic Row 4: r u l b y
+Player 2 Mosaic Row 5: y r u l b
+Player 1 Storage Row 1: L 
+Player 1 Storage Row 2: 
+Player 1 Storage Row 3: 
+Player 1 Storage Row 4: 
+Player 1 Storage Row 5: 
+Player 2 Storage Row 1: 
+Player 2 Storage Row 2: 
+Player 2 Storage Row 3: 
+Player 2 Storage Row 4: 
+Player 2 Storage Row 5: 
+Player 1 Broken Tiles: F 
+Player 2 Broken Tiles: 
+Bag: B R L U U U Y Y R L B B L L U U Y Y R R U B L L U U Y Y R R L L L B B L L U U Y Y R R B B L L U U Y Y R R Y Y Y L R R R B B B B B U U U R R
+Box Lid: B B L L U U Y Y R R 
+Seed: 2
+TURN FOR PLAYER: Jon
+Factories: 
+0: B B L L U U Y Y R R
+1: . . . .
+2: . . . .
+3: . . . .
+4: . . . .
+5: . . . .
+
+Jon's board:
+1:         L  || B Y R U l
+2:       . .  || l b y r u
+3:     . . .  || u l b y r
+4:   . . . .  || r u l b y
+5: . . . . .  || y r u l b
+broken: F
+> Menu
+----
+1. New Game
+2. Load Game
+3. Credits
+4. Quit
+
+> 
+Goodbye
