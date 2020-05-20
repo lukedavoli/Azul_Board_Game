@@ -15,7 +15,31 @@ cd ..
 
 # Testing Valid Save02
 ./azul <Testing/Commands/LoadingValidFile02.txt >Testing/Valid_Saves/act_02.out
+cd Testing/Valid_Saves
+diff act_02.out  exp_02.out
+cd ..
+cd ..
 
+#Testing Valid Save03
+./azul <Testing/Commands/LoadingValidFile03.txt >Testing/Valid_Saves/act_03.out
+cd Testing/Valid_Saves
+diff act_02.out  exp_02.out
+cd ..
+cd ..
+
+#Testing Valid Save04
+./azul <Testing/Commands/LoadingValidFile04.txt >Testing/Valid_Saves/act_04.out
+cd Testing/Valid_Saves
+diff act_04.out  exp_04.out
+cd ..
+cd ..
+
+#Testing Valid Save05
+./azul <Testing/Commands/LoadingValidFile05.txt >Testing/Valid_Saves/act_05.out
+cd Testing/Valid_Saves
+diff act_05.out  exp_05.out
+cd ..
+cd ..
 
 # Testing Invalid Save - Invalid Next Player:  "Handsome_Jack"
 ./azul <Testing/Commands/LoadingInvalidNextPlayer.txt >Testing/Invalid_Saves/act_invalid_nextPlayer.out

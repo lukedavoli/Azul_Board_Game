@@ -8,6 +8,17 @@ cd ..
 # Test for Loading "valid_save02" and playing until end of game.
 ./azul <Testing/Commands/LoadSave02AndPlay.txt
 
+# Test for Loading "valid_save03" and playing until end of game.
+./azul <Testing/Commands/LoadSave03AndPlay.txt
+
+# Test for Loading "valid_save04" and playing until end of game.
+./azul <Testing/Commands/LoadSave04AndPlay.txt
+
+# Test for Loading "valid_save05" and playing until end of game.
+./azul <Testing/Commands/LoadSave05AndPlay.txt
+
+
+
 
 
 

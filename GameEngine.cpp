@@ -509,8 +509,8 @@ void GameEngine::bonusPoints(shared_ptr<Player> player){
         bonusPoints+=10;
     }
     int prevScore= player->getPoints();
-    cout<<prevScore<<endl;
-    cout<<bonusPoints<<endl;
+    // cout<<prevScore<<endl;
+    // cout<<bonusPoints<<endl;
     player->setPoints(prevScore+bonusPoints);
     
     

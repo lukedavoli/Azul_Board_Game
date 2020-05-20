@@ -1,0 +1,132 @@
+Welcome to Azul!
+-------------------
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits
+4. Quit
+
+> 
+Enter the filename from which to load the game
+> Loading game...
+Player 1 Name: Booker
+Player 2 Name: Elizabeth
+Player 1 Points: 5
+Player 2 Points: 6
+Next Turn: Elizabeth
+Factory Zero: Y Y Y R B B B B Y 
+Factory 1: . . . . 
+Factory 2: . . . . 
+Factory 3: . . . . 
+Factory 4: . . . . 
+Factory 5: . . . . 
+Player 1 Mosaic Row 1: B y r U L
+Player 1 Mosaic Row 2: l b y r U
+Player 1 Mosaic Row 3: u l b y r
+Player 1 Mosaic Row 4: r u l b y
+Player 1 Mosaic Row 5: y r u l b
+Player 2 Mosaic Row 1: B y r u l
+Player 2 Mosaic Row 2: L B Y r U
+Player 2 Mosaic Row 3: u l b y r
+Player 2 Mosaic Row 4: r u l b y
+Player 2 Mosaic Row 5: y r u l b
+Player 1 Storage Row 1: 
+Player 1 Storage Row 2: 
+Player 1 Storage Row 3: 
+Player 1 Storage Row 4: 
+Player 1 Storage Row 5: 
+Player 2 Storage Row 1: 
+Player 2 Storage Row 2: R R 
+Player 2 Storage Row 3: 
+Player 2 Storage Row 4: 
+Player 2 Storage Row 5: 
+Player 1 Broken Tiles: F 
+Player 2 Broken Tiles: 
+Bag: B R L U U L L U Y R L B B L L U U Y Y R R U B L L U U Y Y R R U U Y L L L B B L L U U Y Y R R B B L L U U Y Y R R Y Y Y L R R R B B B B B U U U R R
+Box Lid: Y Y R R L L 
+Seed: 2
+TURN FOR PLAYER: Elizabeth
+Factories: 
+0: Y Y Y R B B B B Y
+1: . . . .
+2: . . . .
+3: . . . .
+4: . . . .
+5: . . . .
+
+Elizabeth's board:
+1:         .  || B y r u l
+2:       R R  || L B Y r U
+3:     . . .  || u l b y r
+4:   . . . .  || r u l b y
+5: . . . . .  || y r u l b
+broken: 
+> TURN FOR PLAYER: Booker
+Factories: 
+0: R B B B B
+1: . . . .
+2: . . . .
+3: . . . .
+4: . . . .
+5: . . . .
+
+Booker's board:
+1:         .  || B y r U L
+2:       . .  || l b y r U
+3:     . . .  || u l b y r
+4:   . . . .  || r u l b y
+5: . . . . .  || y r u l b
+broken: F
+> TURN FOR PLAYER: Elizabeth
+Factories: 
+0: R
+1: . . . .
+2: . . . .
+3: . . . .
+4: . . . .
+5: . . . .
+
+Elizabeth's board:
+1:         .  || B y r u l
+2:       R R  || L B Y r U
+3:     . . .  || u l b y r
+4:   Y Y Y Y  || r u l b y
+5: . . . . .  || y r u l b
+broken: 
+> ------------
+END OF ROUND
+------------
+
+Player: Booker | Final Points : 5
+Player: Elizabeth | Final Points : 14
+
+Booker's Board
+1:         .  || B y r U L
+2:       . .  || l b y r U
+3:     . . .  || u l b y r
+4:   . . . .  || r u l B y
+5: . . . . .  || y r u l b
+broken: 
+Elizabeth's Board
+1:         .  || B y R u l
+2:       . .  || L B Y R U
+3:     . . .  || u l b y r
+4:   . . . .  || r u l b Y
+5: . . . . .  || y r u l b
+broken: 
+----------------------------
+******************************
+Player 2 Wins!
+Player 1: Booker's points: 5
+Player 2: Elizabeth's points: 16
+******************************
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits
+4. Quit
+
+> 
+Goodbye
