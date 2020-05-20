@@ -6,7 +6,7 @@ cd ..
 cd ..
 
 # Test for Loading "valid_save02" and playing until end of game.
-./azul <Testing/Commands/LoadSave02AndPlay.txt >Testing/GameTest
+./azul <Testing/Commands/LoadSave02AndPlay.txt
 
 
 
