@@ -1,10 +1,17 @@
 # Test for 1 Round, seed = 7.
 ./azul 7 <Testing/Commands/endOneRound-S7.txt
+cd Testing/GameTest
+diff act-endOneRound-S7.out exp-endOneRound-S7.out
+cd ..
+cd ..
 
 # Test for Loading "valid_save00" and playing until end of game.
 ./azul <Testing/Commands/LoadSave00AndPlay.txt
 
 # Test for Loading "valid_save01" and playing until end of game.
 ./azul <Testing/Commands/LoadSave01AndPlay.txt
+
+
+
 
 
