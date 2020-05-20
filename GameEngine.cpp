@@ -362,7 +362,11 @@ void GameEngine::enterGame(){
                             }else{
                                 nextTurn = player2->getName();
                             }
-                            
+                            completeRow = endGame(); 
+                            if(completeRow){
+                                displayWinner();
+                            }
+                             
                         }
 
                     } else {
@@ -395,6 +399,71 @@ void GameEngine::enterGame(){
         }
     }
 }
+void GameEngine::displayWinner() {
+    cout << "******************************" << endl;
+    if(player1->getPoints() > player2->getPoints()){
+        cout << "Player 1 Wins!" << endl;
+    } else {
+        cout << "Player 2 Wins!" << endl;
+    }
+    cout << "Player 1: " << player1->getName() << "'s points: " <<  player1->getPoints() << endl;
+    cout << "Player 2: " << player2->getName() << "'s points: " <<  player2->getPoints() << endl;
+    cout << "******************************" << endl;
+}
+
+bool GameEngine::endGame() {
+    bool end = false;
+    if(completeMosaic(player1) || completeMosaic(player2)) {
+        end = true;
+    }
+    return end;
+}
+
+bool GameEngine::completeMosaic(shared_ptr<Player> player) {
+   bool completed = false;
+   if(completeRow(player) || completeCol(player)){
+       completed = true;
+   }
+   return completed;
+}
+
+bool GameEngine::completeRow(shared_ptr<Player> player){
+    bool completed = false;
+    int counter = 0;
+    for(int row = 0; row < MAX_MOSAIC_ROW_NUM; ++row){
+        counter = 0;
+        for(int col = 0; col < MAX_MOSAIC_COL_NUM; ++col){
+            char tile = player->getMosaic()->get2DMosaic()[row][col];
+            checkRowORCol(tile, &completed, &counter, &row, &col);
+        }
+    }
+    return completed;
+}
+
+bool GameEngine::completeCol(shared_ptr<Player> player){
+    bool completed = false;
+    int counter = 0;
+    for(int col = 0; col < MAX_MOSAIC_COL_NUM; ++col){
+        counter = 0;
+        for(int row = 0; row < MAX_MOSAIC_ROW_NUM; ++row){
+            char tile = player->getMosaic()->get2DMosaic()[row][col];
+            checkRowORCol(tile, &completed, &counter, &row, &col);
+        }
+    }
+    return completed;
+}
+
+
+void GameEngine::checkRowORCol(char tile, bool* completed, int* counter, int* row, int* col){
+    if(tile == toupper(tile)){
+        (*counter)++;
+    }
+    if(*counter == MAX_MOSAIC_COL_NUM) {
+        *completed = true;
+        *col = MAX_MOSAIC_COL_NUM;
+        *row = MAX_MOSAIC_ROW_NUM;
+    }
+}
 
 // Moving tiles at the end of round.
 // Under the assumption that all factories are empty.
@@ -408,15 +477,12 @@ void GameEngine::moveTilesAndScore(shared_ptr<Player> player) {
             moveStorageTilesToBox(rowNum, tile);
             player->getStorageRow(rowNum)->clearCompleteRow();
         }
-         
     }
-    
+    brokenScore(player);
     if(player->getBroken()->getLength() > 0){
-        brokenScore(player);
         moveBrokenTilesToBox(player);
         player->getBroken()->clearRow();
     }
-    
 }
 
 // Moving excess tiles from full storage rows into the box.
@@ -460,6 +526,7 @@ int GameEngine::getNumOfBoxTiles() {
     }
     return count;
 }
+
 
 void GameEngine::saveGame(string filename) {
     std::ofstream fileStream(filename);

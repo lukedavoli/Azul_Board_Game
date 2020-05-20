@@ -26,6 +26,7 @@ using std::move;
 #define MAX_FACTORY_NUM 5
 #define MAX_STORAGE_NUM 5
 #define MAX_MOSAIC_ROW_NUM 5
+#define MAX_MOSAIC_COL_NUM 5
 #define MAX_BROKEN_TILES 7
 #define MIN_BAG_TILES 20
 #define COMMAND_LENGTH 4
@@ -101,6 +102,16 @@ private:
     bool validTileInRow(char tile, char row);
     bool fileExists(string filename);
     void performTurn(shared_ptr<Player> player,int factory, char tile, char row);
+
+    // Checks both players' mosaic to see if a row/col has been completed.
+    bool endGame();
+    void displayWinner();
+    
+    // Checks a player's mosaic to see if a row/col is completed.
+    bool completeMosaic(shared_ptr<Player> player); 
+    bool completeRow(shared_ptr<Player> player);
+    bool completeCol(shared_ptr<Player> player);
+    void checkRowORCol(char tile, bool* completed, int* counter, int* row, int* col);
 
     void fillBoxLid();
 
