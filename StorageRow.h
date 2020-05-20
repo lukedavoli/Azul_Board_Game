@@ -42,6 +42,8 @@ public:
 
     string toString();
 
+    string toStringBackwards();
+
     void print();
 
     int getOccupied();

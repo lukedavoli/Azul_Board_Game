@@ -1,0 +1,16 @@
+2
+Testing/DemoTests/8save.txt
+turn 2 U 1
+turn 0 Y 2
+turn 1 L 3
+turn 3 B 4
+turn 0 R 5
+turn 4 B 4
+turn 5 R 5
+turn 0 B 4
+turn 0 L 3
+turn 0 Y 2
+turn 0 U B
+turn 4 B 1
+turn 5 B 4
+save Testing/DemoTests/8actual.out

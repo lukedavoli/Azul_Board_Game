@@ -4,7 +4,9 @@ Listed test cases are all that are intentional, however tests will
 most likely cover additional test cases inadvertently. The number in
 square brackets denotes the seed used.
 
+----------
 TEST CASES
+----------
 01. Valid turn to row 1
 02. Valid turn to row 2
 03. Valid turn to row 3
@@ -61,10 +63,14 @@ TEST CASES
 54. Bonus points calculated correctly for complete set of a colour at end of game
 55. First player to take from central factory takes F tile
 
+-----
 TESTS
+-----
 1[45]: 01, 02, 03, 04, 05, 55
 2[23]: 06, 07, 08, 09
 3[76]: 10, 11, 12
 4[91]: 13, 14, 15, 16, 17
-5[56]: 21, 20, 19, 18
-6[72]: 
+5[56]: 18, 19, 20, 21
+6[72]: 22, 23, 24, 25, 26, 27
+7[69]: 28, 29, 30, 31, 32
+8[10]: 33, 34, 35, 36

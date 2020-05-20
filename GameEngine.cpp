@@ -542,10 +542,10 @@ void GameEngine::saveGame(string filename) {
     fileStream << player1->getMosaic()->toString() << "\n"
                << player2->getMosaic()->toString() << "\n";
     for(int i = 0; i < MAX_STORAGE_NUM; i++){
-        fileStream << player1->getStorageRow(i+1)->toString() << "\n";
+        fileStream << player1->getStorageRow(i+1)->toStringBackwards() << "\n";
     }
     for(int i = 0; i < MAX_STORAGE_NUM; i++){
-        fileStream << player2->getStorageRow(i+1)->toString() << "\n";
+        fileStream << player2->getStorageRow(i+1)->toStringBackwards() << "\n";
     }
     fileStream << player1->getBroken()->toString() << "\n"
                << player2->getBroken()->toString() << "\n";

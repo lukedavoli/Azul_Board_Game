@@ -91,6 +91,25 @@ string StorageRow::toString() {
     return row;
 }
 
+string StorageRow::toStringBackwards() {
+    string row = "";
+    int size = getLength();
+
+    for(int i = 0; i < size; i++){
+        row += getTileAt(i);
+        row += " ";
+    }
+
+    for(int i = 0; i < maxTiles - size; i++){
+        row += ".";
+        if(i != maxTiles){
+            row += " ";
+        }
+    }
+
+    return row;
+}
+
 int StorageRow::getOccupied(){
     int occupied = 0;
     int size = tiles->size();
