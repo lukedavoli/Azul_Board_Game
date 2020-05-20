@@ -340,13 +340,14 @@ void GameEngine::enterGame(){
                                     "------------\n" << endl;
                             moveTilesAndScore(player1);
                             moveTilesAndScore(player2);
-                            cout << player1->getName() << ":" << endl;
-                            cout << player1->boardToString() << endl;
                             cout << endl;
-                            cout << player2->getName() << ":" << endl;
-                            cout << player2->boardToString() << endl;
+                            cout << player1->getName() << "'s Board" << endl;
+                            cout << player1->boardToString() << endl;
+                            cout << player2->getName() << "'s Board" << endl;
+                            cout << player2->boardToString() <<  endl;
+                            cout << "----------------------------" << endl;
                             factoryZero->reset();
-                            if(tileBag->size() != 0) {
+                            if(tileBag->size() >= MIN_BAG_TILES) {
                                 fillFactories();
                             } else {
                                 fillBagSequentially();
@@ -398,15 +399,16 @@ void GameEngine::moveTilesAndScore(shared_ptr<Player> player) {
             score(player,rowNum,tile);
             moveStorageTilesToBox(rowNum, tile);
             player->getStorageRow(rowNum)->clearCompleteRow();
-            
-
         }
          
     }
-
-    brokenScore(player);  
-    moveBrokenTilesToBox(player);
-    player->getBroken()->clearRow();
+    
+    if(player->getBroken()->getLength() > 0){
+        brokenScore(player);
+        moveBrokenTilesToBox(player);
+        player->getBroken()->clearRow();
+    }
+    
 }
 
 // Moving excess tiles from full storage rows into the box.
@@ -433,8 +435,11 @@ void GameEngine::moveBrokenTilesToBox(shared_ptr<Player> player){
 // Under the assumption that the bag is empty and the box is full.
 void GameEngine::fillBagSequentially() {
     int index = 0;
-    while(tileBag->size() != TOTAL_TILES) {
-        tileBag->addFront(std::move(boxLid.at(index)));
+    while(tileBag->size() != MIN_BAG_TILES) {
+        char tile = boxLid.at(index);
+        if(tile != '\0'){
+             tileBag->addFront(std::move(tile));
+        }
         ++index;
     }
     boxLid.fill('\0');
@@ -527,11 +532,6 @@ bool GameEngine::validateTurn(int factoryN, char tile, char row) {
             validTurn = true;
         }
     }
-
-    // if ((exists && validTileInRow(tile,row)) ||( row=='B' && exists)  )
-    // {
-    //     validTurn=true;
-    // }
 
     return validTurn;
 }

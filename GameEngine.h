@@ -27,7 +27,7 @@ using std::move;
 #define MAX_STORAGE_NUM 5
 #define MAX_MOSAIC_ROW_NUM 5
 #define MAX_BROKEN_TILES 7
-
+#define MIN_BAG_TILES 20
 #define COMMAND_LENGTH 4
 #define COMIN_START_INDEX 5
 #define TILE_INDEX 7
