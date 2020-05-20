@@ -1,2 +1,5 @@
 # Test for 1 Round, seed = 7.
 ./azul 7 <Testing/Commands/endOneRound-S7.txt
+
+# Test for Loading "valid_save00" and playing until end of game.
+./azul <Testing/Commands/LoadSave00AndPlay.txt
