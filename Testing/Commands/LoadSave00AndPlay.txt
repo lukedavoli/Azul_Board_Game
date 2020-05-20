@@ -4,13 +4,14 @@ turn 0 B 5
 turn 0 U 3
 turn 0 Y 4
 turn 0 L B
-turn 4 U 4
+turn 1 B 5
 turn 3 R 1
-turn 5 Y 1
-turn 2 R 4
 turn 0 B 5
-turn 1 R 5
+turn 2 L 4
+turn 4 L 4
+turn 5 R 5
+turn 0 Y 1
 turn 0 U 3
-turn 0 Y 2
-turn 0 B 2
-save ts1.out
+turn 0 L 4
+turn 0 R B
+save act-LoadSave00AndPlay.out

@@ -3,3 +3,8 @@
 
 # Test for Loading "valid_save00" and playing until end of game.
 ./azul <Testing/Commands/LoadSave00AndPlay.txt
+
+# Test for Loading "valid_save01" and playing until end of game.
+./azul <Testing/Commands/LoadSave01AndPlay.txt
+
+
