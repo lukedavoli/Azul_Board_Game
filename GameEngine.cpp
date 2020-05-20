@@ -312,6 +312,10 @@ void GameEngine::enterGame(){
 
             if(!userExit){
                 string command = turn.substr(0, COMMAND_LENGTH);
+                int turnLength = turn.length();
+                if(turn[turnLength - 1] == '\r'){
+                    turn = turn.substr(0, turn.length() - 1);
+                }
 
                 // Take action based on command and argument
                 if (command == "turn" && turn.length() == TURN_COMMAND_LENGTH) {
