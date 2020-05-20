@@ -57,7 +57,7 @@ void Mosaic::loadRow(int rowNum, string row) {
             string temp = "0 0 0 0 0";
             for(int i = 0; i < MAX_NUM_OF_CHARS; ++i){
                 if(temp[i] != ' '){
-                    temp[i] = row[1];
+                    temp[i] = row[i];
                 }
             }
             rows[rowNum-1] = temp;
