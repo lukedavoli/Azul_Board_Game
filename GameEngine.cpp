@@ -364,6 +364,8 @@ void GameEngine::enterGame(){
                             }
                             completeRow = endGame(); 
                             if(completeRow){
+                                bonusPoints(player1);
+                                bonusPoints(player2);
                                 displayWinner();
                             }
                              
@@ -419,6 +421,102 @@ bool GameEngine::endGame() {
     return end;
 }
 
+void GameEngine::bonusPoints(shared_ptr<Player> player){
+    int countRow=0;
+    int countCol=0;
+    int countBlue=0;
+    int countBlack=0;
+    int countYellow=0;
+    int countRed=0;
+    int countLB=0;
+    int bonusPoints=0;
+    
+      
+
+    for (int i = 0; i < MAX_MOSAIC_COL_NUM; i++)
+    {
+        countRow=0;
+        for (int j = 0; j < MAX_MOSAIC_ROW_NUM; j++)
+        {
+            if(player->getMosaic()->validTile( player->getMosaic()->get2DMosaic()[j][i])){
+               
+                countRow++;
+            }
+             if (countRow==5)
+             {
+              bonusPoints+=7;
+                }
+             
+        }
+        
+    }
+
+     for (int i = 0; i < MAX_MOSAIC_ROW_NUM; i++)
+    {
+        countCol=0;
+        for (int j = 0; j < MAX_MOSAIC_COL_NUM; j++)
+        {
+            if(player->getMosaic()->validTile( player->getMosaic()->get2DMosaic()[i][j])){
+                countCol++;
+            }
+            if (player->getMosaic()->get2DMosaic()[i][j]==BLACK)
+            {
+               countBlack++;
+            }
+            if (player->getMosaic()->get2DMosaic()[i][j]==YELLOW)
+            {
+               countYellow++;
+            }
+            if (player->getMosaic()->get2DMosaic()[i][j]==BLUE)
+            {
+               countBlue++;
+            }
+            if (player->getMosaic()->get2DMosaic()[i][j]==LIGHT_BLUE)
+            {
+               countLB++;
+            }
+            if (player->getMosaic()->get2DMosaic()[i][j]==RED)
+            {
+               countRed++;
+            }   
+             if (countCol==5)
+             {
+        bonusPoints+=2;
+             }
+        }
+    }
+
+   
+   
+    if (countBlack==5)
+    {
+        bonusPoints+=10;
+    }
+     if (countBlue==5)
+    {
+        bonusPoints+=10;
+    }
+     if (countLB==5)
+    {
+        bonusPoints+=10;
+    }
+     if (countRed==5)
+    {
+        bonusPoints+=10;
+    }
+     if (countYellow==5)
+    {
+        bonusPoints+=10;
+    }
+    int prevScore= player->getPoints();
+    cout<<prevScore<<endl;
+    cout<<bonusPoints<<endl;
+    player->setPoints(prevScore+bonusPoints);
+    
+    
+    
+
+}
 bool GameEngine::completeMosaic(shared_ptr<Player> player) {
    bool completed = false;
    if(completeRow(player)){

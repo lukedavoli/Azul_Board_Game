@@ -155,5 +155,7 @@ private:
 
     void brokenScore(shared_ptr<Player> player);
 
+    void bonusPoints(shared_ptr<Player> player);
+
 };
 #endif // GAMEENGINE_H
