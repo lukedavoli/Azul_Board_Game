@@ -1,10 +1,8 @@
 2
 Testing/DemoTests/1save.txt
-turn 1 R 1
-turn 2 R 2
-turn 0 B 3
-turn 3 Y 4
-turn 5 R 5
+turn 1 Y 1
+turn 3 Y 2
+turn 2 U 3
+turn 0 R 4
+turn 4 Y 5
 save Testing/DemoTests/1actual.out
-exit
-4

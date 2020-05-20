@@ -369,6 +369,10 @@ void GameEngine::enterGame(){
                     int inputLength = turn.length();
                     string filename = turn.substr(COMMAND_LENGTH + 1,
                                                   inputLength - 1 - COMMAND_LENGTH);
+                    int filenameLength = filename.length();
+                    if(filename[filenameLength - 1] == '\r'){
+                        filename = filename.substr(0, filenameLength - 1);
+                    }
                     saveGame(filename);
                     cout << "Game saved." << endl;
                 }else if(command == "exit"){
