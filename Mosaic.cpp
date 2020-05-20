@@ -53,7 +53,7 @@ void Mosaic::loadRow(int rowNum, string row) {
     if(validRowNum(rowNum)) {
         if(row.size() == MAX_NUM_OF_CHARS){
             rows[rowNum-1] = row;
-        } else if(row.size() == MAX_NUM_OF_CHARS + 1) {
+        } else if(row.size() == (MAX_NUM_OF_CHARS + 1)) {
             string temp = "000000000";
             for(int i = 0; i < MAX_NUM_OF_CHARS; ++i){
                 temp[i] = row[1];
