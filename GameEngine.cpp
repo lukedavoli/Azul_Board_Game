@@ -112,8 +112,8 @@ void GameEngine::loadGame(string filename){
     loadStorageRows(inStream, line, player2);
     loadBrokenStorage(inStream, line, player1);
     loadBrokenStorage(inStream, line, player2);
-    loadBag(inStream, line);
     loadBoxLid(inStream, line);
+    loadBag(inStream, line);
     inStream >> seed;
     
     inStream.close();
@@ -314,7 +314,7 @@ void GameEngine::enterGame(){
                 string command = turn.substr(0, COMMAND_LENGTH);
 
                 // Take action based on command and argument
-                if (command == "turn") {
+                if (command == "turn" && turn.length() == TURN_COMMAND_LENGTH) {
 
                     //seperate arguments into factory, tile and row
                     int factory = turn[5]-'0'; // Subtract '0' for ASCII conversion

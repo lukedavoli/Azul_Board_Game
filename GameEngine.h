@@ -29,6 +29,7 @@ using std::move;
 #define MAX_BROKEN_TILES 7
 
 #define COMMAND_LENGTH 4
+#define TURN_COMMAND_LENGTH 10
 #define COMIN_START_INDEX 5
 #define TILE_INDEX 7
 #define ROW_INDEX 9
