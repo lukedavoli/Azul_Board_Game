@@ -5,23 +5,21 @@
 Factory::Factory(int factoryNumber){
     this->factoryNumber=factoryNumber;
     clear();
-     
 }
 
-Factory::Factory(Factory& other):
-    factoryNumber(other.factoryNumber)
-    {
-         for (int i = 0; i < NUM_OF_TILES; i++) {
+Factory::Factory(Factory& other): 
+    factoryNumber(other.factoryNumber){
+        for (int i = 0; i < NUM_OF_TILES; i++) {
             tiles[i] = other.tiles[i];
         }
-    }
+}
+
 Factory::Factory(Factory&& other):
-    factoryNumber(other.factoryNumber)
-        {
-         for (int i = 0; i < NUM_OF_TILES; i++) {
+    factoryNumber(other.factoryNumber){
+        for (int i = 0; i < NUM_OF_TILES; i++) {
             tiles[i] = other.tiles[i];
         }
-        }
+}
 
 Factory::~Factory(){
 }
@@ -32,46 +30,34 @@ int Factory::getNumber(){
 
 void Factory::addToFactory(char&& colour){
     int i=0;
-    while (i<NUM_OF_TILES && tiles[i]!='.')
-    {
+    while (i<NUM_OF_TILES && tiles[i]!='.'){
         i++;
     }
-   tiles[i]=colour;
-    
+    tiles[i]=colour;
 }
 
 int Factory::getNumberOfColour(char&& colour){
-     int inFactory =0;
-     for (int i = 0; i < NUM_OF_TILES; ++i)
-     {
-        if (tiles[i]==colour)
-        {
+    int inFactory =0;
+    for (int i = 0; i < NUM_OF_TILES; ++i){
+        if (tiles[i]==colour){
             inFactory++;
         }
-        
      }
      return inFactory;
 }
 
 void Factory::removeTile(char&& colour, std::shared_ptr<FactoryZero> factory){
-    for (int i = 0; i < NUM_OF_TILES; ++i)
-    {
-        if (tiles[i]==colour)
-        {
-             
+    for (int i = 0; i < NUM_OF_TILES; ++i){
+        if (tiles[i]==colour){
             tiles[i]='.';
         }
-        
     }
     this->moveToFactoryZ(factory);
-    
 }
 
 void Factory::moveToFactoryZ(std::shared_ptr<FactoryZero> factory){
-    for (int i = 0; i < NUM_OF_TILES; ++i)
-    {
-        if (tiles[i]!='.')
-        {
+    for (int i = 0; i < NUM_OF_TILES; ++i){
+        if (tiles[i]!='.'){
             (*factory).addToFac(std::move(tiles[i]));
             tiles[i]='.';
         }
@@ -79,16 +65,13 @@ void Factory::moveToFactoryZ(std::shared_ptr<FactoryZero> factory){
 }
 
 void Factory::print(){
-    for (int i = 0; i < NUM_OF_TILES; ++i)
-    {
+    for (int i = 0; i < NUM_OF_TILES; ++i){
        std::cout << tiles[i] << " ";
     }
-    
 }
 
 void Factory::clear() {
-    for (int i = 0; i < NUM_OF_TILES; ++i)
-    {
+    for (int i = 0; i < NUM_OF_TILES; ++i){
        tiles[i] = '.';   
     }
 }

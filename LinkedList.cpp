@@ -7,64 +7,49 @@ Node::Node(char value, Node *next) :
 {
 }
 
-LinkedList::LinkedList()
-{
+LinkedList::LinkedList(){
     this->head = nullptr;
     this->length = 0;
 }
 
-LinkedList::LinkedList(LinkedList &other) : LinkedList()
-{
-
-    for (int i = 0; i < other.size(); i++)
-    {
+LinkedList::LinkedList(LinkedList &other) : LinkedList(){
+    for (int i = 0; i < other.size(); i++){
 
         this->addBack(other.get(i));
     }
 }
 
-LinkedList::~LinkedList()
-{
+LinkedList::~LinkedList(){
     clear();
 }
 
-int LinkedList::size()
-{
+int LinkedList::size(){
     return length;
 }
 
-char LinkedList::get(int index)
-{
+char LinkedList::get(int index){
     int count = 0;
     Node *current = head;
     char returnValue = 10;
-    if (index == 0)
-    {
+    if (index == 0){
         returnValue = head->value;
     }
 
-    while (count < index)
-    {
-
+    while (count < index){
         ++count;
         current = current->next;
-
         returnValue = current->value;
     }
-
     return returnValue;
 }
 
-void LinkedList::addFront(char&& value)
-{
+void LinkedList::addFront(char&& value){
     Node *toAdd = new Node(value, nullptr);
 
-    if (head == nullptr)
-    {
+    if (head == nullptr){
         head = toAdd;
     }
-    else
-    {
+    else{
         Node *current = head;
         toAdd->next = current;
         head = toAdd;
@@ -72,41 +57,33 @@ void LinkedList::addFront(char&& value)
     this->length++;
 }
 
-void LinkedList::addBack(char&& value)
-{
+void LinkedList::addBack(char&& value){
     Node *toAdd = new Node(value, nullptr);
 
-    if (head == nullptr)
-    {
+    if (head == nullptr){
         head = toAdd;
     }
-    else
-    {
+    else{
         Node *current = head;
         while (current->next != nullptr)
         {
             current = current->next;
         }
-
         current->next = toAdd;
     }
     this->length++;
 }
 
-void LinkedList::removeBack()
-{
+void LinkedList::removeBack(){
 
-    if (head->next == nullptr)
-    {
+    if (head->next == nullptr){
         removeFront();
     }
-    else
-    {
+    else{
         Node *prev = nullptr;
         Node *current = head;
 
-        while (current->next != nullptr)
-        {
+        while (current->next != nullptr){
             prev = current;
             current = current->next;
         }
@@ -114,37 +91,29 @@ void LinkedList::removeBack()
         prev->next = current->next;
         delete current;
     }
-    if (size() > 0)
-    {
+    if (size() > 0){
         this->length--;
     }
 }
 
-void LinkedList::removeFront()
-{
+void LinkedList::removeFront(){
    Node* current = head->next;
    delete head;
    head = current;
-    if (size() > 0)
-    {
+    if (size() > 0){
         this->length--;
     }
 }
 
-void LinkedList::clear()
-{
-    while (head != nullptr)
-    {
+void LinkedList::clear(){
+    while (head != nullptr){
         removeFront();
     }
     this->length = 0;
 }
 
-void LinkedList::print()
-{
-
-    for (int i = 0; i < size(); i++)
-    {
+void LinkedList::print(){
+    for (int i = 0; i < size(); i++){
         std::cout << get(i) << " ";
     }
 }

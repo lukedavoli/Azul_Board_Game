@@ -120,7 +120,8 @@ void Mosaic::removeWhiteSpaceFromRow(string string, char* newString){
 
 bool Mosaic::validTile(char tile) {
     bool valid = false;
-    if(tile == BLUE || tile == YELLOW || tile == RED || tile == BLACK || tile == LIGHT_BLUE){
+    if(tile == BLUE || tile == YELLOW || tile == RED || tile == BLACK ||
+       tile == LIGHT_BLUE){
         valid = true;
     }
     return valid;

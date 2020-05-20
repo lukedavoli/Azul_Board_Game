@@ -1,30 +1,25 @@
 #include "StorageRow.h"
 #include <iostream>
 
-StorageRow::StorageRow(int maxTiles)
-{
+StorageRow::StorageRow(int maxTiles){
     this->maxTiles = maxTiles;
     tiles = make_shared<LinkedList>();
 }
 
-StorageRow::~StorageRow()
-{
+StorageRow::~StorageRow(){
 
 }
 
-void StorageRow::addTile(char&& tile)
-{
+void StorageRow::addTile(char&& tile){
     tiles->addBack(move(tile));
 }
 
-char StorageRow::getOccupyingColour()
-{
+char StorageRow::getOccupyingColour(){
     char firstTile = tiles->get(0);
     return firstTile;
 }
 
-bool StorageRow::isFull()
-{
+bool StorageRow::isFull(){
     bool full = false;
     int occupied = getOccupied();
     
@@ -35,28 +30,23 @@ bool StorageRow::isFull()
     return full;
 }
 
-char StorageRow::getFirstTile()
-{
+char StorageRow::getFirstTile(){
    return tiles->get(0);
 }
 
-void StorageRow::clearCompleteRow()
-{
+void StorageRow::clearCompleteRow(){
     tiles->clear();
 }
 
-int StorageRow::getLength()
-{
+int StorageRow::getLength(){
     return tiles->size();
 }
 
-int StorageRow::getMaxTiles()
-{
+int StorageRow::getMaxTiles(){
     return maxTiles;
 }
 
-char StorageRow::getTileAt(int index)
-{
+char StorageRow::getTileAt(int index){
     return tiles->get(index);
 }
 

@@ -4,29 +4,22 @@
 FactoryZero::FactoryZero(){
     this->startingPlayer = FIRST_PLAYER_MARKER;
     tiles.push_back(startingPlayer);
-    
 }
 
 FactoryZero::FactoryZero(FactoryZero& other):
-FactoryZero()
-{
+FactoryZero(){
   tiles=other.tiles;
 }
 
-FactoryZero::FactoryZero(FactoryZero&& other)
-{
+FactoryZero::FactoryZero(FactoryZero&& other){
     int size=other.tiles.size();
-    for (int i = 0; i < size; ++i)
-    {
+    for (int i = 0; i < size; ++i){
         tiles.push_back(std::move(other.tiles[i]));
     }
- 
-   
 }
 
 FactoryZero::~FactoryZero(){
     tiles.clear();
-
 }
 
 int FactoryZero::getFNum(){
@@ -35,31 +28,22 @@ int FactoryZero::getFNum(){
 
 void FactoryZero::addToFac(char&& tile){
     tiles.push_back(std::move(tile));
-
 }
-
 
 int FactoryZero::getNumOfCoulour(char&& colour){
    int numIn=0;
    int size=tiles.size();
-    for (int i = 0; i < size; ++i)
-    {
-        if (tiles[i]==colour)
-        {   
+    for (int i = 0; i < size; ++i){
+        if (tiles[i]==colour){   
            numIn++;
         }
-        
     }
     return numIn;
 }
 
 void FactoryZero::removeTile(char&& colour){
- 
    tiles.erase(std::remove(tiles.begin(),tiles.end(),colour),tiles.end());
-        
-    }
-
-
+}
 
 void FactoryZero::print(){
     int size=tiles.size();
@@ -93,5 +77,3 @@ void FactoryZero::reset() {
     tiles.clear();
     tiles.push_back(startingPlayer);
 }
-
-
