@@ -1,36 +1,36 @@
 Atlas
 P-Body
-32
-59
-Atlas
-R R L Y
-. . . .
-L U L L
-U R R B
-L L R L
-. . . .
-B Y r U l
+42
+64
+P-Body
+F
+R R U B
+U U U U
+L B L B
+U Y B Y
+B B Y Y
+B Y R U l
 L B y R u
-u L b Y r
+U L b Y r
 r U l B y
-y r u l b
-b y R U L
+y R u l b
+b Y R U L
 l b Y R U
 u l b Y R
-r u l B Y
+r u L B Y
 y r u l b
 . 
 . . 
-. . U 
-. . . . 
-. R R R R 
-Y 
-B B 
+. . . 
+L L L . 
+. . . . . 
+. 
+. . 
 . . . 
 . . . . 
-. . . . B 
+B B B B . 
 
-F
-B U R R R R B B B R B U U U U Y Y Y Y Y L L L L L B U U U B L L L Y R R Y Y Y 
-U U U U L B L B U Y B Y B B Y Y
+
+
+
 2

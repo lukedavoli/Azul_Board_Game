@@ -33,18 +33,18 @@ Player 2 Mosaic Row 4: r u l B y
 Player 2 Mosaic Row 5: y r u l b
 Player 1 Storage Row 1: U 
 Player 1 Storage Row 2: B B 
-Player 1 Storage Row 3:
+Player 1 Storage Row 3: 
 Player 1 Storage Row 4: U U U U 
-Player 1 Storage Row 5: R R R
+Player 1 Storage Row 5: R R R 
 Player 2 Storage Row 1: L 
 Player 2 Storage Row 2: Y Y 
 Player 2 Storage Row 3: R R R 
-Player 2 Storage Row 4:
-Player 2 Storage Row 5:
+Player 2 Storage Row 4: 
+Player 2 Storage Row 5: 
 Player 1 Broken Tiles: B 
 Player 2 Broken Tiles: F 
-Bag: B U R R R R B B B R B U U U U Y Y Y Y Y L L L L L
-Box Lid: B R B Y L U L L U R R B L L R L R Y R L U U U U L B L B U Y B Y B B Y Y 
+Bag: B R B Y L U L L U R R B L L R L R Y R L U U U U L B L B U Y B Y B B Y Y
+Box Lid: B U R R R R B B B R B U U U U Y Y Y Y Y L L L L L 
 Seed: 2
 TURN FOR PLAYER: P-Body
 Factories: 
