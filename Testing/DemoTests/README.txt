@@ -13,13 +13,13 @@ TEST CASES
 06. Valid turn to broken storage
 07. Invalid turn, storage row below range
 08. Invalid turn, storage row above range
-09. Invalid turn, storage row character rather than number
+09. Invalid turn, storage row character rather than number (not B)
 10. Invalid turn, two characters for factory
 11. Invalid turn, two characters for tile
 12. Invalid turn, two characters for storage row
 13. Invalid turn, factory below range
 14. Invalid turn, factory above range
-15. Invalid turn, character rather than number (not B)
+15. Invalid turn, factory a character rather than number
 16. Invalid turn, tile doesn't exist
 17. Invalid turn, number rather than character
 18. Invalid turn, attempted to store in full row 1
@@ -65,3 +65,6 @@ TESTS
 1[45]: 01, 02, 03, 04, 05, 55
 2[23]: 06, 07, 08, 09
 3[76]: 10, 11, 12
+4[91]: 13, 14, 15, 16, 17
+5[56]: 21, 20, 19, 18
+6[72]: 

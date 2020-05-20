@@ -1,0 +1,8 @@
+2
+Testing/DemoTests/4save.txt
+turn -1 R 1
+turn 8 R 1
+turn X R 1
+turn 1 Z 3
+turn 1 1 1
+save Testing/DemoTests/4actual.out
