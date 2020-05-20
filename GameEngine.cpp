@@ -83,6 +83,7 @@ void GameEngine::newGame(int seed, bool seedUsed){
     }else{
         fillBagFromBox();
     }
+    
     factoryZero = make_shared<FactoryZero>();
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
         factories[i] = new Factory(i+1);
@@ -334,6 +335,9 @@ void GameEngine::enterGame(){
                             Refill the factories if the tile bag is empty.
                             Otherwise refill the bag first, then the factories. */
                         if(emptyFactories()){
+                            cout << "------------\n" <<
+                                    "END OF ROUND\n" <<
+                                    "------------\n" << endl;
                             moveTilesAndScore(player1);
                             moveTilesAndScore(player2);
                             cout << player1->getName() << ":" << endl;
@@ -843,6 +847,7 @@ void GameEngine::fillBagFromBoxSeed(int seed) {
         int index = uniform_dist(engine);
         if(selected.find(index) == selected.end()){
             tileBag->addFront(std::move(boxLid.at(index)));
+            selected.insert(index);
         }
     }
     boxLid.fill('\0');

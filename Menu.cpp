@@ -380,7 +380,7 @@ void Menu::validBrokenStorage(istream& inStream, bool* valid){
             } else if(*valid && line.size() != 0 && line.size() != 1){
                 for(string::iterator c = line.begin(); c != line.end(); ++c){
                     if(*valid){
-                        if(*c != ' ' || *c != '\n' || *c != '\r'){
+                        if(*c != ' ' && *c != '\n' && *c != '\r'){
                         validFacZandBrokenChar(*c, valid);
                         }
                     }

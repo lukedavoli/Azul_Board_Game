@@ -1,6 +1,6 @@
 2
-3save.txt
+Testing/saveFileComparison/3save.txt
 turn 0 L 4
 turn 0 B 3
 turn 0 Y 5
-save 3actual.out
+save Testing/saveFileComparison/3actual.out
