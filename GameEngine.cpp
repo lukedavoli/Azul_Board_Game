@@ -363,6 +363,11 @@ void GameEngine::enterGame(){
                             cout << "------------\n" <<
                                     "END OF ROUND\n" <<
                                     "------------\n" << endl;
+                            if(player1->getBroken()->hasFirstPlayerMarker()){
+                                nextTurn = player1->getName();
+                            }else{
+                                nextTurn = player2->getName();
+                            }
                             moveTilesAndScore(player1);
                             moveTilesAndScore(player2);
                             cout << endl;
@@ -377,11 +382,6 @@ void GameEngine::enterGame(){
                             } else {
                                 fillBagSequentially();
                                 fillFactories();
-                            }
-                            if(player1->getBroken()->hasFirstPlayerMarker()){
-                                nextTurn = player1->getName();
-                            }else{
-                                nextTurn = player2->getName();
                             }
                             completeRow = endGame(); 
                             if(completeRow){
