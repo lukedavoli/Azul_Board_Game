@@ -1,9 +1,9 @@
 #include "Mosaic.h"
 
 Mosaic::Mosaic() {
-   
-    resetMosaic();
 
+    clear();
+    
     // Creates the 2D array on the heap.
     // Then uses 'update2DMosaic()' to actually have tiles in the 2D array.
     mosaic = new char*[DIM];
@@ -20,7 +20,16 @@ Mosaic::~Mosaic() {
     delete mosaic;
 }
 
-void Mosaic::resetMosaic() {
+void Mosaic::print2DMosaic() {
+    for(int row = 0; row < DIM; ++row){
+        for(int col = 0; col < DIM; ++col){
+            cout << mosaic[row][col];
+        }
+        cout << endl;
+    }
+}
+
+void Mosaic::clear() {
     string row1 = "b y r u l";
     string row2 = "l b y r u";
     string row3 = "u l b y r";
@@ -44,6 +53,14 @@ void Mosaic::loadRow(int rowNum, string row) {
     if(validRowNum(rowNum)) {
         if(row.size() == MAX_NUM_OF_CHARS){
             rows[rowNum-1] = row;
+        } else if(row.size() > MAX_NUM_OF_CHARS) {
+            string temp = "0 0 0 0 0";
+            for(int i = 0; i < MAX_NUM_OF_CHARS; ++i){
+                if(temp[i] != ' '){
+                    temp[i] = row[i];
+                }
+            }
+            rows[rowNum-1] = temp;
         }
     }
 }
@@ -91,10 +108,10 @@ void Mosaic::update2DMosaic() {
 void Mosaic::removeWhiteSpaceFromRow(string string, char* newString){
     if(string.length() == MAX_NUM_OF_CHARS && newString != nullptr){
         int counter = 0;
-        for(int i = 0; i < string.length(); ++i)
+        for(string::iterator c = string.begin(); c != string.end(); ++c)
         {
-            if(string[i] !=  ' '){
-                newString[counter] = string[i];
+            if( *c !=  ' '){
+                newString[counter] = *c;
                 ++counter;
             }
         }
@@ -103,7 +120,8 @@ void Mosaic::removeWhiteSpaceFromRow(string string, char* newString){
 
 bool Mosaic::validTile(char tile) {
     bool valid = false;
-    if(tile == BLUE || tile == YELLOW || tile == RED || tile == BLACK || tile == LIGHT_BLUE){
+    if(tile == BLUE || tile == YELLOW || tile == RED || tile == BLACK ||
+       tile == LIGHT_BLUE){
         valid = true;
     }
     return valid;
@@ -115,4 +133,15 @@ bool Mosaic::validRowNum(int rowNum){
         valid = true;
     }
     return valid;
+}
+
+string Mosaic::toString(){
+    string strMosaic = "";
+    for(int i = 0; i < DIM; i++){
+        strMosaic += getRow(i+1);
+        if(i != DIM - 1){
+            strMosaic += "\n";
+        }
+    }
+    return strMosaic;
 }

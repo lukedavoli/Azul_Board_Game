@@ -1,4 +1,15 @@
-#include<vector>
+#ifndef FACTORYZERO_H
+#define FACTORYZERO_H
+
+#include <vector>
+#include <string>
+#include <iostream>
+#include<utility>
+#include<iterator>
+#include<algorithm>
+#include "Tiles.h"
+using std::string;
+
 #define FACTORY_NUM 0
 class FactoryZero
 {
@@ -24,12 +35,22 @@ void removeTile(char&& colour);
 
 void print();
 
+std::string toString();
+
+void clear();
+
+int getSize();
+
+
+// Reset for the next round.
+void reset();
+
 private:
-    // V: startingPlayerMarker
-    char srartingPlayer;
+    // startingPlayerMarker
+    char startingPlayer;
     std::vector<char> tiles;
 };
-
+#endif // FACTORYZERO_H
  
 
  

@@ -1,0 +1,27 @@
+Welcome to Azul!
+-------------------
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits
+4. Quit
+
+> 
+Enter the filename from which to load the game
+> Error - Invalid Bag/Lid Character: 9
+Error - Invalid Bag/Lid Character: i
+Error - Invalid Bag/Lid Character: d
+Error - Invalid Bag/Lid Character: f
+-------------------
+Invalid file.
+-------------------
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits
+4. Quit
+
+> 
+Goodbye

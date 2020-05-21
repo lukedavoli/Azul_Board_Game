@@ -1,7 +1,17 @@
 #ifndef MENU_H
 #define MENU_H
 
+
+#include <iostream>
+#include <fstream>
 #include <string>
+#include "GameEngine.h"
+
+
+using std::ifstream;
+using std::cout;
+using std::cin;
+
 
 #define SHORT_LB "----"
 #define MEDIUM_LB "-------------------"
@@ -20,6 +30,11 @@
 #define S2_EMAIL "s3783287@student.rmit.edu.au"
 #define S3_EMAIL "s3782747@student.rmit.edu.au"
 
+#define MAX_CHARS_FOR_MOSAIC 9
+#define MAX_CHARS_FOR_FACTORY 7
+#define MAX_CHARS_FOR_BROKEN 13
+#define MAX_CHARS_FOR_BAG 199
+#define MAX_CHARS_FOR_BOX 199
 
 
 class Menu{
@@ -28,7 +43,7 @@ public:
     void displayWelcome();
 
     //Opens the menu
-    void displayMenu();
+    void displayMenu(int seed, bool seedUsed);
 
     //Displays students name, id and email
     void showCredits();
@@ -37,13 +52,47 @@ private:
     std::string names[STUDENTS] = {S1_NAME, S2_NAME, S3_NAME};
     std::string ids[STUDENTS] = {S1_SID, S2_SID, S3_SID};
     std::string emails[STUDENTS] = {S1_EMAIL, S2_EMAIL, S3_EMAIL};
-
-    //Collects player names before starting a new game
-    void newGame();
-
-    //Takes a filename to load a saved game
+    
+    shared_ptr<GameEngine> gameEngine;
+    
+    //Takes a filename to load a saved game.
     void loadGame();
+    // Booleans to check the file.
+    bool fileExists(string filename);
+    bool validFile(string filename);
+
+    void validPlayerNames(istream& inStream, string* p1Name, string* p2Name, bool* valid);
+    void validPlayerPoints(istream& inStream, bool* valid);
+    void validNextPlayer(istream& inStream, string p1Name, string p2Name, bool* valid);
+
+    void validFactoryZero(istream& inStream, bool* valid);
+    void validFacZandBrokenChar(char c, bool* valid);
+
+    void validFactory(istream& inStream, bool* valid);
+    void validFactoryLength(string line, bool* valid, int i);
+    void validFactoryChar(char c, bool* valid, int i);
+
+    void validMosaics(istream& inStream, bool* valid);
+    void validMosaicChar(string row, bool* valid, int i);
+    void validMosaicRow(string row, bool* valid, int rowNum);
+
+    void validStorage(istream& inStream, bool* valid);
+    void validStorageRow(int i, bool* valid, string line);
+    void validCharsInStorage(string row, bool* valid, int rowNum);
+    void validStorageSize(istream& inStream, bool* valid, int index, string line);
+    void validStorageChar(char c, bool* valid, int i);
+ 
+    void validBrokenStorage(istream& inStream, bool* valid);
+
+    void validBag(istream& inStream, bool* valid);
+    void validBoxLid(istream& inSTream, bool* valid);
+    void validBoxOrBagChar(char c, bool* valid);
+
+    void validSeed(istream& inStream, bool* valid);
+    void validTiles(string filename, bool* valid);
+
+
 };
 
 
-#endif //APT_A2_MENU_H
+#endif // MENU_H

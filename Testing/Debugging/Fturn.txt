@@ -1,0 +1,36 @@
+Geralt
+Ciri
+6
+6
+Ciri
+L L R R
+. . . .
+. . . .
+. . . .
+. . . .
+. . . .
+b y r u l
+L b Y R U
+u l b Y R
+r u l b y
+y r u l b
+B Y R u l
+L B Y r u
+u l b y r
+r u l b y
+y r u l b
+.
+B .
+. . .
+. . . .
+. . . . .
+.
+. .
+. . .
+. . . .
+. . . . .
+F
+
+U U Y Y B B B B
+B R L U U L L U Y Y R L B B L L U U Y Y R R U B L L U U Y Y R R U U Y L L L B B L L U U Y Y R R B B L L U U Y Y R R Y Y Y L R R R B B B B B U U U R R
+2

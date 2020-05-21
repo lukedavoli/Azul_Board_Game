@@ -1,0 +1,36 @@
+De
+Bug
+0
+0
+Bug
+
+Y B L U
+L B L R
+U Y R L
+L R L U
+. . . .
+b y r u l
+l b y r u
+u l b y r
+r u l b y
+y r u l b
+b y r u l
+l b y r u
+u l b y r
+r u l b y
+y r u l b
+. 
+. . 
+B B . 
+. . . . 
+. . . . . 
+. 
+R R 
+. . . 
+. . . . 
+. . . . . 
+F
+
+
+B U B Y U B L L U L R B B Y R R U R Y L Y L U U R B Y R U B U Y B L Y Y R B B U R L L B R R L U R U Y U Y B R Y Y Y U B Y R U L B Y U Y L R L Y Y L R L B U U B
+0

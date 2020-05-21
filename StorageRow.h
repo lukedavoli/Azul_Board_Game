@@ -3,8 +3,11 @@
 
 #include <memory>
 #include "LinkedList.h"
+#include <string>
+
 using std::make_shared;
 using std::shared_ptr;
+using std::string;
 
 class StorageRow
 {
@@ -30,9 +33,25 @@ public:
     //Get the first tile from the row
     char getFirstTile();
 
+    //Maximum amount of tiles that may be stored in a row
     int getMaxTiles();
 
+    //Retrieve tile at a specific index
     char getTileAt(int index);
+
+    // Sets all the tile spaces to '.';
+    void resetRow();
+
+    //Storage row to readable string format
+    string toString();
+
+    //Convert to backwards string for saving to file in valid format
+    string toStringBackwards();
+
+    void print();
+
+    //How many tiles are currently in the row occupying spaces
+    int getOccupied();
 
 private:
     shared_ptr<LinkedList> tiles;
@@ -40,4 +59,4 @@ private:
 };
 
 
-#endif STORAGEROW_H
+#endif //STORAGEROW_H

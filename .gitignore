@@ -4,3 +4,6 @@ CMakeLists.txt
 main
 .DS_Store
 .vscode/
+*.o
+azul
+APT_A2_MFC.iml

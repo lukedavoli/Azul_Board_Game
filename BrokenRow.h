@@ -3,8 +3,12 @@
 
 #include <memory>
 #include "LinkedList.h"
+#include <string>
+
 using std::make_shared;
 using std::shared_ptr;
+using std::string;
+
 
 #define MAX_TILES 7
 
@@ -26,7 +30,16 @@ public:
     //get amount of tiles in broken row
     int getLength();
 
+    //Retrieve the tile at a specific index
     char getTileAt(int index);
+
+    void print();
+
+    //Convert to printable string format
+    string toString();
+
+    //Identify whether the broken row contains the F tile
+    bool hasFirstPlayerMarker();
 
 private:
     shared_ptr<LinkedList> tiles;
@@ -34,4 +47,4 @@ private:
 
 };
 
-#endif BROKENROW_H
+#endif //BROKENROW_H

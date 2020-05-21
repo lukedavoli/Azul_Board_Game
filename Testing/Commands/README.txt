@@ -1,0 +1,1 @@
+Use seed 45 where filename ends in "-s.txt"

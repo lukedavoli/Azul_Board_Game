@@ -1,0 +1,73 @@
+Welcome to Azul!
+-------------------
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits
+4. Quit
+
+> 
+Enter the filename from which to load the game
+> Loading game...
+Player 1 Name: Ellie
+Player 2 Name: Joel
+Player 1 Points: 12
+Player 2 Points: 6
+Next Turn: Ellie
+Factory Zero: F 
+Factory 1: R L Y B 
+Factory 2: . . . . 
+Factory 3: U L U R 
+Factory 4: R L R B 
+Factory 5: L R Y R 
+Player 1 Mosaic Row 1: b y r u l
+Player 1 Mosaic Row 2: l b y r u
+Player 1 Mosaic Row 3: u l b y r
+Player 1 Mosaic Row 4: r u l b y
+Player 1 Mosaic Row 5: y r u l b
+Player 2 Mosaic Row 1: b y r u l
+Player 2 Mosaic Row 2: l b y r u
+Player 2 Mosaic Row 3: u l b y r
+Player 2 Mosaic Row 4: r u l b y
+Player 2 Mosaic Row 5: y r u l b
+Player 1 Storage Row 1:
+Player 1 Storage Row 2:
+Player 1 Storage Row 3:
+Player 1 Storage Row 4: B B B B 
+Player 1 Storage Row 5:
+Player 2 Storage Row 1:
+Player 2 Storage Row 2:
+Player 2 Storage Row 3:
+Player 2 Storage Row 4:
+Player 2 Storage Row 5:
+Player 1 Broken Tiles: 
+Player 2 Broken Tiles: 
+Bag: 
+Box Lid: U L U L U B L L B B L B B U B Y U R U Y U R U B U Y U B Y L B U B L L L B B L B U L Y U L U L L U R L L Y B Y R Y Y R Y R Y R Y Y Y R R U R R Y R Y R U U Y R Y 
+Seed: 4
+TURN FOR PLAYER: Ellie
+Factories: 
+0: F
+1: R L Y B
+2: . . . .
+3: U L U R
+4: R L R B
+5: L R Y R
+
+Ellie's board:
+1:         .  || b y r u l
+2:       . .  || l b y r u
+3:     . . .  || u l b y r
+4:   B B B B  || r u l b y
+5: . . . . .  || y r u l b
+broken: 
+> Menu
+----
+1. New Game
+2. Load Game
+3. Credits
+4. Quit
+
+> 
+Goodbye

@@ -34,7 +34,7 @@ int main(int argc, char const *argv[])
     cout << endl;
 
     cout << "<<Reset Mosaic>>" << endl;
-    m->resetMosaic();
+    m->clear();
     m->printMosaic();
     cout << endl;
     m->print2DMosaic();
@@ -82,7 +82,7 @@ int main(int argc, char const *argv[])
 
     cout << endl;
     cout << "<<Reset Mosaic>>"<< endl;
-    m->resetMosaic();
+    m->clear();
     cout << "Insert H into Row 1" << endl;
     m->insertRow(1, 'H');
     m->printMosaic();

@@ -1,0 +1,13 @@
+2
+Testing/DemoTests/6save.txt
+turn 0 L 5
+turn 0 R 4
+turn 0 U 1
+turn 0 Y 2
+turn 0 Y 3
+turn 0 U 4
+turn 0 Y 4
+turn 0 Y 5
+turn 0 Y 1
+turn 0 L 4
+save Testing/DemoTests/6actual.out

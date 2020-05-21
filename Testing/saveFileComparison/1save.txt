@@ -1,0 +1,36 @@
+Luke
+Nikita
+0
+0
+Luke
+F
+R L Y B
+. . . .
+U L U R
+R L R B
+L R Y R
+b y r u l
+l b y r u
+u l b y r
+r u l b y
+y r u l b
+b y r u l
+l b y r u
+u l b y r
+r u l b y
+y r u l b
+.
+. .
+. . .
+B B B B
+. . . . .
+.
+. .
+. . .
+. . . .
+. . . . .
+
+
+    
+U L U L U B L L B B L B B U B Y U R U Y U R U B U Y U B Y L B U B L L L B B L B U L Y U L U L L U R L L Y B Y R Y Y R Y R Y R Y Y Y R R U R R Y R Y R U U Y R Y
+4

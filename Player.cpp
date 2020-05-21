@@ -1,13 +1,11 @@
 
 #include "Player.h"
 
-Player::Player(std::string name, int points)
-{
+Player::Player(string name, int points){
     this->name = name;
     this->points = points;
 
-    for(int i = 0; i < STORAGE_ROWS; i++)
-    {
+    for(int i = 0; i < STORAGE_ROWS; i++){
         storageRows[i] = make_shared<StorageRow>(i + 1);
     }
 
@@ -15,37 +13,53 @@ Player::Player(std::string name, int points)
     mosaic = make_shared<Mosaic>();
 }
 
-Player::~Player()
-{
+Player::~Player(){
 
 }
 
-std::string Player::getName()
-{
+string Player::getName(){
     return name;
 }
 
-int Player::getPoints()
-{
+void Player::setName(string name) {
+    this->name = name;
+}
+
+int Player::getPoints(){
     return points;
 }
 
-void Player::setPoints(int points)
-{
+void Player::setPoints(int points){
     this->points = points;
 }
 
-Mosaic Player::getMosaic()
-{
+shared_ptr<Mosaic> Player::getMosaic(){
     return mosaic;
 }
 
-shared_ptr<StorageRow> Player::getStorageRow(int row)
-{
+shared_ptr<StorageRow> Player::getStorageRow(int row){
     return storageRows[row - 1];
 }
 
-shared_ptr<BrokenRow> Player::getBroken()
-{
+shared_ptr<BrokenRow> Player::getBroken() {
     return brokenRow;
+}
+
+string Player::boardToString() {
+    string board;
+    for(int i = 0; i < STORAGE_ROWS; i++){
+        board += std::to_string(i + 1) + ":";
+        for(int s = 0; s < SPACES - 1 - i * WHITESPACES; s++){
+            board += " ";
+        }
+        shared_ptr<StorageRow> currRow = getStorageRow(i + 1);
+        board += currRow->toString();
+        board += " || ";
+        board += mosaic->getRow(i + 1);
+        board += "\n";
+    }
+    board += "broken: ";
+    board += brokenRow->toString();
+
+    return board;
 }

@@ -1,0 +1,116 @@
+Welcome to Azul!
+-------------------
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits
+4. Quit
+
+> 
+Enter the filename from which to load the game
+> Loading game...
+Player 1 Name: Geralt
+Player 2 Name: Ciri
+Player 1 Points: 6
+Player 2 Points: 6
+Next Turn: Ciri
+Factory Zero: L L R R 
+Factory 1: . . . . 
+Factory 2: . . . . 
+Factory 3: . . . . 
+Factory 4: . . . . 
+Factory 5: . . . . 
+Player 1 Mosaic Row 1: b y r u l
+Player 1 Mosaic Row 2: L b Y R U
+Player 1 Mosaic Row 3: u l b Y R
+Player 1 Mosaic Row 4: r u l b y
+Player 1 Mosaic Row 5: y r u l b
+Player 2 Mosaic Row 1: B Y R u l
+Player 2 Mosaic Row 2: L B Y r u
+Player 2 Mosaic Row 3: u l b y r
+Player 2 Mosaic Row 4: r u l b y
+Player 2 Mosaic Row 5: y r u l b
+Player 1 Storage Row 1: 
+Player 1 Storage Row 2: B B 
+Player 1 Storage Row 3: 
+Player 1 Storage Row 4: 
+Player 1 Storage Row 5: 
+Player 2 Storage Row 1: 
+Player 2 Storage Row 2: 
+Player 2 Storage Row 3: 
+Player 2 Storage Row 4: 
+Player 2 Storage Row 5: 
+Player 1 Broken Tiles: F 
+Player 2 Broken Tiles: 
+Bag: B R L U U L L U Y Y R L B B L L U U Y Y R R U B L L U U Y Y R R U U Y L L L B B L L U U Y Y R R B B L L U U Y Y R R Y Y Y L R R R B B B B B U U U R R
+Box Lid: U U Y Y B B B 
+Seed: 2
+TURN FOR PLAYER: Ciri
+Factories: 
+0: L L R R
+1: . . . .
+2: . . . .
+3: . . . .
+4: . . . .
+5: . . . .
+
+Ciri's board:
+1:         .  || B Y R u l
+2:       . .  || L B Y r u
+3:     . . .  || u l b y r
+4:   . . . .  || r u l b y
+5: . . . . .  || y r u l b
+broken: 
+> TURN FOR PLAYER: Geralt
+Factories: 
+0: R R
+1: . . . .
+2: . . . .
+3: . . . .
+4: . . . .
+5: . . . .
+
+Geralt's board:
+1:         .  || b y r u l
+2:       B B  || L b Y R U
+3:     . . .  || u l b Y R
+4:   . . . .  || r u l b y
+5: . . . . .  || y r u l b
+broken: F
+> ------------
+END OF ROUND
+------------
+
+Player: Geralt | Final Points : 10
+Player: Ciri | Final Points : 6
+
+Geralt's Board
+1:         .  || b y r u l
+2:       . .  || L B Y R U
+3:     . . .  || u l b Y R
+4:   . . R R  || r u l b y
+5: . . . . .  || y r u l b
+broken: 
+Ciri's Board
+1:         .  || B Y R u l
+2:       . .  || L B Y r u
+3:     . L L  || u l b y r
+4:   . . . .  || r u l b y
+5: . . . . .  || y r u l b
+broken: 
+----------------------------
+******************************
+Player 1 Wins!
+Player 1: Geralt's points: 12
+Player 2: Ciri's points: 6
+******************************
+Menu
+----
+1. New Game
+2. Load Game
+3. Credits
+4. Quit
+
+> 
+Goodbye

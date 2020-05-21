@@ -1,0 +1,36 @@
+Creed
+Meredith
+1
+3
+Meredith
+F
+R Y Y Y
+Y R B Y
+U R L R
+B L U L
+L U Y B
+b Y r u l
+l b y r u
+u l b y r
+r u L b y
+y R u l b
+b Y r u l
+l b y r U
+u l B y r
+r u l b y
+y r u l b
+. 
+. . 
+. . . 
+. . . . 
+. . . . . 
+. 
+. . 
+. . . 
+U U . .
+B . . . . 
+
+
+L L L R R R R L U B B 
+B Y U B U L L L B R U B R Y U U U Y Y B U B Y Y Y R B B R R L U Y R B L L L R Y R U U L U R L L Y U U Y Y L B R R B B B
+0

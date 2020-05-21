@@ -1,0 +1,36 @@
+Ryan
+Kelly
+0
+0
+Ryan
+F
+R R R L
+B Y R Y
+L U L B
+U R Y L
+Y U R R
+b y r u l
+l b y r u
+u l b y r
+r u l b y
+y r u l b
+b y r u l
+l b y r u
+u l b y r
+r u l b y
+y r u l b
+. 
+. . 
+. . . 
+. . . . 
+. . . . . 
+. 
+. . 
+. . . 
+. . . . 
+. . . . . 
+
+
+
+R Y R L U U L B U B L Y Y U R L Y L B B R B L U B U Y Y R B B Y U L R L Y Y Y R L L L U R Y L U R L U Y B Y B U B U U R U Y B U B L R B Y Y U R R B B L U L B B
+0
