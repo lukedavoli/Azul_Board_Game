@@ -58,25 +58,28 @@ TEST CASES
 49. Player holding F tile has active turn in next round
 50. Factories refilled correctly following end of round
 51. Bag refilled sequentially from box lid
-52. Bonus points calculated correctly for complete column at end of game
-53. Bonus points calculated correctly for complete row at end of game
-54. Bonus points calculated correctly for complete set of a colour at end of game
-55. First player to take from central factory takes F tile
-56. Points deducted correctly for tiles in floor line
+52. First player to take from central factory takes F tile
+53. Points deducted correctly for tiles in floor line
 
 -----
 TESTS
 -----
-01[45]: 01, 02, 03, 04, 05, 55
+01[45]: 01, 02, 03, 04, 05, 52
 02[23]: 06, 07, 08, 09
 03[76]: 10, 11, 12
 04[91]: 13, 14, 15, 16, 17
 05[56]: 18, 19, 20, 21
 06[72]: 22, 23, 24, 25, 26, 27
 07[69]: 28, 29, 30, 31, 32
-08[10]: 33, 34, 35, 36, 51, 56
+08[10]: 33, 34, 35, 36, 51, 53
 09[87]: 37
 10[87]: 38
 11[99]: 39, 40, 41, 42, 43, 44
 12[72]: 45, 56, 49, 50
-13[2]:  46, 47, 48
+13[02]: 46, 47, 48
+
+---------
+RUN TESTS
+---------
+./azul <Testing/DemoTests/1commands.in
+diff Testing/DemoTests/1expected.out Testing/DemoTests/1actual.out
