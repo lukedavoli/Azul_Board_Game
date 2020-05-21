@@ -93,12 +93,18 @@ private:
 
     // Checks if a storage character is valid ( valid chars = 'B', 'Y', 'R', 'U', 'L')
     bool validStorageChar(char c);
+
+    /* 
+    * Checks if a factory character is valid ( valid chars = '0', '1', '2', '3', '4', '5')
+    * Takes in a integer pointer to return a factory number if the character is valid;
+    */
+    bool validFactoryChar(char c, int* factoryNumber);
     
     // Saves the data into a file.
     void saveGame(string filename);
 
     string factoriesToString();
-    bool validateTurn(int factory, char tile, char row);
+    bool validateTurn(char factory, char tile, char row);
     bool validTileInRow(char tile, char row);
     bool fileExists(string filename);
     void performTurn(shared_ptr<Player> player,int factory, char tile, char row);
@@ -160,6 +166,8 @@ private:
     void brokenScore(shared_ptr<Player> player);
 
     void bonusPoints(shared_ptr<Player> player);
+
+    bool factoryInRange(int factory);
 
 };
 #endif // GAMEENGINE_H
