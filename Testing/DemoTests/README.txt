@@ -81,5 +81,16 @@ TESTS
 ---------
 RUN TESTS
 ---------
-./azul <Testing/DemoTests/1commands.in
 diff Testing/DemoTests/1expected.out Testing/DemoTests/1actual.out
+diff Testing/DemoTests/2expected.out Testing/DemoTests/2actual.out
+diff Testing/DemoTests/3expected.out Testing/DemoTests/3actual.out
+diff Testing/DemoTests/4expected.out Testing/DemoTests/4actual.out
+diff Testing/DemoTests/5expected.out Testing/DemoTests/5actual.out
+diff Testing/DemoTests/6expected.out Testing/DemoTests/6actual.out
+diff Testing/DemoTests/7expected.out Testing/DemoTests/7actual.out
+diff Testing/DemoTests/8expected.out Testing/DemoTests/8actual.out
+diff Testing/DemoTests/9expected.out Testing/DemoTests/9actual.out
+diff Testing/DemoTests/10expected.out Testing/DemoTests/10actual.out
+diff Testing/DemoTests/11expected.out Testing/DemoTests/11actual.out
+diff Testing/DemoTests/12expected.out Testing/DemoTests/12actual.out
+diff Testing/DemoTests/13expected.out Testing/DemoTests/13actual.out
