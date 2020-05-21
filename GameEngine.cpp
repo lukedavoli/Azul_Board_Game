@@ -287,6 +287,23 @@ void GameEngine::printValues() {
     cout << "Seed: " << seed << endl;
 }
 
+/**
+ * enterGame():
+ *  Continues in loop until end of round.
+ *  Continue in loop until user exits game or command is valid.
+ *  Do not proceed until the command is long enough to be valid.
+ *  Skip if user has chosen to exit.
+ *  Take action based on command and argument.
+ *  Seperate arguments into factory, tile and row
+ * 
+ *  If the factories are empty 
+ *       Proceed to move tiles and score and display the player's board.
+ *       Refill the factories if the tile bag is empty.
+ *       Otherwise refill the bag first, then the factories. 
+ */
+
+                        
+
 void GameEngine::enterGame(){
     bool completeRow = false;
     bool userExit = false;
@@ -295,18 +312,17 @@ void GameEngine::enterGame(){
     bool firstLoop = true;
     string turn = "";
 
-    //Continue in loop until end of round
+   
     while(!userExit && !completeRow){
         setActivePlayer();
         displayTurnUpdate();
         validCommand = false;
 
-        //Continue in loop until user exits game or command is valid
         while(!validCommand && !userExit){
             cmdShort = true;
             turn = "";
             cout << PROMPT;
-            //Do not proceed until the command is long enough to be valid
+        
             while (cmdShort && !userExit){
                 if(firstLoop){
                     getline(cin, turn);
@@ -328,22 +344,16 @@ void GameEngine::enterGame(){
                 }
             }
 
-            //Skip if user has chosen to exit
             if(!userExit){
                 string command = turn.substr(0, COMMAND_LENGTH);
                 int turnLength = turn.length();
                 if(turn[turnLength - 1] == '\r'){
                     turn = turn.substr(0, turn.length() - 1);
                 }
-
-                // Take action based on command and argument
                 if (command == "turn" && turn.length() == TURN_COMMAND_LENGTH){
-
-                    //seperate arguments into factory, tile and row
-                    int factory = turn[5]-'0'; // Subtract '0' for ASCII conversion
+                    char factory = turn[5];
                     char tile =   turn[7];
                     char row =  turn[9];
-                    // player1->getStorageRow()->clearCompleteRow()
                     if(validateTurn(factory, tile, row)) {
                         validCommand = true;
                         if (this->nextTurn.compare(player1->getName())==0){
@@ -353,12 +363,7 @@ void GameEngine::enterGame(){
                             performTurn(player2,factory, tile, row);
                             nextTurn = player1->getName();
                         }
-                        /* 
-                        * If the factories are empty 
-                        * Proceed to move tiles and score and display the player's board.
-                        * Refill the factories if the tile bag is empty.
-                        * Otherwise refill the bag first, then the factories. 
-                        */
+                        
                         if(emptyFactories()){
                             cout << "------------\n" <<
                                     "END OF ROUND\n" <<
@@ -391,18 +396,15 @@ void GameEngine::enterGame(){
                             }    
                         }
                     } else {
-                        //Command valid, but turn not possible
                         cout << "You can't perform that move, try again..." <<
                                 endl;
                     }
                 }else if (command == "save") {
                     validCommand = true;
                     int inputLength = turn.length();
-                    //Get the filename entered with the save command
                     string filename = turn.substr(COMMAND_LENGTH + 1,
                                                   inputLength - 1 -
                                                   COMMAND_LENGTH);
-                    //Prevent \r character from being included in filename
                     int filenameLength = filename.length();
                     if(filename[filenameLength - 1] == '\r'){
                         filename = filename.substr(0, filenameLength - 1);
@@ -410,7 +412,6 @@ void GameEngine::enterGame(){
                     saveGame(filename);
                     cout << "Game saved." << endl;
                 }else if(command == "exit"){
-                    //Leave the game loop
                     validCommand = true;
                     userExit = true;
                 } else {
@@ -660,12 +661,27 @@ string GameEngine::factoriesToString(){
     return strFactories;
 }
 
-bool GameEngine::validateTurn(int factoryN, char tile, char row) {
+bool GameEngine::validFactoryChar(char c, int* factoryNumber){
+    bool valid = false;
+    char validChars[MAX_FACTORY_NUM + 1] = {'0', '1', '2', '3', '4', '5'};
+    for(int i = 0; i <= MAX_FACTORY_NUM; ++i){
+        if(c == validChars[i]){
+            valid = true;
+            *factoryNumber = i;
+        }
+    }
+    return valid;
+}
+
+bool GameEngine::validateTurn(char factChar, char tile, char row) {
     char checkTile1=tile;
     char checkTile2=tile;
     bool validTurn = false;
     bool validInput=false;
     bool exists=false;
+    int factoryN = -1;
+
+    validFactoryChar(factChar, &factoryN);
   
     if(tile==RED || tile==YELLOW || tile==BLACK || tile== BLUE ||
        tile==LIGHT_BLUE){
