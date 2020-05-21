@@ -18,47 +18,47 @@ void GameEngine::deleteFactories(){
     }
 }
 
+/**
+ * Initialises modules of the game for loading in a file.
+ *      Deletes factories if they have already been created on the heap.
+ *      Creates players with no names and 0 points.
+ *      Creates factories (empty).
+ * */
 void GameEngine::init(){
-    // Delete variables on the heap if they have already been created.
     if(initialised == true){
         deleteFactories();
     }
-    // Set initialised to true, because factories will be created on the heap here.
     initialised = true;
-
     string p1Name = " ";
     string p2Name = " ";
-
     player1 = make_shared<Player>(p1Name, INIT_POINTS);
     player2 = make_shared<Player>(p2Name, INIT_POINTS);
-
     factoryZero = make_shared<FactoryZero>();
-    
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
         factories[i] = new Factory(i+1);
     }
 }
-
+/**
+ * Initialises modules of the game for a new game.
+ *      Prompts players to enter their names.
+ *      Decides who begins first.
+ *      Fills, the boxlid, bag and factories.
+ *      Starts the game.
+ * */
 void GameEngine::newGame(int seed, bool seedUsed){
 
     std::string p1Name = "";
     std::string p2Name = "";
-
-    //Get names and initialise players
     std::cout << "Starting a New Game\n" << std::endl;
     std::cout << "Enter a name for Player 1" << std::endl;
     std::cout << PROMPT;
     std::cin >> p1Name;
-
     player1 = make_shared<Player>(p1Name, INIT_POINTS);
-    
     std::cout << "Enter a name for Player 2" << std::endl;
     std::cout << PROMPT;
     std::cin >> p2Name;
-
     player2 = make_shared<Player>(p2Name, INIT_POINTS);
 
-    //Determine who will take the first turn
     std::cout << "Who most recently visited Portugal?\n" <<
                  "[1] " << p1Name << "\n" <<
                  "[2] " << p2Name << endl;
@@ -72,36 +72,30 @@ void GameEngine::newGame(int seed, bool seedUsed){
         mostRecent = ' ';
         std::cin >> mostRecent;
     }
-    
     if(mostRecent == '1'){
         nextTurn = p1Name;
     } else{
         nextTurn = p2Name;
     }
-
-    //Fill the box lid with 20 of each tile
     fillBoxLid();
-
-    //Fill the bag randomly from the box
     if(seedUsed){
         fillBagFromBoxSeed(seed);
     }else{
         fillBagFromBox();
     }
-    
-    //Initialise factories 0-5 and fill with tiles sequentially from bag
     factoryZero = make_shared<FactoryZero>();
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
         factories[i] = new Factory(i+1);
     }
     fillFactories();
-
-    //Display message and enter game
     std::cout << "\n" << player1->getName() << " and " << player2->getName() <<
                  ", Let's Play!\n" << std::endl;
     enterGame();
 }
 
+/**
+ * Loads in a save file.
+ * */
 void GameEngine::loadGame(string filename){
     init();
     ifstream inStream(filename);
@@ -243,6 +237,9 @@ bool GameEngine::validStorageChar(char c) {
     return valid;
 }
 
+/**
+ * Prints the values of all the modules (names, points, tiles, etc);
+ * */
 void GameEngine::printValues() {
 
     cout << "Player 1 Name: " << player1->getName() << endl;
@@ -301,9 +298,6 @@ void GameEngine::printValues() {
  *       Refill the factories if the tile bag is empty.
  *       Otherwise refill the bag first, then the factories. 
  */
-
-                        
-
 void GameEngine::enterGame(){
     bool completeRow = false;
     bool userExit = false;
@@ -311,7 +305,6 @@ void GameEngine::enterGame(){
     bool cmdShort = true;
     bool firstLoop = true;
     string turn = "";
-
    
     while(!userExit && !completeRow){
         setActivePlayer();
@@ -502,26 +495,19 @@ void GameEngine::bonusPoints(shared_ptr<Player> player){
     if(countBlack==5){
         bonusPoints+=10;
     }
-    
     if(countBlue==5){
         bonusPoints+=10;
     }
-    
     if(countLB==5){
         bonusPoints+=10;
     }
-    
     if (countRed==5){
         bonusPoints+=10;
     }
-
     if (countYellow==5){
         bonusPoints+=10;
     }
-
     int prevScore= player->getPoints();
-    // cout<<prevScore<<endl;
-    // cout<<bonusPoints<<endl;
     player->setPoints(prevScore+bonusPoints);
 }
 
@@ -558,8 +544,10 @@ void GameEngine::checkRow(char tile, bool* completed, int* counter,
     }
 }
 
-// Moving tiles at the end of round.
-// Under the assumption that all factories are empty.
+/**
+ *  Moving tiles at the end of round.
+ *  Under the assumption that all factories are empty. 
+ * */
 void GameEngine::moveTilesAndScore(shared_ptr<Player> player) {
     for(int j = 0; j < MAX_STORAGE_NUM; ++j){
         int rowNum = j+1;
@@ -578,8 +566,10 @@ void GameEngine::moveTilesAndScore(shared_ptr<Player> player) {
     }
 }
 
-// Moving excess tiles from full storage rows into the box.
-// Under the assumption that the row is full.
+/**
+ * Moving excess tiles from full storage rows into the box.
+ * Under the assumption that the row is full. 
+ * */
 void GameEngine::moveStorageTilesToBox(int rowNum, char tile){
     for(int i = 0; i != rowNum - 1; ++i){
        int lastIndex = getNumOfBoxTiles();
@@ -598,8 +588,10 @@ void GameEngine::moveBrokenTilesToBox(shared_ptr<Player> player){
     }
 }
 
-// Move tiles from the box to the bag.
-// Under the assumption that the bag is empty and the box is full.
+/**
+ * Move tiles from the box to the bag.
+ * Under the assumption that the bag is empty and the box is full. 
+ * */
 void GameEngine::fillBagSequentially() {
     int index = 0;
     while(tileBag->size() != MIN_BAG_TILES) {
@@ -622,7 +614,6 @@ int GameEngine::getNumOfBoxTiles() {
 
 
 void GameEngine::saveGame(string filename) {
-    //Write game state fields to file line by line
     std::ofstream fileStream(filename);
     fileStream << player1->getName() << "\n"
                << player2->getName() << "\n"
@@ -680,9 +671,7 @@ bool GameEngine::validateTurn(char factChar, char tile, char row) {
     bool validInput=false;
     bool exists=false;
     int factoryN = -1;
-
     validFactoryChar(factChar, &factoryN);
-  
     if(tile==RED || tile==YELLOW || tile==BLACK || tile== BLUE ||
        tile==LIGHT_BLUE){
         if(factoryN>=0 && factoryN<=5) {
@@ -692,26 +681,22 @@ bool GameEngine::validateTurn(char factChar, char tile, char row) {
             }
         }
     }
-     
     if(factoryN ==0 ){
         if (validInput && 
             (*factoryZero).getNumOfCoulour(std::move(checkTile1)) > 0){
          exists=true;
         }
     }
-    
     if(factoryN>0 && 
         (*factories[factoryN-1]).getNumberOfColour(std::move(checkTile2))>0){
          exists=true;
     }
-    
     if(exists){
         if((row != BROKEN_ROW &&
             validTileInRow(tile, row)) || (row == BROKEN_ROW)) {
             validTurn = true;
         }
     }
-
     return validTurn;
 }
 
@@ -778,7 +763,6 @@ void GameEngine::performTurn(shared_ptr<Player> player,int factoryN,
     char tileE= tile;
     char tileA=tile;
     char Fp='F';
-    // char tileC=tile;
     int timesInZ=(*factoryZero).getNumOfCoulour(std::move(tileE));
 
     if(row == BROKEN_ROW)
@@ -808,8 +792,6 @@ void GameEngine::performTurn(shared_ptr<Player> player,int factoryN,
                 (*factories[factoryN-1]).removeTile(move(test15),factoryZero);
             }
         }
-    // Else Statement on next line to prevent code from segfaulting (When player 
-    // tries to move a tile to their Broken Storage).
     } else if(row != BROKEN_ROW){
         int avLength = r-player->getStorageRow(r)->getLength();
         if(factoryN==0 && row!='B') {
@@ -892,13 +874,11 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
             x=n;
         }
     }
-
     int begginingX=x;
-   
-    bool CANgU=true;// Can Go UP
-    bool CANgD=true;// Can Go Down
-    bool CANgR=true;// Can Go Right
-    bool CANgL=true;// Can Go left
+    bool CANgU=true;
+    bool CANgD=true;
+    bool CANgR=true;
+    bool CANgL=true;
     bool hadUp=false;
     bool hadRight=false;
     bool hadDown=false;
@@ -909,19 +889,15 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
     if ((beggingY-1)<0 ){
         CANgU=false;
     }
-
     if ((beggingY+1)>4 ){
         CANgD=false;
     }
-
     if ((begginingX-1)<0 ){
         CANgL=false;
     }
-
     if ((begginingX+1)>4){
         CANgR=false;
-    }
-            
+    }       
     while ( CANgU ){     
         if(beggingY>0 &&
            m->validTile(m->get2DMosaic()[beggingY-1][begginingX])){
@@ -934,7 +910,6 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
             CANgU=false;
         }
     }
-
     while ( CANgR ){
         if (begginingX < 4 &&
             m->validTile(m->get2DMosaic()[beggingY][begginingX+1])){
@@ -947,7 +922,6 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
             CANgR=false;
         }
     }
-
     while (CANgD){
         if ((beggingY) < 4 && 
             m->validTile(m->get2DMosaic()[beggingY+1][begginingX])){
@@ -960,7 +934,6 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
             CANgD=false;
         }
     }
-       
     while (CANgL) {     
         if(begginingX > 0 &&
            m->validTile(m->get2DMosaic()[beggingY][begginingX-1])){
@@ -973,7 +946,6 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
             CANgL=false;
         }
     }
-
     if (hadUp==true || hadDown==true){
         score++;
     }
@@ -982,8 +954,7 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
     }
     if(hadUp==false && hadDown==false && hadRight ==false && hadLeft==false){
         score++;
-    }
-        
+    }    
     int prevS=(*player).getPoints();
     (*player).setPoints(prevS+score);
 }
@@ -1006,8 +977,12 @@ void GameEngine::brokenScore(shared_ptr<Player> player){
             (*player).getPoints()<<endl;
 }
 
+/**
+ * fillBoxlid():
+ *   Iterate from 0 to 100, adding a different colour tile each step of 20.
+ * */
 void GameEngine::fillBoxLid() {
-    //Iterate from 0 to 100, adding a different colour tile each step of 20
+   
     for(int i = 0; i < TOTAL_TILES; i++){
         char nextTile = ' ';
         if(i <= LAST_B_TILE){
@@ -1029,17 +1004,19 @@ void GameEngine::fillBoxLid() {
     }
 }
 
+
+/* 
+* fillBagFromBoxSeed():
+*     Continue while bag not full
+*        Randomly select an index of the box to add to the bag
+*        Check to see if that index has already been selected
+*        If not, add the tile to the front of the bag
+*     Clear the boxlid.
+*/
 void GameEngine::fillBagFromBoxSeed(int seed) {
     std::uniform_int_distribution<int> uniform_dist(0, TOTAL_TILES - 1);
     std::default_random_engine engine(seed);
     std::set<int> selected;
-
-    /*
-    * Continue will bag not full
-    * Randomly select an index of the box to add to the bag
-    * Check to see if that index has already been selected
-    * If not, add the tile to the front of the bag
-    */
     while(tileBag->size() != TOTAL_TILES){
         int index = uniform_dist(engine);
         if(selected.find(index) == selected.end()){
@@ -1047,28 +1024,29 @@ void GameEngine::fillBagFromBoxSeed(int seed) {
             selected.insert(index);
         }
     }
-    //Clear the box lid
     boxLid.fill('\0');
 }
+
+
+/*
+* fillBagFromBox():
+*   Continue will bag not full
+*      Randomly select an index of the box to add to the bag
+*      Check to see if that index has already been selected
+*      If not, add the tile to the front of the bag.
+*    Clear box lid.
+*/
 
 void GameEngine::fillBagFromBox() {
     std::uniform_int_distribution<int> uniform_dist(0, TOTAL_TILES - 1);
     std::random_device engine;
     std::set<int> selected;
-
-    /*
-    * Continue will bag not full
-    * Randomly select an index of the box to add to the bag
-    * Check to see if that index has already been selected
-    * If not, add the tile to the front of the bag
-    */
     while(tileBag->size() != TOTAL_TILES){
         int index = uniform_dist(engine);
         if(selected.find(index) == selected.end()){
             tileBag->addFront(std::move(boxLid.at(index)));
         }
     }
-    //Clear box lid
     boxLid.fill('\0');
 }
 
@@ -1081,8 +1059,8 @@ void GameEngine::fillFactories() {
     }
 }
 
+// Compare the name of the current active player, switch to opposite
 void GameEngine::setActivePlayer() {
-    //Compare the name of the current active player, switch to opposite
     if(nextTurn == player1->getName()){
         activePlayer = player1;
     }else{
