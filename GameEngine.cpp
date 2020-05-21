@@ -288,13 +288,6 @@ void GameEngine::printValues() {
 
 /**
  * enterGame():
- *  
- *  
- * 
- *  
- * 
- *  
- * 
  *  If the factories are empty 
  *       Proceed to move tiles and score and display the player's board.
  *       Refill the factories if the tile bag is empty.
@@ -760,7 +753,11 @@ bool GameEngine::validTileInRow(char tile, char storageRow){
 
     return valid;
 }
-
+// This method will perform the turn assuming that the turn is valid.
+// It will check in which row we want to add the tiles from the factories.
+// Then it would remove the spefied colour from the factory , the rest will
+// be added in the factory zero. Then it will add the as many tiles as can 
+//fit in the row the rest would be added in ht ebroker row of the player.
 void GameEngine::performTurn(shared_ptr<Player> player,int factoryN,
                              char tile, char row) {
     int r = 0;
@@ -870,7 +867,9 @@ bool GameEngine::emptyFactories(){
     }
     return empty;
 }
-
+// This method counts by how many points the playes points should be augmented.
+// Checks how many tiles are connected with the tile added in this round   
+// and calculates the points.   
 void GameEngine::score(shared_ptr<Player> player,int row,char tile){
     shared_ptr<Mosaic> m=player->getMosaic();
     int x=0;
@@ -879,11 +878,14 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
             x=n;
         }
     }
+
     int begginingX=x;
+    // This set of booleans are for checking if the searching is in bounds.
     bool CANgU=true;
     bool CANgD=true;
     bool CANgR=true;
     bool CANgL=true;
+    //This set of bolleans are for checking if the tile is connected.
     bool hadUp=false;
     bool hadRight=false;
     bool hadDown=false;
@@ -903,6 +905,8 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
     if ((begginingX+1)>4){
         CANgR=false;
     }       
+    //This set of loops check at each dierection of the tiles to find the connected tiles.
+    //Checks North
     while ( CANgU ){     
         if(beggingY>0 &&
            m->validTile(m->get2DMosaic()[beggingY-1][begginingX])){
@@ -915,6 +919,7 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
             CANgU=false;
         }
     }
+    //Checks East
     while ( CANgR ){
         if (begginingX < 4 &&
             m->validTile(m->get2DMosaic()[beggingY][begginingX+1])){
@@ -927,6 +932,7 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
             CANgR=false;
         }
     }
+    //Checks South
     while (CANgD){
         if ((beggingY) < 4 && 
             m->validTile(m->get2DMosaic()[beggingY+1][begginingX])){
@@ -939,6 +945,7 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
             CANgD=false;
         }
     }
+    //Checks West
     while (CANgL) {     
         if(begginingX > 0 &&
            m->validTile(m->get2DMosaic()[beggingY][begginingX-1])){
@@ -964,6 +971,8 @@ void GameEngine::score(shared_ptr<Player> player,int row,char tile){
     (*player).setPoints(prevS+score);
 }
 
+// This method calculates the points the player will loose.
+// Depending on how many tiles the player has on the broken row.
 void GameEngine::brokenScore(shared_ptr<Player> player){
     int brokenScore[MAX_BROKEN_TILES] = {-1, -2, -4, -6, -8, -11, -14};
     int prevScore = (*player).getPoints();
