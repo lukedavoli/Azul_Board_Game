@@ -37,7 +37,7 @@ void Factory::addToFactory(char&& colour){
 }
 
 int Factory::getNumberOfColour(char&& colour){
-    int inFactory =0;
+    int inFactory = 0;
     for (int i = 0; i < NUM_OF_TILES; ++i){
         if (tiles[i]==colour){
             inFactory++;
@@ -45,6 +45,7 @@ int Factory::getNumberOfColour(char&& colour){
      }
      return inFactory;
 }
+
 
 void Factory::removeTile(char&& colour, std::shared_ptr<FactoryZero> factory){
     for (int i = 0; i < NUM_OF_TILES; ++i){
