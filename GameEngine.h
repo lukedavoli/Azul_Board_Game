@@ -104,10 +104,10 @@ private:
     void saveGame(string filename);
 
     string factoriesToString();
-    bool validateTurn(char factory, char tile, char row);
+    bool validateTurn(char factoryChar, char tile, char row, int* factoryN);
     bool validTileInRow(char tile, char row);
     bool fileExists(string filename);
-    void performTurn(shared_ptr<Player> player,int factory, char tile, char row);
+    void performTurn(shared_ptr<Player> player, int factory, char tile, char row);
 
     // Checks both players' mosaic to see if a row/col has been completed.
     bool endGame();

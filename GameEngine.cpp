@@ -42,7 +42,7 @@ void GameEngine::init(){
  * Initialises modules of the game for a new game.
  *      Prompts players to enter their names.
  *      Decides who begins first.
- *      Fills, the boxlid, bag and factories.
+ *      Fills the boxlid, bag and factories.
  *      Starts the game.
  * */
 void GameEngine::newGame(int seed, bool seedUsed){
@@ -95,6 +95,8 @@ void GameEngine::newGame(int seed, bool seedUsed){
 
 /**
  * Loads in a save file.
+ *      Loads in the data line by line.
+ *      Prints the data that was loaded in.
  * */
 void GameEngine::loadGame(string filename){
     init();
@@ -286,12 +288,12 @@ void GameEngine::printValues() {
 
 /**
  * enterGame():
- *  Continues in loop until end of round.
- *  Continue in loop until user exits game or command is valid.
- *  Do not proceed until the command is long enough to be valid.
- *  Skip if user has chosen to exit.
- *  Take action based on command and argument.
- *  Seperate arguments into factory, tile and row
+ *  
+ *  
+ * 
+ *  
+ * 
+ *  
  * 
  *  If the factories are empty 
  *       Proceed to move tiles and score and display the player's board.
@@ -305,17 +307,18 @@ void GameEngine::enterGame(){
     bool cmdShort = true;
     bool firstLoop = true;
     string turn = "";
-   
+
+   // Continues in loop until end of round.
     while(!userExit && !completeRow){
         setActivePlayer();
         displayTurnUpdate();
         validCommand = false;
-
+        // Continue in loop until user exits game or command is valid.
         while(!validCommand && !userExit){
             cmdShort = true;
             turn = "";
             cout << PROMPT;
-        
+            // Do not proceed until the command is long enough to be valid.
             while (cmdShort && !userExit){
                 if(firstLoop){
                     getline(cin, turn);
@@ -336,27 +339,29 @@ void GameEngine::enterGame(){
                     }
                 }
             }
-
+            // Skip if user has chosen to exit.
             if(!userExit){
+                // Take action based on command and argument.
                 string command = turn.substr(0, COMMAND_LENGTH);
                 int turnLength = turn.length();
                 if(turn[turnLength - 1] == '\r'){
                     turn = turn.substr(0, turn.length() - 1);
                 }
                 if (command == "turn" && turn.length() == TURN_COMMAND_LENGTH){
-                    char factory = turn[5];
+                    // Seperate arguments into factory, tile and row.
+                    char factoryChar = turn[5];
                     char tile =   turn[7];
                     char row =  turn[9];
-                    if(validateTurn(factory, tile, row)) {
+                    int factory = -1;
+                    if(validateTurn(factoryChar, tile, row, &factory)) {
                         validCommand = true;
                         if (this->nextTurn.compare(player1->getName())==0){
-                            performTurn(player1,factory, tile, row);
+                            performTurn(player1, factory, tile, row);
                             nextTurn = player2->getName();
                         } else {
                             performTurn(player2,factory, tile, row);
                             nextTurn = player1->getName();
                         }
-                        
                         if(emptyFactories()){
                             cout << "------------\n" <<
                                     "END OF ROUND\n" <<
@@ -664,37 +669,37 @@ bool GameEngine::validFactoryChar(char c, int* factoryNumber){
     return valid;
 }
 
-bool GameEngine::validateTurn(char factChar, char tile, char row) {
+bool GameEngine::validateTurn(char factChar, char tile, char row, int* factoryN) {
     char checkTile1=tile;
     char checkTile2=tile;
     bool validTurn = false;
     bool validInput=false;
     bool exists=false;
-    int factoryN = -1;
-    validFactoryChar(factChar, &factoryN);
-    if(tile==RED || tile==YELLOW || tile==BLACK || tile== BLUE ||
-       tile==LIGHT_BLUE){
-        if(factoryN>=0 && factoryN<=5) {
-            if(row=='1' || row=='2' || row=='3' || row=='4' || row=='5' ||
-               row=='B'){
-                 validInput=true;
+    if(validFactoryChar(factChar, factoryN)) {
+        if(tile==RED || tile==YELLOW || tile==BLACK || tile== BLUE ||
+        tile==LIGHT_BLUE){
+            if(*factoryN>=0 && *factoryN<=5) {
+                if(row=='1' || row=='2' || row=='3' || row=='4' || row=='5' ||
+                row=='B'){
+                    validInput=true;
+                }
             }
         }
-    }
-    if(factoryN ==0 ){
-        if (validInput && 
-            (*factoryZero).getNumOfCoulour(std::move(checkTile1)) > 0){
-         exists=true;
+        if(*factoryN ==0 ){
+            if (validInput && 
+                (*factoryZero).getNumOfCoulour(std::move(checkTile1)) > 0){
+            exists=true;
+            }
         }
-    }
-    if(factoryN>0 && 
-        (*factories[factoryN-1]).getNumberOfColour(std::move(checkTile2))>0){
-         exists=true;
-    }
-    if(exists){
-        if((row != BROKEN_ROW &&
-            validTileInRow(tile, row)) || (row == BROKEN_ROW)) {
-            validTurn = true;
+        if(*factoryN>0 && 
+            (*factories[*factoryN-1]).getNumberOfColour(std::move(checkTile2))>0){
+            exists=true;
+        }
+        if(exists){
+            if((row != BROKEN_ROW &&
+                validTileInRow(tile, row)) || (row == BROKEN_ROW)) {
+                validTurn = true;
+            }
         }
     }
     return validTurn;
