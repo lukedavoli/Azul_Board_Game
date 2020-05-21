@@ -9,7 +9,6 @@ BrokenRow::~BrokenRow(){
 
 }
 
-
 void BrokenRow::addTile(char&& colour){
     tiles->addBack(move(colour));
 }
@@ -41,6 +40,7 @@ void BrokenRow::print() {
 bool BrokenRow::hasFirstPlayerMarker(){
     bool hasF = false;
     int size = tiles->size();
+    //Iterate through LL, set hasF to true if/when 'F' found
     for(int i = 0; i < size; i++){
         if(getTileAt(i) == 'F'){
             hasF = true;
@@ -53,6 +53,7 @@ string BrokenRow::toString(){
     string strBroken = "";
     int brokenTiles = getLength();
     for(int t = 0; t < brokenTiles; t++){
+        //Append each tile with a space in between
         strBroken += getTileAt(t);
         if(t != brokenTiles - 1){
             strBroken += " ";

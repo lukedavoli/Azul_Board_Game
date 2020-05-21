@@ -30,11 +30,15 @@ public:
     //get amount of tiles in broken row
     int getLength();
 
+    //Retrieve the tile at a specific index
     char getTileAt(int index);
 
     void print();
+
+    //Convert to printable string format
     string toString();
 
+    //Identify whether the broken row contains the F tile
     bool hasFirstPlayerMarker();
 
 private:

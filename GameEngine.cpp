@@ -44,6 +44,7 @@ void GameEngine::newGame(int seed, bool seedUsed){
     std::string p1Name = "";
     std::string p2Name = "";
 
+    //Get names and initialise players
     std::cout << "Starting a New Game\n" << std::endl;
     std::cout << "Enter a name for Player 1" << std::endl;
     std::cout << PROMPT;
@@ -57,6 +58,7 @@ void GameEngine::newGame(int seed, bool seedUsed){
 
     player2 = make_shared<Player>(p2Name, INIT_POINTS);
 
+    //Determine who will take the first turn
     std::cout << "Who most recently visited Portugal?\n" <<
                  "[1] " << p1Name << "\n" <<
                  "[2] " << p2Name << endl;
@@ -77,19 +79,24 @@ void GameEngine::newGame(int seed, bool seedUsed){
         nextTurn = p2Name;
     }
 
+    //Fill the box lid with 20 of each tile
     fillBoxLid();
+
+    //Fill the bag randomly from the box
     if(seedUsed){
         fillBagFromBoxSeed(seed);
     }else{
         fillBagFromBox();
     }
     
+    //Initialise factories 0-5 and fill with tiles sequentially from bag
     factoryZero = make_shared<FactoryZero>();
     for(int i = 0; i < MAX_FACTORY_NUM; ++i){
         factories[i] = new Factory(i+1);
     }
     fillFactories();
 
+    //Display message and enter game
     std::cout << "\n" << player1->getName() << " and " << player2->getName() <<
                  ", Let's Play!\n" << std::endl;
     enterGame();
@@ -288,16 +295,18 @@ void GameEngine::enterGame(){
     bool firstLoop = true;
     string turn = "";
 
+    //Continue in loop until end of round
     while(!userExit && !completeRow){
-
         setActivePlayer();
         displayTurnUpdate();
         validCommand = false;
 
+        //Continue in loop until user exits game or command is valid
         while(!validCommand && !userExit){
             cmdShort = true;
             turn = "";
             cout << PROMPT;
+            //Do not proceed until the command is long enough to be valid
             while (cmdShort && !userExit){
                 if(firstLoop){
                     getline(cin, turn);
@@ -319,6 +328,7 @@ void GameEngine::enterGame(){
                 }
             }
 
+            //Skip if user has chosen to exit
             if(!userExit){
                 string command = turn.substr(0, COMMAND_LENGTH);
                 int turnLength = turn.length();
@@ -343,10 +353,12 @@ void GameEngine::enterGame(){
                             performTurn(player2,factory, tile, row);
                             nextTurn = player1->getName();
                         }
-                        /* If the factories are empty 
-                            Proceed to move tiles and score and display the player's board.
-                            Refill the factories if the tile bag is empty.
-                            Otherwise refill the bag first, then the factories. */
+                        /* 
+                        * If the factories are empty 
+                        * Proceed to move tiles and score and display the player's board.
+                        * Refill the factories if the tile bag is empty.
+                        * Otherwise refill the bag first, then the factories. 
+                        */
                         if(emptyFactories()){
                             cout << "------------\n" <<
                                     "END OF ROUND\n" <<
@@ -376,21 +388,21 @@ void GameEngine::enterGame(){
                                 bonusPoints(player1);
                                 bonusPoints(player2);
                                 displayWinner();
-                            }
-                             
+                            }    
                         }
-
                     } else {
+                        //Command valid, but turn not possible
                         cout << "You can't perform that move, try again..." <<
                                 endl;
                     }
-
-                } else if (command == "save") {
+                }else if (command == "save") {
                     validCommand = true;
                     int inputLength = turn.length();
+                    //Get the filename entered with the save command
                     string filename = turn.substr(COMMAND_LENGTH + 1,
                                                   inputLength - 1 -
                                                   COMMAND_LENGTH);
+                    //Prevent \r character from being included in filename
                     int filenameLength = filename.length();
                     if(filename[filenameLength - 1] == '\r'){
                         filename = filename.substr(0, filenameLength - 1);
@@ -398,6 +410,7 @@ void GameEngine::enterGame(){
                     saveGame(filename);
                     cout << "Game saved." << endl;
                 }else if(command == "exit"){
+                    //Leave the game loop
                     validCommand = true;
                     userExit = true;
                 } else {
@@ -444,8 +457,6 @@ void GameEngine::bonusPoints(shared_ptr<Player> player){
     int countRed=0;
     int countLB=0;
     int bonusPoints=0;
-    
-      
 
     for (int i = 0; i < MAX_MOSAIC_COL_NUM; i++){
         countRow=0;
@@ -610,6 +621,7 @@ int GameEngine::getNumOfBoxTiles() {
 
 
 void GameEngine::saveGame(string filename) {
+    //Write game state fields to file line by line
     std::ofstream fileStream(filename);
     fileStream << player1->getName() << "\n"
                << player2->getName() << "\n"
@@ -743,10 +755,6 @@ bool GameEngine::validTileInRow(char tile, char storageRow){
     return valid;
 }
 
-// Need to go through this.
-// Fixed segfault ( line: "int avLength = r-player->getStorageRow(r)->getLength();")
-// If rowChar == 'B' then r remains 0, can't access Storage 0, so it segfaults.
-// Fixed using an else statement at line 612, but now next player can't perform turn after moving a tile to Broken Storage.
 void GameEngine::performTurn(shared_ptr<Player> player,int factoryN,
                              char tile, char row) {
     int r = 0;
@@ -983,6 +991,7 @@ void GameEngine::brokenScore(shared_ptr<Player> player){
 }
 
 void GameEngine::fillBoxLid() {
+    //Iterate from 0 to 100, adding a different colour tile each step of 20
     for(int i = 0; i < TOTAL_TILES; i++){
         char nextTile = ' ';
         if(i <= LAST_B_TILE){
@@ -1009,6 +1018,12 @@ void GameEngine::fillBagFromBoxSeed(int seed) {
     std::default_random_engine engine(seed);
     std::set<int> selected;
 
+    /*
+    * Continue will bag not full
+    * Randomly select an index of the box to add to the bag
+    * Check to see if that index has already been selected
+    * If not, add the tile to the front of the bag
+    */
     while(tileBag->size() != TOTAL_TILES){
         int index = uniform_dist(engine);
         if(selected.find(index) == selected.end()){
@@ -1016,6 +1031,7 @@ void GameEngine::fillBagFromBoxSeed(int seed) {
             selected.insert(index);
         }
     }
+    //Clear the box lid
     boxLid.fill('\0');
 }
 
@@ -1024,12 +1040,19 @@ void GameEngine::fillBagFromBox() {
     std::random_device engine;
     std::set<int> selected;
 
+    /*
+    * Continue will bag not full
+    * Randomly select an index of the box to add to the bag
+    * Check to see if that index has already been selected
+    * If not, add the tile to the front of the bag
+    */
     while(tileBag->size() != TOTAL_TILES){
         int index = uniform_dist(engine);
         if(selected.find(index) == selected.end()){
             tileBag->addFront(std::move(boxLid.at(index)));
         }
     }
+    //Clear box lid
     boxLid.fill('\0');
 }
 
@@ -1043,6 +1066,7 @@ void GameEngine::fillFactories() {
 }
 
 void GameEngine::setActivePlayer() {
+    //Compare the name of the current active player, switch to opposite
     if(nextTurn == player1->getName()){
         activePlayer = player1;
     }else{

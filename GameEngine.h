@@ -135,12 +135,16 @@ private:
     // Move Broken Storage tiles to box lid.
     void moveBrokenTilesToBox(shared_ptr<Player> player);
 
+    //Identify which player has the next turn and set them as active player
     void setActivePlayer();
 
+    //Print all relevant information to screen prior to user's turn
     void displayTurnUpdate();
 
+    //Convert box lid to readable string format
     string boxLidToString();
 
+    //Convert tile bag to string format
     string tileBagToString();
 
     // Checks if all the factories are empty.

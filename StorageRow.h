@@ -33,19 +33,24 @@ public:
     //Get the first tile from the row
     char getFirstTile();
 
+    //Maximum amount of tiles that may be stored in a row
     int getMaxTiles();
 
+    //Retrieve tile at a specific index
     char getTileAt(int index);
 
     // Sets all the tile spaces to '.';
     void resetRow();
 
+    //Storage row to readable string format
     string toString();
 
+    //Convert to backwards string for saving to file in valid format
     string toStringBackwards();
 
     void print();
 
+    //How many tiles are currently in the row occupying spaces
     int getOccupied();
 
 private:
