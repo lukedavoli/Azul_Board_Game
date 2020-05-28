@@ -42,6 +42,10 @@ public:
 
     string boardToString();
 
+    string colourizeRow(string row);
+
+    string colourizeChar(char character);
+
 private:
     string name;
     int points;

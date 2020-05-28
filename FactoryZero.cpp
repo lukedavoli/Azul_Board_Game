@@ -59,8 +59,20 @@ void FactoryZero::clear() {
 string FactoryZero::toString() {
     string strTiles = "";
     int size = tiles.size();
-    for( int i = 0 ; i < size ; i++){
+    for(int i = 0 ; i < size ; i++){
         strTiles += tiles[i];
+        if(i != size - 1){
+            strTiles += " ";
+        }
+    }
+    return strTiles;
+}
+
+string FactoryZero::toStringColour(){
+    string strTiles = "";
+    int size = tiles.size();
+    for(int i = 0 ; i < size ; i++){
+        strTiles += colourizeChar(tiles[i]);
         if(i != size - 1){
             strTiles += " ";
         }
@@ -76,4 +88,22 @@ int FactoryZero::getSize(){
 void FactoryZero::reset() {
     tiles.clear();
     tiles.push_back(startingPlayer);
+}
+
+string FactoryZero::colourizeChar(char character){
+    string retVal;
+    if(character == 'B'){
+        retVal = "\033[44;37;1mB\033[0m";
+    }else if(character == 'Y'){
+        retVal = "\033[43;37;1mY\033[0m";
+    }else if(character == 'R'){
+        retVal = "\033[41;37;1mR\033[0m";
+    }else if(character == 'U'){
+        retVal = "\033[40;37;1mU\033[0m";
+    }else if(character == 'L'){
+        retVal = "\033[32;1ml\033[0m";
+    }else if(character == 'F'){
+        retVal = "\033[47;30;1mF\033[0m";
+    }
+    return retVal;
 }

@@ -61,7 +61,7 @@ void StorageRow::print() {
     tiles->print();
 }
 
-string StorageRow::toString() {
+string StorageRow::toString(){
     string row = "";
     int size = getLength();
     for(int i = 0; i < maxTiles - size; i++){
@@ -73,6 +73,39 @@ string StorageRow::toString() {
 
     for(int i = 0; i < size; i++){
         row += getTileAt(i);
+        if(i != size){
+            row += " ";
+        }
+    }
+
+    return row;
+}
+
+string StorageRow::toStringUI() {
+    string row = "";
+    int size = getLength();
+    for(int i = 0; i < maxTiles - size; i++){
+        row += "\u25a2";
+        if(i != maxTiles){
+            row += " ";
+        }
+    }
+
+    for(int i = 0; i < size; i++){
+        char nextTile = getTileAt(i);
+        string nextTileColour;
+        if(nextTile == 'B'){
+            nextTileColour = "\033[44;37;1mB\033[0m";
+        }else if(nextTile == 'Y'){
+            nextTileColour = "\033[43;37;1mY\033[0m";
+        }else if(nextTile == 'R'){
+            nextTileColour = "\033[41;37;1mR\033[0m";
+        }else if(nextTile == 'U'){
+            nextTileColour = "\033[40;37;1mU\033[0m";
+        }else if(nextTile == 'L'){
+            nextTileColour = "\033[42;37;1mL\033[0m";
+        }
+        row += nextTileColour;
         if(i != size){
             row += " ";
         }

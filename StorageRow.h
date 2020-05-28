@@ -43,6 +43,8 @@ public:
     void resetRow();
 
     //Storage row to readable string format
+    string toStringUI();
+
     string toString();
 
     //Convert to backwards string for saving to file in valid format

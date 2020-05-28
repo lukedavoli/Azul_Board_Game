@@ -640,9 +640,9 @@ void GameEngine::saveGame(string filename) {
 
 string GameEngine::factoriesToString(){
     string strFactories = "";
-    strFactories += "0: " + factoryZero->toString() + "\n";
+    strFactories += "0: " + factoryZero->toStringColour() + "\n";
     for(int i = 0; i < MAX_FACTORY_NUM; i++){
-        strFactories += std::to_string(i + 1) + ": " +factories[i]->toString();
+        strFactories += std::to_string(i + 1) + ": " + factories[i]->toStringColour();
         if(i != MAX_FACTORY_NUM - 1){
             strFactories += "\n";
         }
