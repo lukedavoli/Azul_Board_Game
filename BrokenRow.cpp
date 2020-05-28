@@ -95,7 +95,7 @@ string BrokenRow::colourizeChar(char character){
     }else if(character == 'U'){
         retVal = "\033[40;37;1mU\033[0m";
     }else if(character == 'L'){
-        retVal = "\033[32;1ml\033[0m";
+        retVal = "\033[42;37;1mL\033[0m";
     }else if(character == 'F'){
         retVal = "\033[47;30;1mF\033[0m";
     }
