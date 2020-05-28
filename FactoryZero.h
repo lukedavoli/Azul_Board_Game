@@ -21,29 +21,33 @@ public:
     // Move Constructor
     FactoryZero(FactoryZero&& other);
 
-//  Get factory number
-int getFNum();
+    //  Get factory number
+    int getFNum();
 
-//  Insert tile within vector
-void addToFac(char&& tile);
+    //  Insert tile within vector
+    void addToFac(char&& tile);
 
-// Get number of tiles with the same color as the color selected
-int getNumOfCoulour(char&& colour);
+    // Get number of tiles with the same color as the color selected
+    int getNumOfCoulour(char&& colour);
 
-//  Remove tiles given the color selected (set them to null)
-void removeTile(char&& colour);
+    //  Remove tiles given the color selected (set them to null)
+    void removeTile(char&& colour);
 
-void print();
+    void print();
 
-std::string toString();
+    std::string toString();
 
-void clear();
+    std::string toStringColour();
 
-int getSize();
+    void clear();
+
+    int getSize();
 
 
-// Reset for the next round.
-void reset();
+    // Reset for the next round.
+    void reset();
+
+    string colourizeChar(char character);
 
 private:
     // startingPlayerMarker

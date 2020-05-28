@@ -61,3 +61,43 @@ string BrokenRow::toString(){
     }
     return strBroken;
 }
+
+string BrokenRow::toStringUI(){
+    string strBroken = "";
+    int tilesInBroken = getLength();
+    for(int t = 0; t < MAX_TILES; t++){
+        if(t == 0){
+            strBroken += "-1 ";
+        }else if(t == 2){
+            strBroken += " -2 ";
+        }else if(t == 5){
+            strBroken += " -3 ";
+        }
+        if(t < tilesInBroken)
+        {
+            strBroken += colourizeChar(getTileAt(t)) + " ";
+        }else{
+            strBroken += "\u25a2";
+            strBroken += " ";
+        }
+    }
+    return strBroken;
+}
+
+string BrokenRow::colourizeChar(char character){
+    string retVal;
+    if(character == 'B'){
+        retVal = "\033[44;37;1mB\033[0m";
+    }else if(character == 'Y'){
+        retVal = "\033[43;37;1mY\033[0m";
+    }else if(character == 'R'){
+        retVal = "\033[41;37;1mR\033[0m";
+    }else if(character == 'U'){
+        retVal = "\033[40;37;1mU\033[0m";
+    }else if(character == 'L'){
+        retVal = "\033[42;37;1mL\033[0m";
+    }else if(character == 'F'){
+        retVal = "\033[47;30;1mF\033[0m";
+    }
+    return retVal;
+}

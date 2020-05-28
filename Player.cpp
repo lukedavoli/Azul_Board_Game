@@ -53,13 +53,47 @@ string Player::boardToString() {
             board += " ";
         }
         shared_ptr<StorageRow> currRow = getStorageRow(i + 1);
-        board += currRow->toString();
-        board += " || ";
-        board += mosaic->getRow(i + 1);
+        board += currRow->toStringUI();
+        board += " \u2b9e ";
+        board += " " + colourizeRow(mosaic->getRow(i + 1));
         board += "\n";
     }
     board += "broken: ";
-    board += brokenRow->toString();
+    board += brokenRow->toStringUI();
 
     return board;
+}
+
+string Player::colourizeRow(string row){
+    string colourRow = " ";
+    for(std::string::size_type i = 0; i < row.size(); ++i){
+        colourRow += colourizeChar(row[i]) + " ";
+    }
+    return colourRow;
+}
+
+string Player::colourizeChar(char character){
+    string retVal;
+    if(character == 'B'){
+        retVal = "\033[44;37;1mB\033[0m";
+    }else if(character == 'Y'){
+        retVal = "\033[43;37;1mY\033[0m";
+    }else if(character == 'R'){
+        retVal = "\033[41;37;1mR\033[0m";
+    }else if(character == 'U'){
+        retVal = "\033[40;37;1mU\033[0m";
+    }else if(character == 'L'){
+        retVal = "\033[42;37;1mL\033[0m";
+    }else if(character == 'b'){
+        retVal = "\033[34;1mb\033[0m";
+    }else if(character == 'y'){
+        retVal = "\033[33;1my\033[0m";
+    }else if(character == 'r'){
+        retVal = "\033[31;1mr\033[0m";
+    }else if(character == 'u'){
+        retVal = "\033[30;1mu\033[0m";
+    }else if(character == 'l'){
+        retVal = "\033[32;1ml\033[0m";
+    }
+    return retVal;
 }

@@ -41,9 +41,13 @@ public:
 
     string toString();
 
+    string toStringColour();
+
     void setTile(int index, char&& tile);
 
     bool isClear();
+
+    string colourizeChar(char character);
 private:
 
     char tiles[NUM_OF_TILES];

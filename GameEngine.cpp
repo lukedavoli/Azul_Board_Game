@@ -59,7 +59,7 @@ void GameEngine::newGame(int seed, bool seedUsed){
     std::cin >> p2Name;
     player2 = make_shared<Player>(p2Name, INIT_POINTS);
 
-    std::cout << "Who most recently visited Portugal?\n" <<
+    std::cout << "\nWho most recently visited Portugal?\n" <<
                  "[1] " << p1Name << "\n" <<
                  "[2] " << p2Name << endl;
           
@@ -310,9 +310,9 @@ void GameEngine::enterGame(){
         while(!validCommand && !userExit){
             cmdShort = true;
             turn = "";
-            cout << PROMPT;
             // Do not proceed until the command is long enough to be valid.
             while (cmdShort && !userExit){
+                cout << PROMPT;
                 if(firstLoop){
                     getline(cin, turn);
                     firstLoop = false;
@@ -323,12 +323,13 @@ void GameEngine::enterGame(){
                 }else{
                     cmdShort = turn.length() < COMMAND_LENGTH;
                     if(cmdShort){
-                        cout << "Invalid action, please try again with one of "
-                                "the following: \n" <<
-                                "turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
+                        cout << "\n\033[31;1mInvalid action, please try again "
+                                "with one of the following: \n" <<
+                                "- turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
                                 "[Row: 1-5, B]\n"
-                                "save [filename] (ensure file exists)\n" <<
-                                "exit" << endl;
+                                "- show\n"
+                                "- save [filename] (ensure file exists)\n" <<
+                                "- exit\033[0m" << endl;
                     }
                 }
             }
@@ -403,15 +404,33 @@ void GameEngine::enterGame(){
                     saveGame(filename);
                     cout << "Game saved." << endl;
                 }else if(command == "exit"){
+                    cout << "\n" << endl;
                     validCommand = true;
                     userExit = true;
+                }else if(command == "show"){
+                    cout << "Opponent's board:" << endl;
+                    if(nextTurn == player1->getName()){
+                        cout << player2->boardToString() << endl;
+                    }else{
+                        cout << player1->boardToString() << endl;
+                    }     
+                }else if(command == "help"){
+                    cout << "Please use one of the following commands\n" <<
+                         "- turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
+                         "[Row: 1-5, B] (performs a turn in the game)\n"
+                         "- show (displays the opponents board to inform"
+                         " strategic decision making)\n"
+                         "- save [filename] (saves the current game to file)\n" 
+                         << "- exit (leaves the game to the main menu"
+                         " without saving)" << endl;
                 } else {
-                    cout << "Invalid action, please try again with one of the"
-                            " following: \n" <<
-                         "turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
+                    cout << "\n\033[31;1mInvalid action, please try again with"
+                            " one of the following: \n" <<
+                         "- turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
                          "[Row: 1-5, B]\n"
-                         "save [filename] (ensure file exists)\n" <<
-                         "exit" << endl;
+                         "- show\n"
+                         "- save [filename] (ensure file exists)\n" <<
+                         "- exit\033[0m" << endl;
                 }
             }
         }
@@ -640,9 +659,9 @@ void GameEngine::saveGame(string filename) {
 
 string GameEngine::factoriesToString(){
     string strFactories = "";
-    strFactories += "0: " + factoryZero->toString() + "\n";
+    strFactories += "0: " + factoryZero->toStringColour() + "\n";
     for(int i = 0; i < MAX_FACTORY_NUM; i++){
-        strFactories += std::to_string(i + 1) + ": " +factories[i]->toString();
+        strFactories += std::to_string(i + 1) + ": " + factories[i]->toStringColour();
         if(i != MAX_FACTORY_NUM - 1){
             strFactories += "\n";
         }
@@ -1083,7 +1102,7 @@ void GameEngine::setActivePlayer() {
 }
 
 void GameEngine::displayTurnUpdate() {
-    cout << "TURN FOR PLAYER: " << activePlayer->getName() << endl;
+    cout << "\nTURN FOR PLAYER: " << activePlayer->getName() << endl;
     cout << "Factories: \n" << factoriesToString() << "\n" << endl;
     cout << activePlayer->getName() << "'s board:\n" <<
          activePlayer->boardToString() << endl;

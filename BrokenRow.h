@@ -38,6 +38,10 @@ public:
     //Convert to printable string format
     string toString();
 
+    string toStringUI();
+
+    string colourizeChar(char character);
+
     //Identify whether the broken row contains the F tile
     bool hasFirstPlayerMarker();
 
