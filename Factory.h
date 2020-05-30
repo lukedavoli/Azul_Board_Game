@@ -25,6 +25,7 @@ public:
     void addToFactory(char&& colour);
     //  Get number of tiles with the same color as the color selected
     int getNumberOfColour(char&& colour);
+    int getNumberOfCol(char colour);
 
     // Remove tiles given the color selected (set them to null)
     void removeTile(char&& colour, std::shared_ptr<FactoryZero> factory);

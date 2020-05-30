@@ -41,6 +41,17 @@ int FactoryZero::getNumOfCoulour(char&& colour){
     return numIn;
 }
 
+int FactoryZero::getNumOfCol(char colour){
+   int numIn=0;
+   int size=tiles.size();
+    for (int i = 0; i < size; ++i){
+        if (tiles[i]==colour){   
+           numIn++;
+        }
+    }
+    return numIn;
+}
+
 void FactoryZero::removeTile(char&& colour){
    tiles.erase(std::remove(tiles.begin(),tiles.end(),colour),tiles.end());
 }

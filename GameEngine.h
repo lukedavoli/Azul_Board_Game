@@ -40,6 +40,8 @@ using std::move;
 #define LAST_U_TILE 59
 #define LAST_R_TILE 79
 #define LAST_Y_TILE 99
+#define TILES 5
+#define POSSIBLE_MOVES 180
 
 class GameEngine
 {
@@ -50,11 +52,14 @@ public:
 
 
     void newGame(int randomseed, bool seedUsed); // Sets up an new game and then enters game loop
+    void newGameSP(int randomseed, bool seedUsed);
     void loadGame(string filename); // Load in existing game from file and then enter game loop
     void enterGame(); // Enter game loop
 
 private:
     int seed;
+
+    bool ai;
 
     shared_ptr<LinkedList> tileBag;
     std::array<char, TOTAL_TILES> boxLid;
@@ -66,6 +71,10 @@ private:
     shared_ptr<Player> player2;
     shared_ptr<Player> activePlayer;
     shared_ptr<FactoryZero> factoryZero;
+
+    string *possibleMoves;
+    std::vector<string> validMoves;
+    std::vector<string> rowFillers;
 
     // To check whether the factories ( or other objects ) have been created on the heap.
     bool initialised;
@@ -169,5 +178,14 @@ private:
 
     bool factoryInRange(int factory);
 
+    string aiTurn();
+
+    void generatePossibleMoves();
+
+    void validatePossibleMoves();
+
+    void findValidMoves(); 
+
+    string findBestMove();
 };
 #endif // GAMEENGINE_H
