@@ -14,10 +14,11 @@ void Menu::displayMenu(int seed, bool seedUsed){
     while(!quit){
         std::cout << "Menu\n" <<
                   SHORT_LB << "\n" <<
-                  "1. New Game\n" <<
-                  "2. Load Game\n" <<
-                  "3. Credits\n" <<
-                  "4. Quit\n" <<
+                  "1. New Game - mutiplayer\n" <<
+                  "2. New Game - single player\n" <<
+                  "3. Load Game\n" <<
+                  "4. Credits\n" <<
+                  "5. Quit\n" <<
                   std::endl;
 
         int menuSelection = -1;
@@ -30,12 +31,15 @@ void Menu::displayMenu(int seed, bool seedUsed){
             gameEngine->newGame(seed, seedUsed);
         }
         else if(menuSelection == 2){
-            loadGame();
+            gameEngine->newGameSP(seed, seedUsed);
         }
         else if(menuSelection == 3){
+            loadGame();
+        }
+        else if(menuSelection == 4){
             showCredits();
         }
-        else if(menuSelection == 4 || !cin.good()){
+        else if(menuSelection == 5 || !cin.good()){
             quit = true;
             std::cout << "Goodbye" << std::endl;
         }

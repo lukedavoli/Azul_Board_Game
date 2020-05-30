@@ -30,6 +30,8 @@ public:
     // Get number of tiles with the same color as the color selected
     int getNumOfCoulour(char&& colour);
 
+    int getNumOfCol(char colour);
+
     //  Remove tiles given the color selected (set them to null)
     void removeTile(char&& colour);
 

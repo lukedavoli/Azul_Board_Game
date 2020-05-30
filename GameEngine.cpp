@@ -1,15 +1,17 @@
 #include <random>
 #include <set>
 #include "GameEngine.h"
-#include<string>
+#include <string>
 
 GameEngine::GameEngine(){
     initialised = false;
     tileBag = make_shared<LinkedList>();
+    possibleMoves = new string[POSSIBLE_MOVES];
 }
 
 GameEngine::~GameEngine(){
     deleteFactories();
+    delete possibleMoves;
 }
 
 void GameEngine::deleteFactories(){
@@ -46,7 +48,7 @@ void GameEngine::init(){
  *      Starts the game.
  * */
 void GameEngine::newGame(int seed, bool seedUsed){
-
+    ai = false;
     std::string p1Name = "";
     std::string p2Name = "";
     std::cout << "Starting a New Game\n" << std::endl;
@@ -93,6 +95,35 @@ void GameEngine::newGame(int seed, bool seedUsed){
     enterGame();
 }
 
+void GameEngine::newGameSP(int seed, bool seedUsed){
+    ai = true;
+    generatePossibleMoves();
+    std::string p1Name = "";
+    std::string p2Name = "AzulBot";
+    std::cout << "Starting a New Game\n" << std::endl;
+    std::cout << "Enter a name for Player 1" << std::endl;
+    std::cout << PROMPT;
+    std::cin >> p1Name;
+    player1 = make_shared<Player>(p1Name, INIT_POINTS);
+    player2 = make_shared<Player>(p2Name, INIT_POINTS);
+
+    nextTurn = p1Name;
+    fillBoxLid();
+    if(seedUsed){
+        fillBagFromBoxSeed(seed);
+    }else{
+        fillBagFromBox();
+    }
+    factoryZero = make_shared<FactoryZero>();
+    for(int i = 0; i < MAX_FACTORY_NUM; ++i){
+        factories[i] = new Factory(i+1);
+    }
+    fillFactories();
+    std::cout << "\n" << player1->getName() << " and " << player2->getName() <<
+                 ", Let's Play!\n" << std::endl;
+    enterGame();
+}
+
 /**
  * Loads in a save file.
  *      Loads in the data line by line.
@@ -103,6 +134,7 @@ void GameEngine::loadGame(string filename){
     ifstream inStream(filename);
     string line = " ";
     int points = 0;
+    std::string gametype = "";
     
     loadPlayerNames(inStream, line);
     loadPoints(inStream, points);
@@ -119,6 +151,12 @@ void GameEngine::loadGame(string filename){
     loadBoxLid(inStream, line);
     loadBag(inStream, line);
     inStream >> seed;
+    inStream >> gametype;
+    if(gametype == "sp"){
+        ai = true;
+    }else{
+        ai = false;
+    }
     
     inStream.close();
     printValues();
@@ -284,6 +322,12 @@ void GameEngine::printValues() {
     cout << "Bag: " << tileBagToString() << endl;
     cout << "Box Lid: " << boxLidToString() << endl;
     cout << "Seed: " << seed << endl;
+    cout << "Game type: ";
+    if(ai){
+        cout << "single player (ai)" << endl;
+    }else{
+        cout << "multiplayer (no ai)" << endl;
+    }
 }
 
 /**
@@ -313,11 +357,16 @@ void GameEngine::enterGame(){
             // Do not proceed until the command is long enough to be valid.
             while (cmdShort && !userExit){
                 cout << PROMPT;
-                if(firstLoop){
+                if(nextTurn != "AzulBot" || !ai){
+                    if(firstLoop){
+                        getline(cin, turn);
+                        firstLoop = false;
+                    }
                     getline(cin, turn);
-                    firstLoop = false;
+                }else{
+                    turn = aiTurn();
+                    cout << turn << endl;
                 }
-                getline(cin, turn);
                 if(cin.eof()){
                     userExit = true;
                 }else{
@@ -653,7 +702,12 @@ void GameEngine::saveGame(string filename) {
                << player2->getBroken()->toString() << "\n";
     fileStream << boxLidToString() << "\n"
                << tileBagToString() << "\n"
-               << seed;
+               << seed << "\n";
+    if(ai){
+        fileStream << "s";
+    }else{
+        fileStream << "m";
+    }
     fileStream.close();
 }
 
@@ -1131,4 +1185,172 @@ string GameEngine::tileBagToString(){
         }
     }
     return strBag;
+}
+
+string GameEngine::aiTurn(){
+    string chosenTurn = "no turn found";
+    findValidMoves();
+    chosenTurn = findBestMove();
+    return chosenTurn;
+}
+
+void GameEngine::generatePossibleMoves(){
+    int i = 0;
+    for(int f = 0; f <= MAX_FACTORY_NUM; f++){
+        for(int t = 0; t < TILES; t++){
+            for(int s = 1; s <= MAX_STORAGE_NUM + 1; s++){
+                string turn = "turn ";
+                turn += std::to_string(f) + " ";
+                if(t == 0){
+                    turn += "B ";
+                }else if(t == 1){
+                    turn += "Y ";
+                }else if(t == 2){
+                    turn += "R ";
+                }else if(t == 3){
+                    turn += "U ";
+                }else if(t == 4){
+                    turn += "L ";
+                }
+                if(s != 6){
+                    turn += std::to_string(s);
+                }else{
+                    turn += "B";
+                }
+                possibleMoves[i] = turn;
+                i++;
+            }
+        }
+    }
+}
+
+void GameEngine::findValidMoves(){
+    validMoves.clear();
+    for(int m = 0; m < POSSIBLE_MOVES; m++){
+        string turn = possibleMoves[m];
+        char factoryChar = turn[5];
+        char tile = turn[7];
+        char row = turn[9];
+        int factory = -1;
+        if(validateTurn(factoryChar, tile, row, &factory)){
+            validMoves.push_back(turn);
+        }
+    }
+}
+
+string GameEngine::findBestMove(){
+    int totalValidMoves = validMoves.size();
+    std::vector<string> movesToConsider;
+    int moveLevel = 0;
+    bool directBroken = false;
+
+    //iterate through all moves that are currently valid
+    for(int m = 0; m < totalValidMoves; m++){
+        //Get the details of the next move
+        string turn = validMoves.at(m);
+        char factoryChar = turn[5];
+        int factoryNum = factoryChar - '0';
+        char tile = turn[7];
+        char row = turn[9];
+        int rowNum = -1;
+        int rowCapacity = 0;
+        int currRowSize;
+        int tilesToAdd;
+        if(factoryChar == '0'){
+            tilesToAdd = factoryZero->getNumOfCol(tile);
+        }else{
+            tilesToAdd = factories[factoryNum - 1]->getNumberOfCol(tile);
+        }
+
+        if(row != 'B'){
+            rowNum = row - '0';
+            currRowSize = activePlayer->getStorageRow(rowNum)->getOccupied();
+            rowCapacity = activePlayer->getStorageRow(rowNum)->getMaxTiles();
+            
+            //Identify what outcome the move will have and choose whether or not to consider it accordingly
+            //level 5 move: perfectly fills a row
+            if(currRowSize + tilesToAdd == rowCapacity){
+                if(moveLevel < 5){
+                    movesToConsider.clear();
+                    moveLevel = 5;
+                    directBroken = false;
+                }
+                movesToConsider.push_back(turn);
+            //level 4 move: fills a row to 1 less than capacity
+            }else if(currRowSize + tilesToAdd == rowCapacity - 1 && moveLevel < 5){
+                if(moveLevel < 4){
+                    movesToConsider.clear();
+                    moveLevel = 4;
+                    directBroken = false;
+                }
+                movesToConsider.push_back(turn);
+            //level 3 move: fills a row to 1 over capacity
+            }else if(currRowSize + tilesToAdd == rowCapacity + 1 && moveLevel < 4){
+                if(moveLevel < 3){
+                    movesToConsider.clear();
+                    moveLevel = 3;
+                    directBroken = false;
+                }
+                movesToConsider.push_back(turn);
+            //level 2 move: fills a row to 2 or more below capacity
+            }else if(currRowSize + tilesToAdd < rowCapacity - 1 && moveLevel < 3){
+                if(moveLevel < 2){
+                    movesToConsider.clear();
+                    moveLevel = 2;
+                    directBroken = false;
+                }
+                movesToConsider.push_back(turn);
+            //level 1 move: fills a row to 2 or more above capacity
+            }else if(currRowSize + tilesToAdd > rowCapacity + 1 && moveLevel < 2){
+                if(moveLevel < 1){
+                    movesToConsider.clear();
+                    moveLevel = 1;
+                    directBroken = false;
+                }
+                movesToConsider.push_back(turn);
+            }
+        }
+        //level 0 move: moves tiles directly to broken row
+        if(row == 'B' && moveLevel < 1){
+            directBroken = true;
+            movesToConsider.push_back(turn);
+        }
+    }
+    
+    /*
+    * Go through all moves to consider, if a move can be played to a row,
+    * choose the one that uses the largest row. If the bot must move directly
+    * to broken, choose the move with the least amount of tiles
+    */
+    int totalMovesToConsider = movesToConsider.size();
+    string chosenMove = "";
+    if(!directBroken){
+        int largestRow = 0;
+        for(int i = 0; i < totalMovesToConsider; i++){
+            string currTurn = movesToConsider.at(i);
+            int row = currTurn[9] - '0';
+            if(row > largestRow){
+                chosenMove = currTurn;
+                largestRow = row;
+            }
+        } 
+    }else{
+        int leastTiles = MAX_BAG_TILES;
+        for(int i = 0; i < totalMovesToConsider; i++){
+            string currTurn = movesToConsider.at(i);
+            char factoryChar = currTurn[5];
+            char tile = currTurn[7];
+            int factoryNum = factoryChar - '0';
+            int tilesToAdd = 0;
+            if(factoryChar == '0'){
+                tilesToAdd = factoryZero->getNumOfCol(tile);
+            }else{
+                tilesToAdd = factories[factoryNum]->getNumberOfCol(tile);
+            }
+            if(tilesToAdd < leastTiles){
+                chosenMove = currTurn;
+            }
+        }
+    }
+    return chosenMove;
 }
