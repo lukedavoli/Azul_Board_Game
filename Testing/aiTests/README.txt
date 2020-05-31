@@ -1,8 +1,7 @@
 The following are a list of numbered test cases, followed by a list
 of numbered tests, each listing the test cases covered by it.
 Listed test cases are all that are intentional, however tests will
-most likely cover additional test cases inadvertently. The number in
-square brackets denotes the seed used.
+most likely cover additional test cases inadvertently.
 
 ----------
 TEST CASES
@@ -17,9 +16,17 @@ TEST CASES
 -----
 TESTS
 -----
-
+1. 1, 4
+2. 2
+3. 3
+4. 5
+5. 6
 
 ---------
 RUN TESTS
 ---------
 diff Testing/aiTests/1expected.out Testing/aiTests/1actual.out
+diff Testing/aiTests/2expected.out Testing/aiTests/2actual.out
+diff Testing/aiTests/3expected.out Testing/aiTests/3actual.out
+diff Testing/aiTests/4expected.out Testing/aiTests/4actual.out
+diff Testing/aiTests/5expected.out Testing/aiTests/5actual.out

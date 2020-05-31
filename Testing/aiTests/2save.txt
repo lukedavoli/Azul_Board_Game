@@ -1,0 +1,37 @@
+Luke
+AzulBot
+0
+0
+Luke
+L U U L R L
+. . . .
+R B U Y
+. . . .
+. . . .
+. . . .
+b y r u l
+l b y r u
+u l b y r
+r u l b y
+y r u l b
+b y r u l
+l b y r u
+u l b y r
+r u l b y
+y r u l b
+B 
+B B 
+B . . 
+. . . . 
+. . . . . 
+Y 
+L L 
+R R R 
+. . . . 
+. . . . . 
+
+F
+
+R Y U L L Y L L B L L U U L L R R U Y B R B R R U R Y U L Y Y U Y R Y B Y R Y L R Y U Y U B U U Y U R Y R U U Y U L B R B L Y B B L B B R B R Y L B U B Y U L B
+0
+sp

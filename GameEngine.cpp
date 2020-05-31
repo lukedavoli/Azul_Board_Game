@@ -1346,10 +1346,11 @@ string GameEngine::findBestMove(){
             if(factoryChar == '0'){
                 tilesToAdd = factoryZero->getNumOfCol(tile);
             }else{
-                tilesToAdd = factories[factoryNum]->getNumberOfCol(tile);
+                tilesToAdd = factories[factoryNum - 1]->getNumberOfCol(tile);
             }
             if(tilesToAdd < leastTiles){
                 chosenMove = currTurn;
+                leastTiles = tilesToAdd;
             }
         }
     }
