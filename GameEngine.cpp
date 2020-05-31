@@ -154,6 +154,7 @@ void GameEngine::loadGame(string filename){
     inStream >> gametype;
     if(gametype == "sp"){
         ai = true;
+        generatePossibleMoves();
     }else{
         ai = false;
     }
@@ -704,9 +705,9 @@ void GameEngine::saveGame(string filename) {
                << tileBagToString() << "\n"
                << seed << "\n";
     if(ai){
-        fileStream << "s";
+        fileStream << "sp";
     }else{
-        fileStream << "m";
+        fileStream << "mp";
     }
     fileStream.close();
 }

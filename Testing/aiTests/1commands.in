@@ -1,0 +1,5 @@
+3
+Testing/aiTests/1save.txt
+turn 3 L 4
+turn 0 L 4
+save Testing/aiTests/1actual.out

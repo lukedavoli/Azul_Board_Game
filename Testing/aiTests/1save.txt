@@ -1,37 +1,37 @@
-Jim
-Pam
+Luke
+AzulBot
 0
 0
-Jim
+Luke
+R R R L L
+. . . .
+. . . .
+R L R B
+. . . .
+. . . .
+b y r u l
+l b y r u
+u l b y r
+r u l b y
+y r u l b
+b y r u l
+l b y r u
+u l b y r
+r u l b y
+y r u l b
+B 
+L L 
+U U . 
+. . . . 
+. . . . . 
+B 
+Y Y 
+Y Y Y 
+. . . . 
+. . . . . 
 F
-R R R Y
-U U L U
-B Y Y R
-Y U Y B
-R U R B
-b y r u l
-l b y r u
-u l b y r
-r u l b y
-y r u l b
-b y r u l
-l b y r u
-u l b y r
-r u l b y
-y r u l b
-. 
-. . 
-. . . 
-. . . . 
-. . . . . 
-. 
-. . 
-. . . 
-. . . . 
-. . . . . 
 
 
-
-B L Y L L L R R B Y U B Y R Y U U B B Y B B R B R L Y R L L U R B L L L R R Y B R U L L U L U U B U R B Y L Y U B R B Y U Y R L L Y U U L L L B U U B Y Y R Y B
+R L R U L B Y L U U B B B R U R Y Y U B B L U L R Y B B Y R U Y U L U Y Y U B L L U U L Y B R Y L L Y R L R L R Y R R B Y U R U B U B B Y U L Y R B L U U R B B
 0
 sp
