@@ -3,8 +3,9 @@
 
 
 void Menu::displayWelcome(){
-    std::cout << "Welcome to Azul!\n" <<
-                 MEDIUM_LB <<
+    std::cout << SHME_LB <<
+                 "\n𝔸 ℤ 𝕌 𝕃\n" <<
+                 SHME_LB <<
                  std::endl;
 }
 
@@ -12,13 +13,13 @@ void Menu::displayMenu(int seed, bool seedUsed){
     gameEngine=  make_shared<GameEngine>();
     bool quit = false;
     while(!quit){
-        std::cout << "Menu\n" <<
+        std::cout << "\nMenu\n" <<
                   SHORT_LB << "\n" <<
-                  "1. New Game - mutiplayer\n" <<
-                  "2. New Game - single player\n" <<
-                  "3. Load Game\n" <<
-                  "4. Credits\n" <<
-                  "5. Quit\n" <<
+                  "1. New Game - mutiplayer 👦👧\n" <<
+                  "2. New Game - single player 👦🤖 \n" <<
+                  "3. Load Game 💾\n" <<
+                  "4. Credits 🎬\n" <<
+                  "5. Quit ❌\n" <<
                   std::endl;
 
         int menuSelection = -1;
@@ -66,7 +67,7 @@ void Menu::showCredits(){
 
 void Menu::loadGame(){
     string filename = "";
-    cout << "Enter the filename from which to load the game" << std::endl;
+    cout << "Enter the filename from which to load the game:" << std::endl;
     cout << PROMPT;
     cin >> filename;
          

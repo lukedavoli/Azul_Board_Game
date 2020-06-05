@@ -81,6 +81,37 @@ TESTS
 ---------
 RUN TESTS
 ---------
+./azul <Testing/DemoTests/1commands.in
+./azul <Testing/DemoTests/2commands.in
+./azul <Testing/DemoTests/3commands.in
+./azul <Testing/DemoTests/4commands.in
+./azul <Testing/DemoTests/5commands.in
+./azul <Testing/DemoTests/6commands.in
+./azul <Testing/DemoTests/7commands.in
+./azul <Testing/DemoTests/8commands.in
+./azul <Testing/DemoTests/9commands.in
+./azul <Testing/DemoTests/10commands.in
+./azul <Testing/DemoTests/11commands.in
+./azul <Testing/DemoTests/12commands.in
+./azul <Testing/DemoTests/13commands.in
+
+(running the dos2unix commands only necessary if expected file has been changed
+since the last run of tests)
+dos2unix Testing/DemoTests/1expected.out
+dos2unix Testing/DemoTests/2expected.out
+dos2unix Testing/DemoTests/3expected.out
+dos2unix Testing/DemoTests/4expected.out
+dos2unix Testing/DemoTests/5expected.out
+dos2unix Testing/DemoTests/6expected.out
+dos2unix Testing/DemoTests/7expected.out
+dos2unix Testing/DemoTests/8expected.out
+dos2unix Testing/DemoTests/9expected.out
+dos2unix Testing/DemoTests/10expected.out
+dos2unix Testing/DemoTests/11expected.out
+dos2unix Testing/DemoTests/12expected.out
+dos2unix Testing/DemoTests/13expected.out
+
+
 diff Testing/DemoTests/1expected.out Testing/DemoTests/1actual.out
 diff Testing/DemoTests/2expected.out Testing/DemoTests/2actual.out
 diff Testing/DemoTests/3expected.out Testing/DemoTests/3actual.out

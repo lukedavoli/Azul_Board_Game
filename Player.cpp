@@ -77,7 +77,7 @@ string Player::colourizeChar(char character){
     if(character == 'B'){
         retVal = "\033[44;37;1mB\033[0m";
     }else if(character == 'Y'){
-        retVal = "\033[43;37;1mY\033[0m";
+        retVal = "\033[103;37;1mY\033[0m";
     }else if(character == 'R'){
         retVal = "\033[41;37;1mR\033[0m";
     }else if(character == 'U'){

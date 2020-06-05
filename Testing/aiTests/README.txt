@@ -25,6 +25,21 @@ TESTS
 ---------
 RUN TESTS
 ---------
+./azul <Testing/aiTests/1commands.in
+./azul <Testing/aiTests/2commands.in
+./azul <Testing/aiTests/3commands.in
+./azul <Testing/aiTests/4commands.in
+./azul <Testing/aiTests/5commands.in
+
+(running the dos2unix commands only necessary if expected file has been changed
+since the last run of tests)
+dos2unix Testing/aiTests/1expected.out
+dos2unix Testing/aiTests/2expected.out
+dos2unix Testing/aiTests/3expected.out
+dos2unix Testing/aiTests/4expected.out
+dos2unix Testing/aiTests/5expected.out
+
+
 diff Testing/aiTests/1expected.out Testing/aiTests/1actual.out
 diff Testing/aiTests/2expected.out Testing/aiTests/2actual.out
 diff Testing/aiTests/3expected.out Testing/aiTests/3actual.out

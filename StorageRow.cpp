@@ -97,7 +97,7 @@ string StorageRow::toStringUI() {
         if(nextTile == 'B'){
             nextTileColour = "\033[44;37;1mB\033[0m";
         }else if(nextTile == 'Y'){
-            nextTileColour = "\033[43;37;1mY\033[0m";
+            nextTileColour = "\033[103;37;1mY\033[0m";
         }else if(nextTile == 'R'){
             nextTileColour = "\033[41;37;1mR\033[0m";
         }else if(nextTile == 'U'){

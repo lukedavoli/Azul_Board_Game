@@ -52,18 +52,18 @@ void GameEngine::newGame(int seed, bool seedUsed){
     std::string p1Name = "";
     std::string p2Name = "";
     std::cout << "Starting a New Game\n" << std::endl;
-    std::cout << "Enter a name for Player 1" << std::endl;
+    std::cout << "Enter a name for \033[95;1mPlayer 1\033[0m" << std::endl;
     std::cout << PROMPT;
     std::cin >> p1Name;
     player1 = make_shared<Player>(p1Name, INIT_POINTS);
-    std::cout << "Enter a name for Player 2" << std::endl;
+    std::cout << "Enter a name for \033[96;1mPlayer 2\033[0m" << std::endl;
     std::cout << PROMPT;
     std::cin >> p2Name;
     player2 = make_shared<Player>(p2Name, INIT_POINTS);
 
-    std::cout << "\nWho most recently visited Portugal?\n" <<
-                 "[1] " << p1Name << "\n" <<
-                 "[2] " << p2Name << endl;
+    std::cout << "\nWho most recently visited Portugal? 💚🔴\n" <<
+                 "[1] \033[95;1m" << p1Name << "\033[0m" << "\n" <<
+                 "[2] \033[96;1m" << p2Name << "\033[0m" << endl;
           
     char mostRecent =  ' ';
     std::cout << PROMPT;
@@ -90,7 +90,8 @@ void GameEngine::newGame(int seed, bool seedUsed){
         factories[i] = new Factory(i+1);
     }
     fillFactories();
-    std::cout << "\n" << player1->getName() << " and " << player2->getName() <<
+    std::cout << "\n\033[95;1m" << player1->getName() << "\033[0m and " 
+              << "\033[96;1m" << player2->getName() << "\033[0m" <<
                  ", Let's Play!\n" << std::endl;
     enterGame();
 }
@@ -99,9 +100,9 @@ void GameEngine::newGameSP(int seed, bool seedUsed){
     ai = true;
     generatePossibleMoves();
     std::string p1Name = "";
-    std::string p2Name = "AzulBot";
+    std::string p2Name = "AzulBot🤖";
     std::cout << "Starting a New Game\n" << std::endl;
-    std::cout << "Enter a name for Player 1" << std::endl;
+    std::cout << "Enter a name for \033[95;1mPlayer 1\033[0m" << std::endl;
     std::cout << PROMPT;
     std::cin >> p1Name;
     player1 = make_shared<Player>(p1Name, INIT_POINTS);
@@ -119,7 +120,8 @@ void GameEngine::newGameSP(int seed, bool seedUsed){
         factories[i] = new Factory(i+1);
     }
     fillFactories();
-    std::cout << "\n" << player1->getName() << " and " << player2->getName() <<
+    std::cout << "\n\033[95;1m" << player1->getName() << "\033[0m and " << 
+                 "\033[96;1m" << player2->getName() << "\033[0m" <<
                  ", Let's Play!\n" << std::endl;
     enterGame();
 }
@@ -160,7 +162,7 @@ void GameEngine::loadGame(string filename){
     }
     
     inStream.close();
-    printValues();
+    cout << "\"" << filename << "\"" << " loaded successfully!" << endl;
     enterGame();
 }
 
@@ -279,59 +281,6 @@ bool GameEngine::validStorageChar(char c) {
 }
 
 /**
- * Prints the values of all the modules (names, points, tiles, etc);
- * */
-void GameEngine::printValues() {
-
-    cout << "Player 1 Name: " << player1->getName() << endl;
-    cout << "Player 2 Name: " << player2->getName() << endl;
-    cout << "Player 1 Points: " << player1->getPoints() << endl;
-    cout << "Player 2 Points: " << player2->getPoints() << endl;
-    cout << "Next Turn: " << nextTurn << endl;
-    cout << "Factory Zero: ";
-    factoryZero->print();
-    cout << endl;
-    for(int i = 0; i < MAX_FACTORY_NUM; ++i){
-        cout << "Factory "<< i+1 << ": ";
-        factories[i]->print();
-        cout << endl;       
-    }
-    for(int i = 0; i < MAX_MOSAIC_ROW_NUM; ++i){
-        cout << "Player 1 Mosaic Row "<< i+1 << ": " <<
-                player1->getMosaic()->getRow(i+1) << endl;
-    }
-    for(int i = 0; i < MAX_MOSAIC_ROW_NUM; ++i){
-        cout << "Player 2 Mosaic Row "<< i+1 << ": " <<
-                player2->getMosaic()->getRow(i+1) << endl;
-    }
-    for(int i = 0; i < MAX_STORAGE_NUM; ++i) {
-        cout << "Player 1 Storage Row "  << i+1 << ": ";
-        player1->getStorageRow(i+1)->print();
-        cout << endl;
-    }
-    for(int i = 0; i < MAX_STORAGE_NUM; ++i) {
-        cout << "Player 2 Storage Row " << i+1 << ": ";
-        player2->getStorageRow(i+1)->print();
-        cout << endl;
-    }
-    cout << "Player 1 Broken Tiles: ";
-    player1->getBroken()->print();
-    cout << endl;
-    cout << "Player 2 Broken Tiles: ";
-    player2->getBroken()->print();
-    cout << endl;
-    cout << "Bag: " << tileBagToString() << endl;
-    cout << "Box Lid: " << boxLidToString() << endl;
-    cout << "Seed: " << seed << endl;
-    cout << "Game type: ";
-    if(ai){
-        cout << "single player (ai)" << endl;
-    }else{
-        cout << "multiplayer (no ai)" << endl;
-    }
-}
-
-/**
  * enterGame():
  *  If the factories are empty 
  *       Proceed to move tiles and score and display the player's board.
@@ -358,7 +307,7 @@ void GameEngine::enterGame(){
             // Do not proceed until the command is long enough to be valid.
             while (cmdShort && !userExit){
                 cout << PROMPT;
-                if(nextTurn != "AzulBot" || !ai){
+                if(nextTurn != "AzulBot🤖" || !ai){
                     if(firstLoop){
                         getline(cin, turn);
                         firstLoop = false;
@@ -407,7 +356,7 @@ void GameEngine::enterGame(){
                             nextTurn = player1->getName();
                         }
                         if(emptyFactories()){
-                            cout << "------------\n" <<
+                            cout << "\n------------\n" <<
                                     "END OF ROUND\n" <<
                                     "------------\n" << endl;
                             if(player1->getBroken()->hasFirstPlayerMarker()){
@@ -420,9 +369,10 @@ void GameEngine::enterGame(){
                             cout << endl;
                             cout << player1->getName() << "'s Board" << endl;
                             cout << player1->boardToString() << endl;
+                            cout << "\n";
                             cout << player2->getName() << "'s Board" << endl;
                             cout << player2->boardToString() <<  endl;
-                            cout << "----------------------------" << endl;
+                            cout << "\n--------------------------------" << endl;
                             factoryZero->reset();
                             if(tileBag->size() >= MIN_BAG_TILES) {
                                 fillFactories();
@@ -458,21 +408,24 @@ void GameEngine::enterGame(){
                     validCommand = true;
                     userExit = true;
                 }else if(command == "show"){
-                    cout << "Opponent's board:" << endl;
                     if(nextTurn == player1->getName()){
+                        cout << "\n\033[96;1m" << player2->getName() << "'s\033[0m's board:" << endl;
                         cout << player2->boardToString() << endl;
                     }else{
+                        cout << "\n\033[95;1m" << player1->getName() << "'s\033[0m's board:" << endl;
                         cout << player1->boardToString() << endl;
                     }     
                 }else if(command == "help"){
-                    cout << "Please use one of the following commands\n" <<
+                    cout << "\n\033[93mPlease use one of the following commands...\n" <<
                          "- turn [factory: 0-5] [tile: R,Y,B,L,U,F] "
                          "[Row: 1-5, B] (performs a turn in the game)\n"
                          "- show (displays the opponents board to inform"
                          " strategic decision making)\n"
                          "- save [filename] (saves the current game to file)\n" 
-                         << "- exit (leaves the game to the main menu"
-                         " without saving)" << endl;
+                         "- exit (leaves the game to the main menu"
+                         " without saving)\n" <<
+                         "For a refresher of the rules, click the link below:\033[0m\n"
+                         "\033[34;1mhttps://www.ultraboardgames.com/azul/game-rules.php\033[0m" << endl;
                 } else {
                     cout << "\n\033[31;1mInvalid action, please try again with"
                             " one of the following: \n" <<
@@ -488,17 +441,16 @@ void GameEngine::enterGame(){
 }
 
 void GameEngine::displayWinner() {
-    cout << "******************************" << endl;
+    cout << "\nEND OF GAME" << endl;
     if(player1->getPoints() > player2->getPoints()){
-        cout << "Player 1 Wins!" << endl;
+        cout << "\033[95;1m" << player1->getName() << "\033[0m Wins!" << endl;
     } else {
-        cout << "Player 2 Wins!" << endl;
+        cout << "\033[96;1m" << player2->getName() << "\033[0m Wins!" << endl;
     }
-    cout << "Player 1: " << player1->getName() << "'s points: " <<
-            player1->getPoints() << endl;
-    cout << "Player 2: " << player2->getName() << "'s points: " <<
-            player2->getPoints() << endl;
-    cout << "******************************" << endl;
+    cout << "\033[95;1m" << (*player1).getPoints() << " - " << 
+            player1->getName() << "\033[0m" << endl;
+    cout << "\033[96;1m" << (*player2).getPoints() << " - " << 
+                player2->getName() << "\033[0m" << endl;
 }
 
 bool GameEngine::endGame() {
@@ -661,14 +613,12 @@ void GameEngine::moveBrokenTilesToBox(shared_ptr<Player> player){
  * */
 void GameEngine::fillBagSequentially() {
     int index = 0;
-    while(tileBag->size() != MIN_BAG_TILES) {
+    while(boxLid.at(index) != '\000'){
         char tile = boxLid.at(index);
-        if(tile != '\0'){
-             tileBag->addFront(std::move(tile));
-        }
+        tileBag->addFront(std::move(tile));
         ++index;
     }
-    boxLid.fill('\0');
+    boxLid.fill('\000');
 }
 
 int GameEngine::getNumOfBoxTiles() {
@@ -1061,8 +1011,14 @@ void GameEngine::brokenScore(shared_ptr<Player> player){
     } else {
         (*player).setPoints(prevScore+lostPoints);
     }
-    cout << "Player: "<<(*player).getName()<<" | Final Points : " <<
-            (*player).getPoints()<<endl;
+    if(player->getName() == player1->getName()){
+        cout << "\033[95;1m" << (*player).getPoints() << " - " << 
+                player1->getName() << "\033[0m" << endl;
+    }else{
+        cout << "\033[96;1m" << (*player).getPoints() << " - " << 
+                player2->getName() << "\033[0m" << endl;
+    }
+    
 }
 
 /**
@@ -1157,10 +1113,17 @@ void GameEngine::setActivePlayer() {
 }
 
 void GameEngine::displayTurnUpdate() {
-    cout << "\nTURN FOR PLAYER: " << activePlayer->getName() << endl;
-    cout << "Factories: \n" << factoriesToString() << "\n" << endl;
-    cout << activePlayer->getName() << "'s board:\n" <<
-         activePlayer->boardToString() << endl;
+    if(nextTurn == player1->getName()){
+        cout << "\n\033[95;1m" << player1->getName() << "'s\033[0m turn..." << endl;
+        cout << "Factories: \n" << factoriesToString() << "\n" << endl;
+        cout << "\n\033[95;1m" << activePlayer->getName() << "'s\033[0m board:\n" <<
+        activePlayer->boardToString() << endl;
+    }else{
+        cout << "\n\033[96;1m" << player2->getName() << "'s\033[0m turn..." <<endl;
+        cout << "Factories: \n" << factoriesToString() << "\n" << endl;
+        cout << "\n\033[96;1m" << activePlayer->getName() << "'s\033[0m board:\n" <<
+        activePlayer->boardToString() << endl;
+    }
 }
 
 string GameEngine::boxLidToString(){

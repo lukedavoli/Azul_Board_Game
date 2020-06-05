@@ -14,6 +14,7 @@ using std::cin;
 
 
 #define SHORT_LB "----"
+#define SHME_LB "-------"
 #define MEDIUM_LB "-------------------"
 #define LONG_LB "----------------------------------"
 

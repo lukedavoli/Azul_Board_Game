@@ -1,0 +1,37 @@
+Dwight
+Andy
+27
+25
+Andy
+Y Y R
+. . . .
+. . . .
+. . . .
+. . . .
+. . . .
+B Y R u L
+L B Y R u
+u L B Y r
+r u l B Y
+y r U L b
+B y R U L
+l B Y R U
+u L B y r
+R U l b Y
+y R U l b
+. 
+U U 
+. . . 
+L L . . 
+B B B B B 
+Y 
+L L 
+R R R 
+L L L . 
+B . . . . 
+F
+R R
+
+R R R R R R R R B B B B B B B U U U U U U U U U U U U U Y Y Y Y Y Y Y Y Y Y Y L L L L L L L
+0
+mp

@@ -1,0 +1,37 @@
+Luke
+AzulBot🤖
+20
+24
+Luke
+F Y U
+R L Y B
+. . . .
+B U B Y
+R R B L
+R R L L
+b y r U L
+L b Y R U
+u l b Y R
+r u L B Y
+y r u l B
+B Y R U l
+L b Y r U
+u l B Y R
+R u l B Y
+y r u l b
+. 
+. . 
+B B . 
+. . . . 
+. . . . . 
+. 
+B B 
+. . . 
+. . . . 
+U U . . . 
+
+
+U R R L Y B B R R R L Y U U U U U U U L L U U U Y Y R Y B B B Y L L L L R R B B R L L L L U Y Y Y R Y 
+
+0
+sp
